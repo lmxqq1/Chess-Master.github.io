@@ -1,0 +1,5021 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#0a1120">
+<title>棋大师 · 七类棋艺合集</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#080e1a;--bg2:#101a2c;--card:rgba(255,255,255,.045);--card2:rgba(255,255,255,.08);
+  --line:rgba(255,255,255,.1);--txt:#e8eefb;--dim:#8ea1c0;--dim2:#61748f;
+  --acc:#3ddad7;--acc2:#f0b429;--bad:#ff6b6b;--good:#57d98a;
+  --r:16px;
+}
+html,body{margin:0;padding:0;height:100%}
+body{
+  background:
+    radial-gradient(900px 520px at 12% -8%,rgba(61,218,215,.14),transparent 60%),
+    radial-gradient(800px 500px at 92% 4%,rgba(240,180,41,.1),transparent 60%),
+    linear-gradient(180deg,#0d1728 0%,var(--bg) 60%);
+  color:var(--txt);
+  font:15px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",sans-serif;
+  min-height:100%;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;color:inherit;border:0;background:none;cursor:pointer;font-size:14px}
+.app{max-width:1180px;margin:0 auto;padding:0 14px 40px;min-height:100%}
+.hidden{display:none!important}
+
+/* ---------- 顶栏 ---------- */
+.topbar{display:flex;align-items:center;gap:12px;padding:16px 4px 10px;position:sticky;top:0;z-index:20;
+  background:linear-gradient(180deg,rgba(8,14,26,.92),rgba(8,14,26,0));backdrop-filter:blur(8px)}
+.brand{font-size:22px;font-weight:800;letter-spacing:1px;display:flex;align-items:center;gap:8px;
+  background:linear-gradient(92deg,#7ff0ee,#f7cf6a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand .lg{font-size:24px;-webkit-text-fill-color:initial}
+.topbar .sub{color:var(--dim);font-size:12px;margin-left:auto;letter-spacing:.5px}
+.ghost{display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:var(--card);
+  border:1px solid var(--line);color:var(--dim);font-size:13px}
+.ghost:active{transform:scale(.96)}
+
+/* ---------- 首页 ---------- */
+.hero{padding:14px 4px 22px}
+.hero h1{margin:0 0 8px;font-size:30px;line-height:1.25;letter-spacing:.5px}
+.hero p{margin:0;color:var(--dim);font-size:14px;max-width:640px}
+.cat{margin:22px 0 0}
+.catHead{display:flex;align-items:center;gap:12px;padding:0 4px 10px}
+.catIcon{width:40px;height:40px;flex:0 0 40px;display:grid;place-items:center;font-size:21px;border-radius:12px;
+  background:linear-gradient(150deg,rgba(61,218,215,.18),rgba(240,180,41,.12));border:1px solid var(--line)}
+.catName{font-size:17px;font-weight:700;letter-spacing:.5px}
+.catDesc{font-size:12px;color:var(--dim2)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:12px}
+.card{position:relative;text-align:left;padding:14px;border-radius:var(--r);background:var(--card);
+  border:1px solid var(--line);transition:.18s;overflow:hidden}
+.card:before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(61,218,215,.12),transparent 55%);opacity:0;transition:.25s}
+.card:hover{border-color:rgba(61,218,215,.4);transform:translateY(-2px)}
+.card:hover:before{opacity:1}
+.card:active{transform:scale(.98)}
+.card .gi{font-size:26px}
+.card .gn{font-size:16px;font-weight:700;margin-top:6px}
+.card .gd{font-size:12px;color:var(--dim);margin-top:2px;min-height:34px}
+.card .gm{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.07);color:var(--dim);border:1px solid var(--line)}
+.tag.on{background:rgba(61,218,215,.15);color:#8ff0ee;border-color:rgba(61,218,215,.35)}
+
+/* ---------- 设置页 ---------- */
+.setup{max-width:520px;margin:0 auto;padding:8px 0 30px}
+.setup .stitle{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800;margin:6px 0 4px}
+.setup .sdesc{color:var(--dim);font-size:13px;margin:0 0 18px}
+.grp{margin-bottom:16px}
+.grp>label{display:block;font-size:12px;color:var(--dim2);margin-bottom:8px;letter-spacing:1px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px}
+.opt{padding:10px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line);text-align:left;transition:.15s}
+.opt b{display:block;font-size:14px;font-weight:600}
+.opt span{display:block;font-size:11px;color:var(--dim2);margin-top:2px}
+.opt.sel{background:linear-gradient(140deg,rgba(61,218,215,.2),rgba(61,218,215,.06));border-color:rgba(61,218,215,.55)}
+.ruleBox{padding:12px 14px;border-radius:12px;background:rgba(0,0,0,.22);border:1px solid var(--line);
+  font-size:12.5px;color:var(--dim);white-space:pre-wrap;max-height:190px;overflow:auto;line-height:1.75}
+.big{width:100%;padding:15px;border-radius:14px;font-size:16px;font-weight:800;letter-spacing:2px;
+  background:linear-gradient(96deg,#31c9c6,#3f8ef0 55%,#f0b429);color:#06202b;box-shadow:0 10px 26px rgba(49,201,198,.22)}
+.big:active{transform:scale(.985)}
+
+/* ---------- 对局页 ---------- */
+#play{display:flex;flex-direction:column;height:100dvh;max-height:100dvh;padding:0 14px}
+.pTop{display:flex;align-items:center;gap:10px;padding:12px 0 8px;flex:0 0 auto}
+.pTop .t{font-size:18px;font-weight:800}
+.pTop .m{font-size:11px;color:var(--dim);border:1px solid var(--line);padding:2px 9px;border-radius:999px}
+#boardWrap{flex:1 1 auto;min-height:0;display:grid;place-items:center;position:relative}
+#board{touch-action:manipulation;border-radius:14px;display:block}
+.status{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:12px;background:var(--card);
+  border:1px solid var(--line);margin:8px 0;font-size:13.5px;flex:0 0 auto;min-height:44px}
+.dot{width:11px;height:11px;border-radius:50%;flex:0 0 11px;box-shadow:0 0 0 3px rgba(255,255,255,.07)}
+.status .msg{color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ctrls{display:flex;gap:8px;flex-wrap:wrap;flex:0 0 auto;padding-bottom:10px}
+.btn{padding:9px 14px;border-radius:11px;background:var(--card2);border:1px solid var(--line);font-size:13px;transition:.15s}
+.btn:active{transform:scale(.96)}
+.btn.pri{background:linear-gradient(96deg,rgba(61,218,215,.28),rgba(63,142,240,.24));border-color:rgba(61,218,215,.45);font-weight:700}
+.btn:disabled{opacity:.4}
+.rules{margin-bottom:20px;flex:0 0 auto}
+.rules summary{cursor:pointer;font-size:12.5px;color:var(--dim);padding:6px 2px;list-style:none}
+.rules summary::-webkit-details-marker{display:none}
+.rules summary:before{content:"▸ ";color:var(--acc)}
+.rules[open] summary:before{content:"▾ "}
+.rules .body{font-size:12.5px;color:var(--dim);white-space:pre-wrap;line-height:1.8;padding:8px 12px;
+  border-radius:12px;background:rgba(0,0,0,.2);border:1px solid var(--line);max-height:34vh;overflow:auto}
+
+@media(min-width:900px){
+  #play{max-width:1180px;display:block;height:auto}
+  .pWrap{display:flex;gap:18px;align-items:flex-start;margin-top:6px}
+  #boardWrap{flex:0 0 auto;width:min(70vh,700px);height:min(70vh,700px)}
+  .side{flex:1 1 auto;min-width:280px;max-width:420px}
+  .rules .body{max-height:40vh}
+}
+
+/* ---------- 账号 ---------- */
+.acct{display:flex;align-items:center;gap:7px;padding:6px 13px 6px 8px;border-radius:999px;
+  background:var(--card);border:1px solid var(--line);color:var(--txt);font-size:13px;max-width:44vw}
+.acct:active{transform:scale(.96)}
+.acct .av{width:24px;height:24px;flex:0 0 24px;display:grid;place-items:center;border-radius:50%;
+  background:linear-gradient(150deg,rgba(61,218,215,.3),rgba(240,180,41,.22));font-size:13px}
+.acct .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.formRow{margin:10px 0}
+.formRow input{width:100%;padding:13px 14px;border-radius:12px;font-size:15px;outline:none;
+  background:rgba(0,0,0,.32);border:1px solid var(--line);color:var(--txt)}
+.formRow input:focus{border-color:rgba(61,218,215,.6)}
+.formRow .tip{font-size:11.5px;color:var(--dim2);margin-top:5px;line-height:1.5}
+.formRow .err{font-size:12.5px;color:var(--bad);margin-top:6px;min-height:16px}
+.tabs{display:flex;gap:8px;margin:4px 0 12px}
+.tabs button{flex:1;padding:10px;border-radius:11px;background:var(--card);border:1px solid var(--line);
+  color:var(--dim);font-size:14px}
+.tabs button.sel{background:rgba(61,218,215,.16);border-color:rgba(61,218,215,.5);color:var(--txt);font-weight:700}
+.acctCard{display:flex;align-items:center;gap:12px;padding:13px;border-radius:14px;
+  background:var(--card);border:1px solid var(--line);margin:6px 0 12px}
+.acctCard .big{width:46px;height:46px;flex:0 0 46px;display:grid;place-items:center;border-radius:50%;font-size:22px;
+  background:linear-gradient(150deg,rgba(61,218,215,.3),rgba(240,180,41,.22))}
+.acctCard .who{flex:1;min-width:0}
+.acctCard .who b{display:block;font-size:16px}
+.acctCard .who span{font-size:12px;color:var(--dim2)}
+.statGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0 14px}
+.statGrid div{text-align:center;padding:11px 4px;border-radius:12px;background:var(--card);border:1px solid var(--line)}
+.statGrid b{display:block;font-size:19px;font-weight:800}
+.statGrid span{font-size:11px;color:var(--dim2)}
+.userItem{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:12px;margin-bottom:8px;
+  background:var(--card);border:1px solid var(--line);cursor:pointer}
+.userItem:active{transform:scale(.98)}
+.userItem.cur{border-color:rgba(61,218,215,.5);background:rgba(61,218,215,.09)}
+.userItem .av{width:32px;height:32px;flex:0 0 32px;display:grid;place-items:center;border-radius:50%;
+  background:rgba(255,255,255,.09);font-size:15px}
+.userItem .who{flex:1;min-width:0}
+.userItem .who b{display:block;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.userItem .who span{font-size:11.5px;color:var(--dim2)}
+.userItem .del{padding:6px 10px;border-radius:8px;background:rgba(255,107,107,.14);color:var(--bad);font-size:12px}
+
+/* ---------- 二维码与扫码 ---------- */
+.qrWrap{display:flex;align-items:center;gap:16px;margin:14px 0 6px;padding:14px;border-radius:18px;
+  background:linear-gradient(150deg,rgba(61,218,215,.14),rgba(240,180,41,.08));border:1px dashed rgba(61,218,215,.45)}
+.qrCv{width:132px;height:132px;flex:0 0 132px;border-radius:10px;background:#fff;padding:6px;
+  box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.qrSide{flex:1;min-width:0;text-align:center}
+.qrSide .lb{font-size:11.5px;color:var(--dim);letter-spacing:2px}
+.qrSide .cv{font-size:32px;font-weight:800;letter-spacing:6px;margin:4px 0 4px;text-indent:6px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;
+  background:linear-gradient(92deg,#7ff0ee,#f7cf6a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.qrSide .hint{font-size:11px;color:var(--dim2);line-height:1.5}
+@media (max-width:400px){ .qrWrap{flex-direction:column;gap:10px} .qrCv{width:110px;height:110px;flex-basis:110px} }
+
+.scanBox{position:relative;width:100%;aspect-ratio:1/1;max-width:340px;margin:12px auto 0;
+  border-radius:18px;overflow:hidden;background:#000}
+.scanBox video{width:100%;height:100%;object-fit:cover;display:block}
+.scanFrame{position:absolute;inset:14%;pointer-events:none}
+.scanFrame i{position:absolute;width:26px;height:26px;border:3px solid var(--acc);border-radius:4px}
+.scanFrame i:nth-child(1){top:0;left:0;border-right:0;border-bottom:0}
+.scanFrame i:nth-child(2){top:0;right:0;border-left:0;border-bottom:0}
+.scanFrame i:nth-child(3){bottom:0;left:0;border-right:0;border-top:0}
+.scanFrame i:nth-child(4){bottom:0;right:0;border-left:0;border-top:0}
+
+/* ---------- 联机房间 ---------- */
+.codeBox{margin:14px 0 6px;padding:20px 10px;border-radius:18px;text-align:center;
+  background:linear-gradient(150deg,rgba(61,218,215,.16),rgba(240,180,41,.08));border:1px dashed rgba(61,218,215,.5)}
+.codeBox .lb{font-size:11.5px;color:var(--dim);letter-spacing:2px}
+.codeBox .cv{font-size:40px;font-weight:800;letter-spacing:9px;margin:6px 0 2px;
+  font-family:"SF Mono",Menlo,Consolas,monospace;text-indent:9px;
+  background:linear-gradient(92deg,#7ff0ee,#f7cf6a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.codeBox .hint{font-size:11.5px;color:var(--dim2)}
+.seats{margin:14px 0}
+.seat{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:12px;margin-bottom:8px;
+  background:var(--card);border:1px solid var(--line);font-size:14px}
+.seat.me{border-color:rgba(61,218,215,.5);background:rgba(61,218,215,.09)}
+.seat.wait{opacity:.55;border-style:dashed}
+.seat .no{width:26px;height:26px;flex:0 0 26px;display:grid;place-items:center;border-radius:50%;
+  background:rgba(255,255,255,.09);font-size:12px;font-weight:700}
+.seat .nm{flex:1}
+.seat .st{font-size:12px;color:var(--dim2)}
+.seat.me .st{color:#8ff0ee}
+.netBar{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:12px;font-size:12.5px;
+  background:rgba(0,0,0,.25);border:1px solid var(--line);color:var(--dim);margin-bottom:14px}
+.netBar .led{width:8px;height:8px;border-radius:50%;background:var(--dim2);flex:0 0 8px}
+.netBar.ok .led{background:var(--good);box-shadow:0 0 8px var(--good);animation:blink 1.6s infinite}
+.netBar.wait .led{background:var(--acc2);animation:blink .8s infinite}
+.netBar.err .led{background:var(--bad)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.codeIn{width:100%;padding:16px;border-radius:14px;font-size:28px;letter-spacing:8px;text-align:center;
+  text-indent:8px;font-family:"SF Mono",Menlo,Consolas,monospace;font-weight:700;text-transform:uppercase;
+  background:rgba(0,0,0,.3);border:1px solid var(--line);color:var(--txt);outline:none}
+.codeIn:focus{border-color:rgba(61,218,215,.6)}
+.codeIn::placeholder{color:var(--dim2);letter-spacing:6px;font-size:20px}
+.nameIn{width:100%;padding:12px 14px;border-radius:12px;font-size:15px;background:rgba(0,0,0,.3);
+  border:1px solid var(--line);color:var(--txt);outline:none;margin-top:10px}
+.nameIn:focus{border-color:rgba(61,218,215,.6)}
+
+/* ---------- 弹窗 / toast ---------- */
+.mask{position:fixed;inset:0;background:rgba(4,8,16,.72);backdrop-filter:blur(6px);z-index:60;
+  display:grid;place-items:center;padding:24px;animation:fade .18s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+.dlg{width:100%;max-width:400px;background:linear-gradient(160deg,#16233a,#0d1526);border:1px solid var(--line);
+  border-radius:20px;padding:22px;text-align:center;animation:pop .22s cubic-bezier(.2,1.2,.4,1);box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.dlg .ic{font-size:44px}
+.dlg h3{margin:8px 0 4px;font-size:21px}
+.dlg p{margin:0 0 16px;color:var(--dim);font-size:13.5px;white-space:pre-wrap}
+.dlg .row{display:flex;gap:10px}
+.dlg .row .btn{flex:1;padding:12px}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:34px;z-index:80;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
+.tt{background:rgba(12,20,34,.94);border:1px solid var(--line);color:var(--txt);padding:9px 16px;border-radius:999px;
+  font-size:13px;animation:pop .2s ease;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.foot{text-align:center;color:var(--dim2);font-size:11.5px;padding:26px 0 10px;line-height:1.8}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand" id="btnHome"><span class="lg">♟</span>棋大师</div>
+    <div class="sub">七类棋理 · 五种模式</div>
+    <button class="acct" id="btnAcct"><span class="av">👤</span><span class="nm">未登录</span></button>
+  </header>
+
+  <main id="pageHome">
+    <div class="hero">
+      <h1>把棋盘的道理，一次下明白</h1>
+      <p>按<b>胜利条件</b>分为七类：到达、占地、成型、灭子、取子、争子、得分。每类配一款经典棋种，支持人机对弈、联机对弈、同设备轮流、一人多弈与机机演示。</p>
+      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+        <button class="btn pri" id="btnHomeJoin" style="padding:12px 18px">🔑 用邀请码加入房间</button>
+        <button class="btn" id="btnHomeHost" style="padding:12px 18px">📡 我要开房间</button>
+      </div>
+    </div>
+    <div id="catList"></div>
+    <div class="foot">棋大师 · 单文件运行 · 除联机对弈外，所有对局均在本机完成<br>联机对弈通过公共 MQTT 服务器同步局面，仅传输棋局数据</div>
+  </main>
+
+  <section id="pageSetup" class="setup hidden"></section>
+
+  <section id="pageRoom" class="setup hidden"></section>
+
+  <section id="pagePlay" class="hidden">
+    <div class="pTop">
+      <button class="ghost" id="btnBack">← 返回</button>
+      <div class="t" id="pTitle">对局</div>
+      <div class="m" id="pMode">人机对弈</div>
+    </div>
+    <div class="pWrap">
+      <div id="boardWrap"><canvas id="board"></canvas></div>
+      <div class="side">
+        <div class="status"><span class="dot" id="sDot"></span><span id="sTurn">轮到</span><span class="msg" id="sMsg"></span></div>
+        <div class="ctrls" id="ctrls"></div>
+        <details class="rules"><summary>规则说明</summary><div class="body" id="pRules"></div></details>
+      </div>
+    </div>
+  </section>
+</div>
+<div id="modalRoot"></div>
+<div id="toast"></div>
+<script>
+
+/* ======== 05_mqtt.js ======== */
+/* ===== 极简 MQTT 3.1.1 over WebSocket 客户端（零依赖） =====
+   仅实现 CONNECT / CONNACK / SUBSCRIBE / SUBACK / PUBLISH / PINGREQ / DISCONNECT
+   足够支撑"房间广播 + 点对点消息"的联机需求 */
+(function(global){
+'use strict';
+
+function encLen(n,out){ // MQTT 剩余长度变长编码
+  do{ let b=n%128; n=Math.floor(n/128); if(n>0)b|=0x80; out.push(b); }while(n>0);
+}
+function encStr(s){ // UTF-8 字符串 → [len_hi,len_lo,...bytes]
+  const bytes=[];
+  const u=unescape(encodeURIComponent(s));
+  for(let i=0;i<u.length;i++) bytes.push(u.charCodeAt(i));
+  return [bytes.length>>8, bytes.length&255].concat(bytes);
+}
+function strBytes(s){
+  const u=unescape(encodeURIComponent(s)); const a=new Array(u.length);
+  for(let i=0;i<u.length;i++)a[i]=u.charCodeAt(i);
+  return a;
+}
+function decStr(buf,off){
+  const len=(buf[off]<<8)|buf[off+1];
+  let s=''; const slice=buf.slice(off+2,off+2+len);
+  // 手动 UTF-8 解码
+  for(let i=0;i<slice.length;){
+    let c=slice[i++];
+    if(c<0x80) s+=String.fromCharCode(c);
+    else if(c<0xE0){ s+=String.fromCharCode(((c&31)<<6)|(slice[i++]&63)); }
+    else { s+=String.fromCharCode(((c&15)<<12)|((slice[i++]&63)<<6)|(slice[i++]&63)); }
+  }
+  return {s:s,next:off+2+len};
+}
+function decRemain(buf,off){
+  let mul=1,val=0,i=off,b;
+  do{ b=buf[i++]; val+=(b&127)*mul; mul*=128; }while((b&128)!==0);
+  return {v:val,next:i};
+}
+
+function MiniMQTT(url,opts){
+  opts=opts||{};
+  this.url=url;
+  this.clientId=opts.clientId||('qm'+Math.random().toString(36).slice(2,10));
+  this.onopen=opts.onopen||function(){};
+  this.onclose=opts.onclose||function(){};
+  this.onerror=opts.onerror||function(){};
+  this.onmessage=opts.onmessage||function(){};   // (topic, payloadStr)
+  this.keepalive=opts.keepalive||40;
+  this.ws=null; this.buf=[]; this.connected=false; this.pid=1; this.pingT=0;
+}
+MiniMQTT.prototype.connect=function(){
+  const self=this;
+  let ws;
+  try{ ws=new WebSocket(this.url,'mqtt'); }catch(e){ this.onerror(e); return; }
+  ws.binaryType='arraybuffer';
+  this.ws=ws;
+  ws.onopen=function(){
+    const payload=encStr(self.clientId);
+    const vh=[0,4,0x4d,0x51,0x54,0x54,4,0x02,0,self.keepalive];
+    const rem=vh.concat(payload);
+    const out=[0x10]; encLen(rem.length,out);
+    ws.send(new Uint8Array(out.concat(rem)));
+  };
+  ws.onmessage=function(ev){ self._feed(ev.data); };
+  ws.onclose=function(){ self.connected=false; clearInterval(self.pingT); self.onclose(); };
+  ws.onerror=function(e){ self.onerror(e); };
+};
+MiniMQTT.prototype._feed=function(data){
+  const self=this;
+  let buf=new Uint8Array(data);
+  this.buf=this.buf?this._cat(this.buf,buf):buf;
+  // 解析完整包
+  for(;;){
+    const b=this.buf;
+    if(b.length<2)return;
+    const r=decRemain(b,1);
+    const total=r.next+r.v;
+    if(b.length<total)return;
+    const pkt=b.slice(0,total);
+    this.buf=b.slice(total);
+    this._pkt(pkt,r.next,r.v);
+    if(!this.buf.length)return;
+  }
+};
+MiniMQTT.prototype._cat=function(a,b){
+  const c=new Uint8Array(a.length+b.length); c.set(a,0); c.set(b,a.length); return c;
+};
+MiniMQTT.prototype._pkt=function(pkt,bodyStart,remLen){
+  const t=pkt[0]>>4, self=this;
+  if(t===2){ // CONNACK
+    const rc=pkt[bodyStart+1];
+    if(rc===0){
+      this.connected=true;
+      const self2=this;
+      clearInterval(this.pingT);
+      this.pingT=setInterval(function(){ if(self2.ws&&self2.ws.readyState===1) self2.ws.send(new Uint8Array([0xC0,0])); },this.keepalive*1000/2);
+      this.onopen();
+    } else { this.onerror(new Error('CONNACK '+rc)); this.close(); }
+  } else if(t===3){ // PUBLISH
+    const qos=(pkt[0]>>1)&3;
+    const d=decStr(pkt,bodyStart);
+    let off=d.next;
+    if(qos>0) off+=2;
+    const pay=pkt.slice(off,bodyStart+remLen);
+    let s='';
+    for(let i=0;i<pay.length;){
+      let c=pay[i++];
+      if(c<0x80) s+=String.fromCharCode(c);
+      else if(c<0xE0){ s+=String.fromCharCode(((c&31)<<6)|(pay[i++]&63)); }
+      else { s+=String.fromCharCode(((c&15)<<12)|((pay[i++]&63)<<6)|(pay[i++]&63)); }
+    }
+    this.onmessage(d.s,s);
+  } else if(t===9){ // SUBACK
+    /* no-op */
+  }
+};
+MiniMQTT.prototype.subscribe=function(topic){
+  if(!this.ws||this.ws.readyState!==1)return;
+  const id=this.pid++; if(this.pid>65000)this.pid=1;
+  const rem=[id>>8,id&255].concat(encStr(topic)).concat([0]);
+  const out=[0x82]; encLen(rem.length,out);
+  this.ws.send(new Uint8Array(out.concat(rem)));
+};
+MiniMQTT.prototype.publish=function(topic,payload){
+  if(!this.ws||this.ws.readyState!==1)return false;
+  const tb=strBytes(topic), pb=strBytes(payload);
+  const rem=[tb.length>>8,tb.length&255].concat(tb).concat(pb);
+  const out=[0x30]; encLen(rem.length,out);
+  try{ this.ws.send(new Uint8Array(out.concat(rem))); return true; }catch(e){ return false; }
+};
+MiniMQTT.prototype.close=function(){
+  clearInterval(this.pingT);
+  try{ if(this.ws&&this.ws.readyState===1){ this.ws.send(new Uint8Array([0xE0,0])); this.ws.close(); } }catch(e){}
+  this.connected=false;
+};
+
+global.MiniMQTT=MiniMQTT;
+if(typeof module!=='undefined'&&module.exports) module.exports=MiniMQTT;
+})(typeof window!=='undefined'?window:global);
+
+
+/* ======== 10_core.js ======== */
+/* ================= 棋大师 · 核心引擎 ================= */
+(function(){
+'use strict';
+const QM = window.QM = window.QM || {};
+
+/* ---------- 分类定义 ---------- */
+QM.cats = [
+  {id:'reach', name:'到达类', icon:'🏁', desc:'棋子抢先抵达终点者胜', games:[]},
+  {id:'area',  name:'占地类', icon:'⛩️', desc:'围占更多地域者胜',     games:[]},
+  {id:'shape', name:'成型类', icon:'🧩', desc:'连成特定棋型者胜',     games:[]},
+  {id:'kill',  name:'灭子类', icon:'⚔️', desc:'歼灭对方关键棋子者胜', games:[]},
+  {id:'take',  name:'取子类', icon:'🖐️', desc:'抓取夺取更多棋子者胜', games:[]},
+  {id:'fight', name:'争子类', icon:'🚩', desc:'争夺棋子与阵地者胜',   games:[]},
+  {id:'score', name:'得分类', icon:'🎯', desc:'累积更多子数或分数者胜',games:[]}
+];
+QM.games = {};
+QM.reg = function(g){
+  QM.games[g.id] = g;
+  const c = QM.cats.find(c=>c.id===g.cat);
+  if(c) c.games.push(g);
+  return g;
+};
+
+/* ---------- 模式 ---------- */
+QM.modes = [
+  {id:'pve', name:'人机对弈', desc:'你执一方，其余交给 AI'},
+  {id:'pvp', name:'联机对弈', desc:'生成邀请码，多台设备同房间对局'},
+  {id:'hot', name:'同设备轮流', desc:'一台设备上传着轮流下'},
+  {id:'solo',name:'一人多弈', desc:'你执掌全部阵营，可随时要提示'},
+  {id:'eva', name:'机机对弈', desc:'AI 对 AI 自动演示，旁观学习'}
+];
+QM.levels = [
+  {id:1,name:'初级',desc:'反应快，偶有漏算'},
+  {id:2,name:'中级',desc:'算得清，会防守'},
+  {id:3,name:'高级',desc:'算得深，别轻敌'}
+];
+
+/* ---------- 通用工具 ---------- */
+const U = QM.util = {
+  clone:o=>JSON.parse(JSON.stringify(o)),
+  ri:n=>Math.floor(Math.random()*n),
+  pick:a=>a[U.ri(a.length)],
+  shuffle(a){for(let i=a.length-1;i>0;i--){const j=U.ri(i+1);const t=a[i];a[i]=a[j];a[j]=t;}return a;},
+  clamp:(v,a,b)=>v<a?a:(v>b?b:v),
+  now:()=>performance.now(),
+  sum:(a,f)=>a.reduce((s,x)=>s+(f?f(x):x),0)
+};
+
+/* ---------- 绘图工具 ---------- */
+const G = QM.gfx = {
+  rr(ctx,x,y,w,h,r){
+    r=Math.min(r,w/2,h/2);
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);
+    ctx.arcTo(x+w,y,x+w,y+h,r);
+    ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r);
+    ctx.arcTo(x,y,x+w,y,r);
+    ctx.closePath();
+  },
+  disc(ctx,x,y,r,fill,stroke,lw){
+    ctx.beginPath();ctx.arc(x,y,r,0,6.2832);
+    if(fill){ctx.fillStyle=fill;ctx.fill();}
+    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw||1.5;ctx.stroke();}
+  },
+  stone(ctx,x,y,r,o){
+    o=o||{};
+    if(o.shadow){ctx.save();ctx.shadowColor='rgba(0,0,0,.45)';ctx.shadowBlur=r*.5;ctx.shadowOffsetY=r*.18;}
+    const gd=ctx.createRadialGradient(x-r*.35,y-r*.42,r*.12,x,y,r*1.05);
+    gd.addColorStop(0,o.hi||'#fff');gd.addColorStop(.42,o.fill||'#ddd');gd.addColorStop(1,o.lo||'#666');
+    ctx.beginPath();ctx.arc(x,y,r,0,6.2832);ctx.fillStyle=gd;ctx.fill();
+    if(o.shadow)ctx.restore();
+    if(o.ring){ctx.strokeStyle=o.ring;ctx.lineWidth=Math.max(1,r*.12);ctx.stroke();}
+    if(o.text){
+      ctx.fillStyle=o.color||'#fff';
+      ctx.font='700 '+(o.fs||r*1.02)+'px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(o.text,x,y+r*.04);
+    }
+  },
+  txt(ctx,t,x,y,size,color,align,weight){
+    ctx.fillStyle=color||'#fff';
+    ctx.font=(weight||'600')+' '+size+'px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+    ctx.textAlign=align||'center';ctx.textBaseline='middle';
+    ctx.fillText(t,x,y);
+  },
+  hexPath(ctx,x,y,r){
+    ctx.beginPath();
+    for(let i=0;i<6;i++){const a=Math.PI/180*(60*i-30);const px=x+r*Math.cos(a),py=y+r*Math.sin(a);i?ctx.lineTo(px,py):ctx.moveTo(px,py);}
+    ctx.closePath();
+  },
+  line(ctx,x1,y1,x2,y2,color,w){
+    ctx.strokeStyle=color;ctx.lineWidth=w||1;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+  }
+};
+
+/* ---------- 引擎 ---------- */
+const E = QM.engine = {
+  game:null, s:null, cfg:null, view:null,
+  raf:0, aiT:0, dirty:true, cw:300, ch:300, cv:null, ctx:null, hist:[], busy:false,
+
+  start(game,cfg){
+    this.stop();
+    this.game=game; this.cfg=cfg;
+    this.s=game.newState(cfg);
+    this.view={hover:null,anim:null,hint:null,sel:null,t:0};
+    this.hist=[]; this.busy=false;
+    UI.showPlay();
+    this.mount();
+    this.resize();
+    this.schedAI();
+    this.loop();
+  },
+  /* 只建立对局状态、不切换页面：供房主在等待他人加入时预先准备局面 */
+  prepare(game,cfg){
+    this.game=game; this.cfg=cfg;
+    this.s=game.newState(cfg);
+    this.view={hover:null,anim:null,hint:null,sel:null,t:0};
+    this.hist=[]; this.busy=false; this._finished=false;
+  },
+  stop(){ if(this.raf)cancelAnimationFrame(this.raf),this.raf=0; if(this.aiT)clearTimeout(this.aiT),this.aiT=0; },
+  mount(){
+    this.cv=document.getElementById('board');
+    this.ctx=this.cv.getContext('2d');
+    if(!this._bound){
+      this._bound=1;
+      const pos=e=>{
+        const r=this.cv.getBoundingClientRect();
+        const p=(e.touches&&e.touches[0])||e;
+        return {x:p.clientX-r.left,y:p.clientY-r.top};
+      };
+      this.cv.addEventListener('click',e=>{ const q=pos(e); this.tap(q.x,q.y); });
+      this.cv.addEventListener('mousemove',e=>{
+        const q=pos(e);
+        const g=this.game;
+        if(g.hover){ const h=g.hover(this.s,this.layout(),q.x,q.y); if(h!==this.view.hover){this.view.hover=h;this.dirty=true;} }
+      });
+      this.cv.addEventListener('mouseleave',()=>{this.view.hover=null;this.dirty=true;});
+      window.addEventListener('resize',()=>this.resize());
+    }
+  },
+  resize(){
+    const wrap=document.getElementById('boardWrap');
+    if(!wrap||!this.cv)return;
+    let w=wrap.clientWidth, h=wrap.clientHeight;
+    if(h<80) h=w;
+    const dpr=Math.min(window.devicePixelRatio||1,2.5);
+    this.cv.width=Math.round(w*dpr); this.cv.height=Math.round(h*dpr);
+    this.cv.style.width=w+'px'; this.cv.style.height=h+'px';
+    this.ctx.setTransform(dpr,0,0,dpr,0,0);
+    this.cw=w; this.ch=h; this.dirty=true;
+  },
+  layout(){ return this.game.layout(this.cw,this.ch,this.s); },
+  loop(){
+    const step=()=>{
+      const hasAnim=this.view&&this.view.anim;
+      if(this.dirty||hasAnim){
+        this.dirty=false;
+        const ctx=this.ctx;
+        ctx.clearRect(0,0,this.cw,this.ch);
+        try{
+          this.game.draw(ctx,this.s,this.layout(),this.view);
+          if(this.view.hint) this.game.drawHint&&this.game.drawHint(ctx,this.s,this.layout(),this.view.hint);
+        }catch(err){ console.error(err); }
+      }
+      if(hasAnim && U.now()-this.view.anim.t0>this.view.anim.dur){ this.view.anim=null; this.dirty=true; }
+      this.raf=requestAnimationFrame(step);
+    };
+    if(!this.raf) this.raf=requestAnimationFrame(step);
+  },
+  tap(x,y){
+    const g=this.game;
+    if(!g||this.busy||this.view.anim)return;
+    if(this.s.over)return;
+    if(!this.canAct()){
+      UI.toast(this.cfg.online ? '还没轮到你的阵营' : '这一方由 AI 执子');
+      return;
+    }
+    let mv=null;
+    try{ mv=g.hit(this.s,x,y,this.layout()); }catch(err){ console.error(err); }
+    if(mv==='again'){ this.dirty=true; this.schedAI(); return; }
+    if(mv===null||mv===undefined){ if(g.onTapMiss) g.onTapMiss(this.s); this.dirty=true; return; }
+    this.play(mv);
+  },
+  /* 当前是否轮到本地玩家操作 */
+  canAct(){
+    if(!this.s||this.s.over)return false;
+    if(this.cfg.online) return QM.net.seat===this.s.turn;
+    return this.cfg.seats[this.s.turn]==='human';
+  },
+  /* 该座位是否由本机/本地 AI 执子 */
+  localSeat(t){
+    if(this.cfg.online) return QM.net.isHost && QM.net.aiSeat(t);
+    return this.cfg.seats[t]==='ai';
+  },
+  play(mv){
+    const g=this.game;
+    // 联机：非房主把着法提交给房主，由房主裁决后再广播回来
+    if(this.cfg.online && !QM.net.isHost){
+      if(QM.net.seat!==this.s.turn){ UI.toast('还没轮到你的阵营'); return; }
+      if(QM.net.send('move',mv)){ this.view.sel=null; this.dirty=true; UI.toast('已发送，等待同步…'); }
+      else UI.toast('网络未连接，着法未送出');
+      return;
+    }
+    this.hist.push(U.clone(this.s));
+    if(this.hist.length>80)this.hist.shift();
+    let fx=null;
+    try{ fx=g.apply(this.s,mv); }catch(err){ console.error(err); this.hist.pop(); return; }
+    this.view.hint=null; this.view.sel=null;
+    this.after(fx);
+  },
+  after(fx){
+    const g=this.game;
+    if(fx&&fx.anim){ this.view.anim={a:fx.anim,t0:U.now(),dur:fx.dur||380}; this.aiDelay=(fx.dur||380)+140; }
+    if(g.checkOver) g.checkOver(this.s);
+    this.dirty=true;
+    UI.syncStatus();
+    if(this.cfg.online&&QM.net.isHost) QM.net._push();   // 房主向全房间广播新局面
+    if(this.s.over){ this.finish(); return; }
+    this.schedAI();
+  },
+  /* 房主执行远端提交的着法，随后自动广播 */
+  commitRemote(mv,depth){
+    depth=depth||0;
+    if(!this.s||this.s.over)return;
+    // 等本机动画播完再落子；最多等约 2.4 秒，避免动画被节流时着法一直挂起
+    if(this.view.anim&&depth<12){ setTimeout(()=>this.commitRemote(mv,depth+1),200); return; }
+    if(QM.net.seat===this.s.turn)return;                 // 该座由房主本人操作，忽略
+    if(QM.net.seats[this.s.turn]===null)return;           // 空座由 AI 代打，不收远端着法
+    this.hist.push(U.clone(this.s));
+    if(this.hist.length>80)this.hist.shift();
+    let fx=null;
+    try{ fx=this.game.apply(this.s,mv); }
+    catch(err){ console.error(err); this.hist.pop(); QM.net._push(); return; }
+    this.view.hint=null; this.view.sel=null;
+    this.after(fx);
+  },
+  /* 远端玩家：直接套用房主广播过来的局面 */
+  applyRemote(state){
+    if(!state)return;
+    this.s=state;
+    if(!this.view) this.view={hover:null,anim:null,hint:null,sel:null,t:0};
+    this.view.hint=null; this.view.sel=null; this.view.anim=null;
+    this.busy=false; this.dirty=true;
+    if(this.game) UI.syncStatus();
+    if(this.s.over&&this.game) this.finish();
+  },
+  schedAI(){
+    if(this.aiT)clearTimeout(this.aiT);
+    if(!this.s||this.s.over)return;
+    const t=this.s.turn;
+    if(!this.localSeat(t))return;
+    const isDemo=!this.cfg.online&&this.cfg.seats.every(x=>x==='ai');
+    const base=isDemo?240:340;
+    const d=Math.max(base,this.aiDelay||0);
+    this.aiDelay=0;
+    this.aiT=setTimeout(()=>this.aiGo(), d);
+  },
+  aiGo(){
+    this.aiT=0;
+    if(!this.s||this.s.over)return;
+    const t=this.s.turn;
+    if(!this.localSeat(t))return;
+    this.busy=true;
+    UI.syncStatus();
+    setTimeout(()=>{
+      let mv=null;
+      try{ mv=this.game.ai(this.s,t,this.cfg.level); }catch(err){ console.error(err); }
+      this.busy=false;
+      if(mv===null||mv===undefined){ mv=this.fallback(); }
+      if(mv){ this.play(mv); }
+      else{ this.dirty=true; UI.syncStatus(); }
+    },10);
+  },
+  fallback(){
+    const g=this.game;
+    if(!g.moves)return null;
+    const ms=g.moves(this.s,this.s.turn);
+    return ms.length?U.pick(ms):null;
+  },
+  undo(){
+    if(this.busy||this.view.anim)return;
+    if(this.cfg.online&&!QM.net.isHost){ UI.toast('联机对局中，只有房主可以悔棋'); return; }
+    if(!this.hist.length){ UI.toast('没有可悔的棋了'); return; }
+    // 回退到最近一个由人类操作的局面
+    let st=this.hist.pop();
+    while(this.hist.length && this.cfg.seats[st.turn]!=='human' && !st.over) st=this.hist.pop();
+    this.s=st; this.view.hint=null; this.view.sel=null; this.view.anim=null;
+    this.dirty=true; UI.syncStatus();
+    if(this.s.over){ this.s.over=false; this.s.winner=null; }
+    if(this.cfg.online) QM.net._push();
+  },
+  hint(){
+    if(this.busy||this.s.over)return;
+    UI.toast('正在思考…');
+    setTimeout(()=>{
+      let mv=null;
+      try{ mv=this.game.ai(this.s,this.s.turn,Math.max(2,this.cfg.level)); }catch(e){console.error(e);}
+      if(mv){ this.view.hint=mv; this.view.hintT=U.now(); this.dirty=true; UI.toast('已给出建议着法'); }
+      else UI.toast('没有可走的棋');
+    },30);
+  },
+  finish(){
+    const g=this.game, s=this.s;
+    const wtxt = g.resultText? g.resultText(s) : (s.winner==null?'和局':('胜方：'+g.seatName(s.winner)));
+    let title='平局', icon='🤝';
+    if(s.winner!==null&&s.winner!==undefined){
+      if(this.cfg.online){
+        const mine = QM.net.seat===s.winner;
+        title = mine?'你赢了':'对方获胜'; icon = mine?'🎉':'🫡';
+      } else if(this.cfg.seats[s.winner]==='ai'){ title='AI 获胜'; icon='🤖'; }
+      else { title='你赢了'; icon='🎉'; }
+    }
+    if(this._finished) return;
+    this._finished=true;
+    setTimeout(()=>{ this._finished=false; },1200);
+    // 战绩：仅统计有胜负意义的对局（演示与自弈不计）
+    try{
+      const A=QM.account;
+      if(A&&A.isLogin()&&this.cfg.mode!=='eva'&&this.cfg.mode!=='solo'&&s.winner!==null&&s.winner!==undefined){
+        const mine=this.cfg.online?QM.net.seat:0;
+        const mySide=this.cfg.online?(QM.net.seat===s.winner):(this.cfg.seats[s.winner]!=='ai');
+        A.record(mySide?'win':'lose');
+      }
+    }catch(e){}
+    UI.modal({
+      icon:icon, title:title, text:wtxt,
+      btns:[{t:'再来一局',p:1,f:()=>{UI.closeModal();E.restart();}},
+            {t:'换模式',f:()=>{UI.closeModal();QM.net.close();UI.openSetup(g.id);}}]
+    });
+  },
+  restart(){
+    if(this.cfg.online&&!QM.net.isHost){ UI.toast('联机对局中，只有房主可以重开'); return; }
+    if(this.game) this.start(this.game,this.cfg);
+    if(this.cfg.online&&QM.net.isHost) QM.net._push();
+  }
+};
+
+/* ---------- 界面 ---------- */
+const UI = QM.ui = {
+  el(id){return document.getElementById(id);},
+  show(id){ ['pageHome','pageSetup','pageRoom','pagePlay'].forEach(p=>{ const e=this.el(p); if(e)e.classList.toggle('hidden',p!==id); }); },
+  toast(msg){
+    const box=this.el('toast'); const d=document.createElement('div');
+    d.className='tt'; d.textContent=msg; box.appendChild(d);
+    setTimeout(()=>{d.style.transition='.3s';d.style.opacity=0;setTimeout(()=>d.remove(),320);},1250);
+  },
+  modal(o){
+    const root=this.el('modalRoot');
+    root.innerHTML=`<div class="mask"><div class="dlg"><div class="ic">${o.icon||'♟'}</div>
+      <h3>${o.title||''}</h3><p>${o.text||''}</p>${o.html||''}<div class="row"></div></div></div>`;
+    const row=root.querySelector('.row');
+    (o.btns||[{t:'知道了',p:1}]).forEach(b=>{
+      const btn=document.createElement('button');
+      btn.className='btn'+(b.p?' pri':''); btn.textContent=b.t;
+      btn.onclick=()=>{ b.f?b.f():this.closeModal(); };
+      row.appendChild(btn);
+    });
+  },
+  closeModal(){ this.el('modalRoot').innerHTML=''; },
+
+  /* 首页 */
+  buildHome(){
+    const box=this.el('catList');
+    box.innerHTML=QM.cats.map(c=>{
+      if(!c.games.length)return '';
+      return `<div class="cat"><div class="catHead"><div class="catIcon">${c.icon}</div>
+        <div><div class="catName">${c.name}</div><div class="catDesc">${c.desc}</div></div></div>
+        <div class="cards">${c.games.map(g=>`
+          <button class="card" data-g="${g.id}">
+            <div class="gi">${g.icon}</div>
+            <div class="gn">${g.name}</div>
+            <div class="gd">${g.desc}</div>
+            <div class="gm"><span class="tag on">${g.seats.length?g.seats.join('/')+' 人':'2 人'}</span>${(g.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+          </button>`).join('')}</div></div>`;
+    }).join('');
+    box.querySelectorAll('.card').forEach(b=>b.onclick=()=>this.openSetup(b.dataset.g));
+  },
+
+  /* 设置页 */
+  openSetup(gid){
+    const g=QM.games[gid];
+    const cfg=QM.lastCfg&&QM.lastCfg[gid] ? QM.lastCfg[gid] : {mode:'pve',level:2,players:g.seats[0],first:0};
+    const seatOpts = g.seats.map(n=>`<button class="opt ${cfg.players===n?'sel':''}" data-p="${n}"><b>${n} 人</b><span>${g.seatNote?g.seatNote[n]||'':''}</span></button>`).join('');
+    this.el('pageSetup').innerHTML=`
+      <div class="stitle">${g.icon} ${g.name}</div>
+      <p class="sdesc">${g.desc}</p>
+      <div class="grp"><label>对局模式</label><div class="opts" id="optMode">
+        ${QM.modes.map(m=>`<button class="opt ${cfg.mode===m.id?'sel':''}" data-m="${m.id}"><b>${m.name}</b><span>${m.desc}</span></button>`).join('')}
+      </div></div>
+      ${g.seats.length>1?`<div class="grp"><label>对局人数</label><div class="opts" id="optP">${seatOpts}</div></div>`:''}
+      <div class="grp"><label>AI 棋力</label><div class="opts" id="optLv">
+        ${QM.levels.map(l=>`<button class="opt ${cfg.level===l.id?'sel':''}" data-l="${l.id}"><b>${l.name}</b><span>${l.desc}</span></button>`).join('')}
+      </div></div>
+      <div class="grp"><label>规则要点</label><div class="ruleBox">${g.rules}</div></div>
+      <button class="big" id="btnStart">开 始 对 局</button>
+      <div style="display:flex;gap:10px;margin-top:10px">
+        <button class="btn" id="btnJoin" style="flex:1;padding:13px">🔑 用邀请码加入房间</button>
+      </div>`;
+    this.show('pageSetup');
+    const pick=(box,attr,key,cast)=>{
+      box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+        box.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+        b.classList.add('sel'); cfg[key]=cast?cast(b.dataset[attr]):b.dataset[attr];
+      });
+    };
+    const startBtn=this.el('btnStart');
+    const syncBtn=()=>{
+      startBtn.textContent = cfg.mode==='pvp' ? '📡 创建房间，生成邀请码' : '开 始 对 局';
+    };
+    pick(this.el('optMode'),'m','mode',null);
+    this.el('optMode').querySelectorAll('.opt').forEach(b=>b.onclick=(()=>{
+      const base=b.onclick;
+      return function(){ base(); syncBtn(); };
+    })());
+    syncBtn();
+    if(g.seats.length>1) pick(this.el('optP'),'p','players',Number);
+    pick(this.el('optLv'),'l','level',Number);
+    this.el('btnJoin').onclick=()=>this.openJoin(gid);
+    startBtn.onclick=()=>{
+      QM.lastCfg=QM.lastCfg||{}; QM.lastCfg[gid]=cfg;
+      const n=cfg.players;
+      if(cfg.mode==='pvp'){ this.openRoom(gid,{players:n,level:cfg.level}); return; }
+      const seats=[];
+      for(let i=0;i<n;i++){
+        if(cfg.mode==='pve') seats.push(i===0?'human':'ai');
+        else if(cfg.mode==='eva') seats.push('ai');
+        else seats.push('human');
+      }
+      E.start(g,{mode:cfg.mode,level:cfg.level,players:n,seats:seats,gameId:gid});
+    };
+  },
+
+  /* ---------- 联机：创建房间 ---------- */
+  openRoom(gid,cfg){
+    const g=QM.games[gid], self=this;
+    this._room={gid:gid,cfg:cfg};
+    this.show('pageRoom');
+    this.el('pageRoom').innerHTML=`
+      <div class="stitle">${g.icon} ${g.name} · 联机房</div>
+      <p class="sdesc">把下面的邀请码发给朋友，对方在首页或本页输入即可加入同一房间。</p>
+      <div class="netBar wait" id="netBar"><span class="led"></span><span id="netTxt">正在连接服务器…</span></div>
+      <div class="qrWrap">
+        <canvas id="roomQr" class="qrCv"></canvas>
+        <div class="qrSide">
+          <div class="lb">房 间 邀 请 码</div>
+          <div class="cv" id="roomCode">------</div>
+          <div class="hint">面对面时让对方直接扫码；<br>异地可复制链接发送</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin:10px 0 4px">
+        <button class="btn" id="btnCopy" style="flex:1;padding:12px">📋 复制邀请码</button>
+        <button class="btn" id="btnCopyLink" style="flex:1;padding:12px">🔗 复制邀请链接</button>
+      </div>
+      <div class="seats" id="seatList"></div>
+      <div class="netBar" style="margin:6px 0 14px"><span class="led" style="background:var(--acc)"></span>
+        <span id="fillTxt">未坐满的阵营由本机 AI 代打，可随时开始</span></div>
+      <button class="big" id="btnGo">开 始 对 局</button>
+      <button class="btn" id="btnCancel" style="width:100%;padding:13px;margin-top:10px">解散房间</button>`;
+
+    const setNet=(cls,txt)=>{ const b=this.el('netBar'); b.className='netBar '+cls; this.el('netTxt').textContent=txt; };
+
+    this.el('btnCancel').onclick=()=>{ QM.net.close(); this.openSetup(gid); };
+    this.el('btnGo').onclick=()=>{ this.roomStart(); };
+    this.el('btnCopy').onclick=()=>this.copy(QM.net.code,'邀请码已复制');
+    this.el('btnCopyLink').onclick=()=>{
+      const url=location.href.split('#')[0]+'#'+QM.net.code;
+      this.copy(url,'邀请链接已复制，发给朋友即可直接进房');
+    };
+
+    QM.net.create(gid,{players:cfg.players,level:cfg.level},'房主',function(type,data){
+      if(type==='created'){
+        self.el('roomCode').textContent=data.code;
+        setNet('ok','已连接 · 等待其他设备加入');
+        // 绘制邀请码二维码（链接型，对方扫码即可直达房间）
+        if(QM.qrui){
+          const cv=self.el('roomQr');
+          const r=QM.qrui.renderInvite(cv,data.code,{text:QM.qrui.inviteUrl(data.code)});
+          if(!r&&cv){ cv.width=cv.height=0; self.el('roomCode').style.marginTop='10px'; }
+        }
+        self.renderSeats(g);
+      } else if(type==='joined'||type==='left'||type==='roster'){
+        self.renderSeats(g);
+      } else if(type==='error'||type==='lost'){
+        setNet('err',data.msg||'连接中断');
+      }
+    });
+    this.renderSeats(g);
+  },
+  renderSeats(g){
+    const box=this.el('seatList'); if(!box)return;
+    const N=QM.net.seats||[];
+    const nm=QM.net.names||[];
+    let h='';
+    for(let i=0;i<N.length;i++){
+      const taken=!!N[i];
+      const me=(i===QM.net.seat);
+      h+=`<div class="seat ${me?'me':''} ${taken?'':'wait'}">
+        <div class="no">${i+1}</div>
+        <div class="nm">${taken?(nm[i]||('玩家'+(i+1))):'等待加入…'}${me?'（我）':''}</div>
+        <div class="st">${me?'本机':(taken?'已连接':'空位 · AI 代打')}</div>
+      </div>`;
+    }
+    box.innerHTML=h;
+  },
+  copy(text,okMsg){
+    const done=()=>this.toast(okMsg||'已复制');
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done,()=>this.fallbackCopy(text,done));
+    } else this.fallbackCopy(text,done);
+  },
+  fallbackCopy(text,done){
+    try{
+      const ta=document.createElement('textarea');
+      ta.value=text; ta.style.position='fixed'; ta.style.opacity=0;
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); done();
+    }catch(e){ this.toast('复制失败，请手动记录：'+text); }
+  },
+  /* 房主点开始 —— 进入对局，并让所有已加入设备同步开局 */
+  roomStart(){
+    const r=this._room; if(!r)return;
+    const g=QM.games[r.gid], n=r.cfg.players;
+    const seats=new Array(n).fill('human');
+    E.start(g,{mode:'pvp',level:r.cfg.level,players:n,seats:seats,gameId:r.gid,online:true});
+    clearInterval(QM.net.pingT);
+    setTimeout(()=>QM.net._push(),400);
+    this.toast('已开局，局面将自动同步给所有设备');
+  },
+
+  /* ---------- 账号 ---------- */
+  syncAcct(){
+    const b=this.el('btnAcct'); if(!b)return;
+    const c=QM.account.current;
+    if(c){ b.querySelector('.av').textContent=QM.account.avatarOf(c.id); b.querySelector('.nm').textContent=c.nick; }
+    else { b.querySelector('.av').textContent='👤'; b.querySelector('.nm').textContent='未登录'; }
+  },
+  openAcct(){
+    const self=this, A=QM.account;
+    const c=A.current;
+    // 已登录 → 展示账号主页（战绩 + 切换/退出）
+    if(c){
+      const u=A.get(c.id)||{};
+      const st=A.stat()||{play:0,win:0,lose:0,draw:0};
+      const rate=st.play?Math.round(st.win/st.play*100):0;
+      const others=A.list().filter(x=>x.id!==c.id);
+      this.modal({
+        icon:A.avatarOf(c.id), title:c.nick,
+        text:'',
+        html:`<div class="acctCard">
+            <div class="big">${A.avatarOf(c.id)}</div>
+            <div class="who"><b>${this.esc(c.nick)}</b><span>${this.esc(A.mask(c.id))}</span></div>
+          </div>
+          <div class="statGrid">
+            <div><b>${st.play}</b><span>总对局</span></div>
+            <div><b>${st.win}</b><span>胜</span></div>
+            <div><b>${st.lose}</b><span>负</span></div>
+            <div><b>${rate}%</b><span>胜率</span></div>
+          </div>
+          ${others.length?`<div style="font-size:12.5px;color:var(--dim);margin:2px 0 8px">切换账号</div>
+            ${others.map(x=>`<div class="userItem" data-u="${this.esc(x.id)}">
+              <div class="av">${A.avatarOf(x.id)}</div>
+              <div class="who"><b>${this.esc(x.nick)}</b><span>${this.esc(A.mask(x.id))}</span></div>
+            </div>`).join('')}`:''}`,
+        btns:[
+          {t:'切换/注册',f:()=>{ A.logout(); this.syncAcct(); this.openAcctForm('login'); }},
+          {t:'退出登录',f:()=>{ A.logout(); this.syncAcct(); this.toast('已退出登录'); }},
+          {t:'关闭',p:1,f:()=>{}}
+        ]
+      });
+      // 切换账号列表点击
+      const root=this.el('modalRoot');
+      root.querySelectorAll('.userItem').forEach(el=>{
+        el.onclick=()=>{
+          const id=el.dataset.u;
+          this.modal({
+            icon:'🔑',title:'切换账号',
+            html:`<div class="acctCard"><div class="big">${A.avatarOf(id)}</div>
+                <div class="who"><b>${this.esc((A.get(id)||{}).nick||'')}</b><span>${this.esc(A.mask(id))}</span></div></div>
+              <div class="formRow"><input type="password" id="swPw" placeholder="输入该账号密码" autocomplete="current-password"></div>
+              <div class="formRow err" id="swErr"></div>`,
+            btns:[{t:'登录',p:1,f:()=>{
+                const pw=this.el('swPw').value;
+                A.login(id,pw,r=>{
+                  if(r.ok){ this.closeModal(); this.syncAcct(); this.toast('已切换到 '+r.user.nick); this.openAcct(); }
+                  else { this.el('swErr').textContent=r.msg; }
+                });
+                return 'keep';
+              }},
+              {t:'删除此账号',f:()=>{ A.remove(id); this.syncAcct(); this.closeModal(); this.toast('账号已删除'); }},
+              {t:'取消',f:()=>{}}]
+          });
+        };
+      });
+      return;
+    }
+    this.openAcctForm('login');
+  },
+  openAcctForm(tab){
+    const self=this, A=QM.account;
+    const saved=A.list();
+    this.modal({
+      icon:'👤',title:'登录 / 注册',
+      html:`<div class="tabs">
+          <button id="tbLogin" class="${tab==='login'?'sel':''}">登录</button>
+          <button id="tbReg" class="${tab==='reg'?'sel':''}">注册</button>
+        </div>
+        <div class="formRow"><input id="acId" placeholder="手机号或邮箱" autocomplete="username" inputmode="email"></div>
+        <div class="formRow"><input id="acPw" type="password" placeholder="密码（至少 6 位）" autocomplete="current-password"></div>
+        <div class="formRow" id="rowNick" style="display:${tab==='reg'?'block':'none'}">
+          <input id="acNick" placeholder="昵称（可留空）" maxlength="12"></div>
+        <div class="formRow err" id="acErr"></div>
+        ${saved.length?`<div style="font-size:12.5px;color:var(--dim);margin:10px 0 8px">本机已存账号</div>
+          ${saved.map(x=>`<div class="userItem" data-s="${this.esc(x.id)}">
+            <div class="av">${A.avatarOf(x.id)}</div>
+            <div class="who"><b>${this.esc(x.nick)}</b><span>${this.esc(A.mask(x.id))}</span></div>
+          </div>`).join('')}`:''}
+        <div class="formRow tip" style="margin-top:12px">
+          账号与战绩保存在<b>本设备浏览器</b>中，不会上传服务器；换设备或清理浏览器数据后需重新注册。
+        </div>`,
+      btns:[{t:'确定',p:1,f:()=>{ self.acctSubmit(self._acctTab||tab); return 'keep'; }},
+            {t:'稍后',f:()=>{}}]
+    });
+    this._acctTab=tab;
+    const tbL=this.el('tbLogin'), tbR=this.el('tbReg');
+    const setTab=t=>{
+      this._acctTab=t;
+      tbL.className=t==='login'?'sel':'';
+      tbR.className=t==='reg'?'sel':'';
+      this.el('rowNick').style.display=t==='reg'?'block':'none';
+      this.el('acErr').textContent='';
+    };
+    tbL.onclick=()=>setTab('login');
+    tbR.onclick=()=>setTab('reg');
+    // 点击已存账号：填入账号名
+    this.el('modalRoot').querySelectorAll('.userItem').forEach(el=>{
+      el.onclick=()=>{ this.el('acId').value=el.dataset.s; this.el('acPw').focus(); };
+    });
+    setTimeout(()=>{ const i=this.el('acId'); i&&i.focus(); },80);
+  },
+  acctSubmit(tab){
+    const A=QM.account;
+    const id=this.el('acId').value.trim();
+    const pw=this.el('acPw').value;
+    const nick=(this.el('acNick')&&this.el('acNick').value||'').trim();
+    const errBox=this.el('acErr');
+    errBox.textContent='';
+    if(!id) { errBox.textContent='请输入手机号或邮箱'; return; }
+    if(!pw) { errBox.textContent='请输入密码'; return; }
+    const btn=this.el('modalRoot').querySelector('.btn.pri');
+    if(btn){ btn.disabled=true; btn.textContent='处理中…'; }
+    const self=this;
+    const finish=r=>{
+      if(btn){ btn.disabled=false; btn.textContent='确定'; }
+      if(r.ok){ self.closeModal(); self.syncAcct(); self.toast(tab==='reg'?'注册成功，已登录':'欢迎回来，'+r.user.nick); }
+      else errBox.textContent=r.msg;
+    };
+    if(tab==='reg') A.register(id,pw,nick,finish);
+    else A.login(id,pw,finish);
+  },
+  esc(s){
+    return String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  },
+
+  /* ---------- 联机：扫一扫 ---------- */
+  openScan(gid){
+    const self=this;
+    this.show('pageRoom');
+    this.el('pageRoom').innerHTML=`
+      <div class="stitle">📷 扫一扫加入</div>
+      <p class="sdesc">对准房主屏幕上的二维码，识别成功后会自动加入房间。</p>
+      <div class="netBar" id="netBar"><span class="led"></span><span id="netTxt">准备启动相机…</span></div>
+      <div class="scanBox">
+        <video id="scanVid" playsinline muted></video>
+        <div class="scanFrame"><i></i><i></i><i></i><i></i></div>
+      </div>
+      <p class="sdesc" style="margin-top:12px;text-align:center">
+        识别不到？把手机拿远一点、让二维码完整落在框内，或改用手动输入。</p>
+      <button class="btn" id="btnScanBack" style="width:100%;padding:13px;margin-top:6px">返回手动输入</button>`;
+    const setNet=(cls,txt)=>{ const b=self.el('netBar'); if(b){b.className='netBar '+cls; self.el('netTxt').textContent=txt;} };
+    const back=()=>{ QM.qrui&&QM.qrui.stopScan(); gid?self.openJoin(gid):self.openJoin(null); };
+    this.el('btnScanBack').onclick=back;
+    if(!QM.qrui){ setNet('err','二维码模块未加载，请手动输入'); return; }
+    const video=this.el('scanVid');
+    // 用一个隐藏 canvas 承载取帧，直接复用 video 的显示容器
+    const cv=document.createElement('canvas');
+    QM.qrui.startScan(cv,video,function(code){
+      setNet('ok','已识别邀请码 '+code+'，正在加入…');
+      self.toast('识别成功：'+code);
+      setTimeout(function(){
+        gid?self.openJoin(gid):self.openJoin(null);
+        const inp=self.el('inCode');
+        if(inp){ inp.value=code; setTimeout(function(){ const b=self.el('btnJoinGo'); b&&b.click(); },120); }
+      },260);
+    },setNet);
+  },
+
+  /* ---------- 联机：加入房间 ---------- */
+  openJoin(gid){
+    const self=this;
+    this.show('pageRoom');
+    this.el('pageRoom').innerHTML=`
+      <div class="stitle">🔑 加入房间</div>
+      <p class="sdesc">输入房主给你的 6 位邀请码，即可在多台设备上同场对弈。</p>
+      <div class="netBar" id="netBar"><span class="led"></span><span id="netTxt">等待输入邀请码</span></div>
+      <div class="grp"><label>邀请码</label>
+        <input class="codeIn" id="inCode" maxlength="6" placeholder="______" autocomplete="off" autocapitalize="characters" spellcheck="false">
+        <button class="btn" id="btnScan" style="width:100%;padding:13px;margin-top:10px">📷 扫一扫二维码加入</button>
+      </div>
+      <input class="nameIn" id="inName" maxlength="10" placeholder="你的昵称（可留空）">
+      <button class="big" id="btnJoinGo" style="margin-top:16px">加 入 房 间</button>
+      <button class="btn" id="btnJoinBack" style="width:100%;padding:13px;margin-top:10px">返回</button>`;
+    const inp=this.el('inCode');
+    inp.oninput=()=>{ inp.value=inp.value.toUpperCase().replace(/[^A-Z2-9]/g,''); };
+    const go=()=>{
+      const code=inp.value.trim();
+      if(code.length!==6){ this.toast('请输入 6 位邀请码'); inp.focus(); return; }
+      const name=(this.el('inName').value||'').trim()||('玩家'+code.slice(0,2));
+      const setNet=(cls,txt)=>{ const b=self.el('netBar'); if(b){b.className='netBar '+cls; self.el('netTxt').textContent=txt;} };
+      setNet('wait','正在连接房间 '+code+'…');
+      self.el('btnJoinGo').disabled=true;
+      QM.net.join(code,name,function(type,data){
+        if(type==='joined'){
+          if(data.gid===undefined||data.gid===null)return;
+          setNet('ok','已加入 · 等待房主开始');
+          const g=QM.games[data.gid];
+          if(g){
+            const n=(data.cfg&&data.cfg.players)||2;
+            self._room={gid:data.gid,cfg:data.cfg};
+            E.start(g,{mode:'pvp',level:(data.cfg&&data.cfg.level)||2,players:n,
+              seats:new Array(n).fill('human'),gameId:data.gid,online:true});
+            if(data.state) E.applyRemote(data.state);
+          }
+        } else if(type==='state'){
+          E.applyRemote(data.state);
+        } else if(type==='roster'){
+          self.toast('房间成员已更新');
+        } else if(type==='error'){
+          setNet('err',data.msg||'连接失败');
+          self.el('btnJoinGo').disabled=false;
+        } else if(type==='lost'){
+          setNet('err','与房间的连接已断开');
+        }
+      });
+    };
+    this.el('btnJoinGo').onclick=go;
+    this.el('btnScan').onclick=()=>this.openScan(gid);
+    inp.onkeydown=e=>{ if(e.key==='Enter')go(); };
+    this.el('btnJoinBack').onclick=()=>{ QM.net.close(); gid?this.openSetup(gid):this.show('pageHome'); };
+    setTimeout(()=>inp.focus(),80);
+  },
+
+  /* 对局页 */
+  showPlay(){
+    this.show('pagePlay');
+    const g=E.game;
+    this.el('pTitle').textContent=g.icon+' '+g.name;
+    this.el('pMode').textContent = E.cfg.online
+      ? ('联机 · '+(QM.net.isHost?'房主 · '+g.seatName(QM.net.seat):'你的阵营：'+g.seatName(QM.net.seat)))
+      : ((QM.modes.find(m=>m.id===E.cfg.mode)||{}).name);
+    this.el('pRules').textContent=g.rules;
+    this.buildCtrls();
+    this.syncStatus();
+  },
+  buildCtrls(){
+    const g=E.game, box=this.el('ctrls');
+    const mk=(t,f,pri,id)=>{
+      const b=document.createElement('button');
+      b.className='btn'+(pri?' pri':''); b.textContent=t; if(id)b.id=id; b.onclick=f; box.appendChild(b); return b;
+    };
+    box.innerHTML='';
+    const online=!!E.cfg.online;
+    (g.actions||[]).forEach(a=>mk(a.t,()=>{ const r=a.f(E.s,E.view,E); if(r==='refresh')E.dirty=true; if(r!=='keep'){E.dirty=true;UI.syncStatus();if(r==='moved')E.after(null);} },a.pri,a.id));
+    if(online){
+      const host=QM.net.isHost;
+      mk('🔗 邀请码 '+QM.net.code,()=>{
+        UI.modal({icon:'🔑',title:'房间邀请码',
+          text:'把邀请码发给朋友，对方选「用邀请码加入房间」输入即可同场对弈。\n\n你当前执：'+g.seatName(QM.net.seat),
+          btns:[{t:'复制邀请码',p:1,f:()=>UI.copy(QM.net.code,'邀请码已复制')},
+                {t:'复制链接',f:()=>UI.copy(location.href.split('#')[0]+'#'+QM.net.code,'邀请链接已复制')}]});
+      },true);
+      if(host){ mk('悔棋',()=>E.undo()); mk('重开',()=>E.restart()); }
+      mk('离开房间',()=>{
+        UI.modal({icon:'🚪',title:'离开房间？',text:host?'你是房主，离开后房间将解散，其他人也会断开。':'离开后将退出本局。',
+          btns:[{t:'离开',f:()=>{QM.net.close();E.stop();UI.show('pageHome');}},{t:'继续对局',p:1}]});
+      });
+      return;
+    }
+    mk('提示',()=>E.hint());
+    mk('悔棋',()=>E.undo());
+    mk('重开',()=>E.restart());
+    if(E.cfg.mode==='pve'||E.cfg.mode==='eva'){
+      mk(E.cfg.mode==='eva'?'暂停演示':'交给 AI',()=>{
+        if(E.cfg.mode==='eva'){ E.cfg.mode='pve'; E.cfg.seats=E.cfg.seats.map((x,i)=>i===0?'human':'ai'); }
+        else{ E.cfg.mode='eva'; E.cfg.seats=E.cfg.seats.map(()=>'ai'); }
+        this.el('pMode').textContent=(QM.modes.find(m=>m.id===E.cfg.mode)||{}).name;
+        this.buildCtrls(); this.syncStatus(); E.schedAI();
+      });
+    }
+  },
+  syncStatus(){
+    if(!E.s)return;
+    const g=E.game, t=E.s.turn;
+    const nm=g.seatName(t);
+    const col=g.seatColor?g.seatColor(t):'#888';
+    this.el('sDot').style.background=col;
+    let who;
+    if(E.cfg.online){
+      const mine=QM.net.seat===t;
+      const occupied = QM.net.seats && QM.net.seats[t]!==null && QM.net.seats[t]!==undefined;
+      who = mine ? `你（${nm}）` : (occupied ? `对方（${nm}）` : `${nm}（AI 代打）`);
+    }
+    else who = E.cfg.seats[t]==='ai'?`AI（${nm}）`:nm;
+    this.el('sTurn').innerHTML=`<b>${who}</b> 行棋`;
+    this.el('sMsg').textContent=(g.status?g.status(E.s):'')||'';
+  }
+};
+
+/* ---------- 启动 ---------- */
+window.addEventListener('DOMContentLoaded',()=>{
+  UI.buildHome();
+  UI.el('btnHome').onclick=()=>{ E.stop(); UI.show('pageHome'); };
+  UI.el('btnBack').onclick=()=>{
+    if(E.cfg&&E.cfg.online){
+      UI.modal({icon:'🚪',title:'离开房间？',text:QM.net.isHost?'你是房主，离开后房间将解散。':'离开后将退出本局。',
+        btns:[{t:'离开',f:()=>{QM.net.close();E.stop();UI.show('pageHome');}},{t:'继续对局',p:1}]});
+      return;
+    }
+    E.stop(); UI.openSetup(E.game.id);
+  };
+  UI.el('btnHomeJoin').onclick=()=>UI.openJoin(null);
+  UI.el('btnHomeHost').onclick=()=>UI.openSetup(Object.keys(QM.games)[0]);
+  UI.el('btnAcct').onclick=()=>UI.openAcct();
+  UI.syncAcct();
+  // 支持邀请链接：xxx.html#ABC123 直接进入房间
+  const h=(location.hash||'').replace('#','').trim().toUpperCase();
+  if(/^[A-Z2-9]{6}$/.test(h)){
+    setTimeout(()=>{
+      UI.openJoin(null);
+      const inp=UI.el('inCode');
+      if(inp){ inp.value=h; UI.toast('已从邀请链接填入房间码 '+h); }
+    },300);
+  }
+});
+window.addEventListener('beforeunload',()=>{ try{ QM.net.close(); }catch(e){} });
+window.addEventListener('hashchange',()=>{
+  const h=(location.hash||'').replace('#','').trim().toUpperCase();
+  if(/^[A-Z2-9]{6}$/.test(h)&&document.getElementById('pageRoom').classList.contains('hidden')){
+    UI.openJoin(null);
+    const inp=UI.el('inCode'); if(inp)inp.value=h;
+  }
+});
+})();
+
+
+/* ======== 11_net.js ======== */
+/* ================= 联机房间层 · 邀请码 + 座位分配 + 状态同步 ================= */
+QM.net = (function(){
+'use strict';
+const BROKERS=[
+  'wss://broker.emqx.io:8084/mqtt',
+  'wss://broker-cn.emqx.io:8084/mqtt',
+  'wss://broker.hivemq.com:8884/mqtt',
+  'wss://test.mosquitto.org:8081/mqtt'
+];
+const CHARS='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // 去掉易混字符 I O 0 1
+function randCode(n){
+  let s=''; const a=new Uint32Array(n);
+  (self.crypto||window.crypto||{getRandomValues:x=>{for(let i=0;i<x.length;i++)x[i]=Math.random()*4294967296|0;}}).getRandomValues(a);
+  for(let i=0;i<n;i++) s+=CHARS[a[i]%CHARS.length];
+  return s;
+}
+
+const N={
+  conn:null, code:'', topic:'', pid:'', seat:-1, isHost:false,
+  gid:'', cfg:null, seats:[], names:[], on:null, bi:0, ready:false, players:0,
+  myName:'', lastSeen:{}, pingT:0, status:'idle', // idle|connecting|waiting|playing|error
+  hostPid:'', aiFill:true,
+
+  /* ---------- 事件回调 ---------- */
+  emit(t,d){ if(this.on) this.on(t,d||{}); },
+
+  /* ---------- 连接 broker（多地址自动回退） ---------- */
+  BROKERS:null,   // 可外部覆盖为自建服务器地址数组
+  _connect(cb){
+    const self=this;
+    const list=this.BROKERS&&this.BROKERS.length?this.BROKERS:BROKERS;
+    const tryOne=function(i){
+      if(i>=list.length){ self.status='error'; self.emit('error',{msg:'无法连接服务器，请检查网络，或改用「同设备轮流 / 棋局接力码」'}); return; }
+      self.bi=i;
+      let done=false;
+      const c=new MiniMQTT(list[i],{
+        clientId:self.pid, keepalive:40,
+        onopen:function(){
+          if(done)return; done=true;
+          self.conn=c; self.status='waiting';
+          c.subscribe(self.topic);
+          c.subscribe(self.topic+'/p/'+self.pid);
+          setTimeout(function(){ cb&&cb(); },260);
+        },
+        onerror:function(){ if(!done){ try{ c.close(); }catch(e){} tryOne(i+1); } },
+        onclose:function(){ if(self.conn===c&&self.status!=='idle'){ self.emit('lost',{}); } },
+        onmessage:function(t,p){ self._msg(t,p); }
+      });
+      try{ c.connect(); }catch(e){ tryOne(i+1); }
+      setTimeout(function(){ if(!done){ try{c.close();}catch(e){} tryOne(i+1); } },6000);
+    };
+    tryOne(0);
+  },
+
+  /* ---------- 创建房间 ---------- */
+  create(gid,cfg,name,on){
+    this.close();
+    this.pid='H'+randCode(8);
+    this.code=randCode(6);
+    this.topic='qmdzv1/'+this.code;
+    this.isHost=true; this.gid=gid; this.cfg=cfg; this.players=cfg.players;
+    this.myName=name||'房主'; this.on=on; this.status='connecting';
+    this.seats=new Array(cfg.players).fill(null);
+    this.names=new Array(cfg.players).fill('');
+    this.seats[0]=this.pid; this.names[0]=this.myName;
+    this.seat=0;
+    const self=this;
+    this.emit('status',{msg:'正在创建房间…'});
+    this._connect(function(){
+      self.ready=true;
+      // 预建初始局面：后加入的设备立刻能拿到完整棋盘，不必等房主点开始
+      const g=QM.games[gid];
+      if(g&&QM.engine) QM.engine.prepare(g,{mode:'pvp',level:cfg.level,players:cfg.players,
+        seats:new Array(cfg.players).fill('human'),gameId:gid,online:true});
+      self.emit('created',{code:self.code});
+      self._roster();
+      // 房主心跳：周期性广播名册，便于新设备发现
+      self.pingT=setInterval(function(){ self._roster(); },4000);
+    });
+    return this.code;
+  },
+
+  /* ---------- 加入房间 ---------- */
+  join(code,name,on){
+    this.close();
+    code=(code||'').trim().toUpperCase();
+    if(!/^[A-Z2-9]{6}$/.test(code)){ if(on)on('error',{msg:'邀请码应为 6 位字母数字'}); return false; }
+    this.pid='G'+randCode(8);
+    this.code=code; this.topic='qmdzv1/'+this.code;
+    this.isHost=false; this.on=on; this.status='connecting';
+    this.myName=name||'玩家';
+    this.emit('status',{msg:'正在连接房间 '+code+'…'});
+    const self=this;
+    this._connect(function(){
+      self.ready=true;
+      self.send('hello',{name:self.myName});
+      self._helloT=setInterval(function(){
+        if(self.seat<0) self.send('hello',{name:self.myName});
+      },2500);
+      setTimeout(function(){
+        if(self.seat<0){ clearInterval(self._helloT); self.emit('error',{msg:'房间无响应：邀请码可能有误，或房主已离开'}); }
+      },9000);
+    });
+    return true;
+  },
+
+  /* ---------- 发送 ---------- */
+  send(t,d,toPid){
+    if(!this.conn||!this.conn.connected)return false;
+    const topic=this.topic+(toPid?('/p/'+toPid):'');
+    return this.conn.publish(topic,JSON.stringify({f:this.pid,s:this.seat,t:t,d:d||null,ts:Date.now()}));
+  },
+
+  /* ---------- 收包 ---------- */
+  _msg(topic,payload){
+    let m; try{ m=JSON.parse(payload); }catch(e){ return; }
+    if(m.f===this.pid)return;                 // 忽略自己
+    const d=m.d||{}, self=this;
+
+    if(this.isHost){
+      if(m.t==='hello'){
+        // 分配座位
+        let idx=this.seats.indexOf(m.f);
+        if(idx<0){
+          for(let i=this.cfg.players-1;i>=1;i--){   // seat0 归房主
+            if(!this.seats[i]){ idx=i; break; }
+          }
+        }
+        if(idx<0){ this.send('full',{},m.f); return; }
+        this.seats[idx]=m.f; this.names[idx]=d.name||('玩家'+(idx+1));
+        this.send('assign',{seat:idx,gid:this.gid,cfg:this.cfg,names:this.names,
+          state:QM.engine.s, over:QM.engine.s?QM.engine.s.over:false},m.f);
+        this._roster();
+        this.emit('joined',{seat:idx,name:this.names[idx]});
+      }
+      else if(m.t==='move'){
+        if(m.s<0||m.s!==(QM.engine.s?QM.engine.s.turn:-1))return;   // 不是该座位的行棋权
+        if(this.seats[m.s]!==m.f)return;                            // 座位与设备不匹配
+        QM.engine.commitRemote(m.d);
+      }
+      else if(m.t==='bye'){
+        const i=this.seats.indexOf(m.f);
+        if(i>0){ this.seats[i]=null; this.names[i]=''; this.emit('left',{seat:i}); this._roster(); }
+      }
+      else if(m.t==='sync'){ this._push(); }
+    } else {
+      if(m.t==='assign'){
+        clearInterval(this._helloT);
+        this.seat=d.seat; this.gid=d.gid; this.cfg=d.cfg; this.names=d.names;
+        this.hostPid=m.f; this.status='playing';
+        this.emit('joined',{seat:d.seat,gid:d.gid,cfg:d.cfg,state:d.state});
+      }
+      else if(m.t==='state'){
+        this.hostPid=m.f;
+        if(this.seat<0)return;
+        this.emit('state',{state:d.state,turn:d.turn});
+      }
+      else if(m.t==='roster'){ this.seats=d.seats; this.names=d.names; this.emit('roster',{seats:d.seats,names:d.names}); }
+      else if(m.t==='full'){ clearInterval(this._helloT); this.emit('error',{msg:'房间座位已满'}); }
+      else if(m.t==='bye'){
+        if(m.f===this.hostPid) this.emit('error',{msg:'房主已解散房间'});
+      }
+      else if(m.t==='sync'){ /* guest 不响应 */ }
+    }
+  },
+
+  /* ---------- 主机：广播名册 / 局面 ---------- */
+  _roster(){
+    if(!this.isHost)return;
+    this.send('roster',{seats:this.seats,names:this.names});
+    this.emit('roster',{seats:this.seats,names:this.names});
+  },
+  _push(){
+    if(!this.isHost||!QM.engine.s)return;
+    this.send('state',{state:QM.engine.s,turn:QM.engine.s.turn});
+  },
+  /* AI 补位：某座位无人时由主机本地代打 */
+  aiSeat(seat){ return this.isHost && this.seats[seat]===null; },
+
+  /* ---------- 关闭 ---------- */
+  close(){
+    try{ if(this.pingT)clearInterval(this.pingT); }catch(e){}
+    try{ if(this._helloT)clearInterval(this._helloT); }catch(e){}
+    this.pingT=0; this._helloT=0;
+    if(this.conn){ try{ if(this.isHost&&this.seat>=0) this.send('bye',{}); }catch(e){} try{ this.conn.close(); }catch(e){} }
+    this.conn=null; this.ready=false; this.seat=-1; this.status='idle'; this.isHost=false;
+  }
+};
+return N;
+})();
+
+
+/* ======== 12_qr.js ======== */
+/* ================= 二维码 · 零依赖编码器 + 解码器 ================= */
+(function(){
+'use strict';
+const QM = window.QM = window.QM || {};
+
+/* ---------------- GF(256) 伽罗华域 ---------------- */
+const EXP=new Uint8Array(512), LOG=new Uint8Array(256);
+(function(){
+  let x=1;
+  for(let i=0;i<255;i++){ EXP[i]=x; LOG[x]=i; x<<=1; if(x&0x100)x^=0x11d; }
+  for(let i=255;i<512;i++) EXP[i]=EXP[i-255];
+})();
+function gmul(a,b){ return (a&&b)?EXP[LOG[a]+LOG[b]]:0; }
+function gdiv(a,b){ return (a===0)?0:EXP[(LOG[a]+255-LOG[b])%255]; }
+function ginv(a){ return a?EXP[(255-LOG[a])%255]:0; }
+function gpow(a,n){ return a?EXP[(LOG[a]*n)%255]:0; }
+
+/* ---------------- Reed-Solomon ---------------- */
+function rsGenPoly(deg){
+  let poly=[1];
+  for(let i=0;i<deg;i++){
+    const nx=new Array(poly.length+1).fill(0);
+    for(let j=0;j<poly.length;j++){ nx[j]^=gmul(poly[j],EXP[i]); nx[j+1]^=poly[j]; }
+    poly=nx;
+  }
+  return poly;                       // 低次在前，最高次系数应为 1
+}
+/* 多项式长除法求余。
+   rsGenPoly 返回的系数是"低次在前"（末尾为最高次，系数 1）；
+   长除法要求除数"高次在前、首项系数为 1"，故此处必须反转。 */
+function rsRemainder(data,genLow){
+  const gen=genLow.slice().reverse();
+  const buf=data.slice();
+  for(let i=0;i<gen.length-1;i++) buf.push(0);   // 补 degree 个 0
+  for(let i=0;i<data.length;i++){
+    const f=buf[i];
+    if(f) for(let j=0;j<gen.length;j++) buf[i+j]^=gmul(gen[j],f);
+  }
+  return buf.slice(data.length);
+}
+/* BM + Chien + Forney 纠错，返回纠正个数，-1 表示不可纠 */
+function rsCorrect(msg,ecLen){
+  const n=msg.length;
+  const synd=new Array(ecLen).fill(0);
+  let bad=false;
+  for(let i=0;i<ecLen;i++){
+    let s=0;
+    for(let j=0;j<n;j++) s=gmul(s,EXP[i])^msg[j];
+    synd[i]=s; if(s)bad=true;
+  }
+  if(!bad) return 0;
+  // Berlekamp-Massey
+  let C=[1],B=[1],L=0,m=1,b=1;
+  for(let nn=0;nn<ecLen;nn++){
+    let d=synd[nn];
+    for(let i=1;i<=L;i++) d^=gmul(C[i]||0,synd[nn-i]);
+    if(d===0){ m++; }
+    else if(2*L<=nn){
+      const T=C.slice();
+      const coef=gdiv(d,b);
+      for(let i=0;i<B.length;i++){
+        const idx=i+m;
+        while(C.length<=idx)C.push(0);
+        C[idx]^=gmul(coef,B[i]);
+      }
+      L=nn+1-L; B=T; b=d; m=1;
+    } else {
+      const coef=gdiv(d,b);
+      for(let i=0;i<B.length;i++){
+        const idx=i+m;
+        while(C.length<=idx)C.push(0);
+        C[idx]^=gmul(coef,B[i]);
+      }
+      m++;
+    }
+  }
+  // Ω(x) = S(x)·C(x) mod x^ecLen
+  const Om=new Array(ecLen).fill(0);
+  for(let i=0;i<ecLen;i++){
+    for(let j=0;j<C.length&&j<=i;j++) Om[i]^=gmul(synd[i-j],C[j]);
+  }
+  if(L>C.length-1) return -1;
+  let fixed=0;
+  for(let i=0;i<n;i++){
+    let sum=0;
+    for(let k=0;k<C.length;k++) sum^=gmul(C[k],gpow(EXP[(255-(i*k)%255)%255],1));
+    if(sum!==0) continue;
+    const Xinv=EXP[(255-(i%255))%255];
+    let om=0;
+    for(let k=0;k<Om.length;k++) om^=gmul(Om[k],gpow(Xinv,k));
+    let dv=0;
+    for(let k=1;k<C.length;k+=2) dv^=gmul(C[k],gpow(Xinv,k-1));
+    if(om!==0&&dv!==0){
+      const j=n-1-i;
+      if(j<0||j>=n) return -1;
+      msg[j]^=gdiv(om,dv);
+      fixed++;
+    }
+  }
+  // 校验
+  for(let i=0;i<ecLen;i++){
+    let s=0;
+    for(let j=0;j<n;j++) s=gmul(s,EXP[i])^msg[j];
+    if(s!==0) return -1;
+  }
+  return fixed;
+}
+
+/* ---------------- 版本 / 纠错参数表 ---------------- */
+/* 每项：[每块纠错码字, [[块数, 该组每块数据码字], ...]] */
+const ECC_L={1:[7,[[1,19]]],2:[10,[[1,34]]],3:[15,[[1,55]]],4:[20,[[1,80]]],5:[26,[[1,108]]],
+  6:[18,[[2,68]]],7:[20,[[2,78]]],8:[24,[[2,97]]],9:[30,[[2,116]]],10:[18,[[2,68],[2,69]]]};
+const ECC_M={1:[10,[[1,16]]],2:[16,[[1,28]]],3:[26,[[1,44]]],4:[18,[[2,32]]],5:[24,[[2,43]]],
+  6:[16,[[4,27]]],7:[18,[[4,31]]],8:[22,[[2,38],[2,39]]],9:[22,[[3,36],[2,37]]],10:[26,[[4,43],[1,44]]]};
+const EC_TBL={L:ECC_L,M:ECC_M};
+const EC_BITS={L:1,M:0};
+function dataCapacity(v,ec){
+  const t=EC_TBL[ec][v];
+  return t[1].reduce((s,g)=>s+g[0]*g[1],0);
+}
+function alignPos(v){
+  if(v===1)return [];
+  const n=Math.floor(v/7)+2;
+  const size=v*4+17;
+  const step=Math.ceil((v*4+4)/(n*2-2))*2;
+  const r=[6];
+  for(let p=size-7;r.length<n;p-=step) r.splice(1,0,p);
+  return r;
+}
+
+/* ---------------- 编码 ---------------- */
+function utf8Bytes(str){
+  const out=[];
+  for(const ch of String(str)){
+    let cp=ch.codePointAt(0);
+    if(cp<0x80) out.push(cp);
+    else if(cp<0x800){ out.push(0xC0|(cp>>6),0x80|(cp&63)); }
+    else if(cp<0x10000){ out.push(0xE0|(cp>>12),0x80|((cp>>6)&63),0x80|(cp&63)); }
+    else { out.push(0xF0|(cp>>18),0x80|((cp>>12)&63),0x80|((cp>>6)&63),0x80|(cp&63)); }
+  }
+  return out;
+}
+function bytesToStr(b){
+  let s='';
+  for(let i=0;i<b.length;){
+    const c=b[i++];
+    if(c<0x80) s+=String.fromCharCode(c);
+    else if(c<0xE0) s+=String.fromCharCode(((c&31)<<6)|(b[i++]&63));
+    else if(c<0xF0) s+=String.fromCharCode(((c&15)<<12)|((b[i++]&63)<<6)|(b[i++]&63));
+    else {
+      const cp=((c&7)<<18)|((b[i++]&63)<<12)|((b[i++]&63)<<6)|(b[i++]&63);
+      s+=String.fromCodePoint?String.fromCodePoint(cp):String.fromCharCode(cp);
+    }
+  }
+  return s;
+}
+/* 生成 QR 矩阵：返回 {size, modules[size][size](bool), version, mask, ec} */
+function encode(text,ec,forceMask){
+  ec=ec||'M';
+  const data=utf8Bytes(text);
+  const lenBits=data.length>255?16:8;
+  let ver=0;
+  for(let v=1;v<=10;v++){
+    const cap=dataCapacity(v,ec);
+    const need=4+lenBits+data.length*8;
+    if(cap*8>=need && (v>=10||lenBits===8||true)){ ver=v; break; }
+  }
+  if(!ver) throw new Error('内容过长');
+  if(ver>=10&&lenBits===8) return encode(text,ec==='M'?'L':ec);   // 超长降级
+
+  const size=ver*4+17;
+  const bits=[];
+  const push=(val,n)=>{ for(let i=n-1;i>=0;i--) bits.push((val>>>i)&1); };
+  push(4,4);                       // byte mode
+  push(data.length,lenBits);
+  for(const b of data) push(b,8);
+
+  const capBits=dataCapacity(ver,ec)*8;
+  for(let i=0;i<4&&bits.length<capBits;i++) bits.push(0);   // terminator
+  while(bits.length%8) bits.push(0);
+  const bytes=[];
+  for(let i=0;i<bits.length;i+=8){
+    let v=0; for(let k=0;k<8;k++) v=(v<<1)|(bits[i+k]||0);
+    bytes.push(v);
+  }
+  const pads=[0xEC,0x11];
+  let pi=0;
+  while(bytes.length<dataCapacity(ver,ec)) bytes.push(pads[pi++%2]);
+
+  // 分块 + RS
+  const [ecw,groups]=EC_TBL[ec][ver];
+  const blocks=[], ecBlocks=[];
+  let off=0;
+  for(const [cnt,dlen] of groups){
+    for(let i=0;i<cnt;i++){
+      const d=bytes.slice(off,off+dlen); off+=dlen;
+      blocks.push(d);
+      ecBlocks.push(rsRemainder(d,rsGenPoly(ecw)));
+    }
+  }
+  // 交织
+  const out=[];
+  const maxD=Math.max(...blocks.map(b=>b.length));
+  for(let i=0;i<maxD;i++) for(const b of blocks) if(i<b.length) out.push(b[i]);
+  for(let i=0;i<ecw;i++) for(const b of ecBlocks) out.push(b[i]);
+
+  // 建矩阵
+  const mods=[];
+  for(let i=0;i<size;i++) mods.push(new Array(size).fill(null));
+  const setF=(r,c,v)=>{ if(r>=0&&r<size&&c>=0&&c<size) mods[r][c]=v?1:0; };
+
+  // finder + separator
+  const finder=(r0,c0)=>{
+    for(let dr=-1;dr<=7;dr++)for(let dc=-1;dc<=7;dc++){
+      const r=r0+dr,c=c0+dc;
+      if(r<0||r>=size||c<0||c>=size)continue;
+      const inRing=(dr>=0&&dr<=6&&dc>=0&&dc<=6);
+      let v=false;
+      if(inRing){
+        const edge=(dr===0||dr===6||dc===0||dc===6);
+        const core=(dr>=2&&dr<=4&&dc>=2&&dc<=4);
+        v=edge||core;
+      }
+      mods[r][c]=v?1:0;
+    }
+  };
+  finder(0,0); finder(0,size-7); finder(size-7,0);
+  // timing
+  for(let i=8;i<size-8;i++){ const v=(i%2===0)?1:0; mods[6][i]=v; mods[i][6]=v; }
+  // alignment
+  const ap=alignPos(ver);
+  for(const r of ap)for(const c of ap){
+    if((r===6&&c===6)||(r===6&&c===size-7)||(r===size-7&&c===6))continue;
+    for(let dr=-2;dr<=2;dr++)for(let dc=-2;dc<=2;dc++){
+      const v=(Math.max(Math.abs(dr),Math.abs(dc))!==1)?1:0;
+      mods[r+dr][c+dc]=v;
+    }
+  }
+  // format 预留
+  for(let i=0;i<9;i++){ if(mods[8][i]===null)mods[8][i]=0; if(mods[i][8]===null)mods[i][8]=0; }
+  for(let i=0;i<8;i++){ mods[8][size-1-i]=0; mods[size-1-i][8]=0; }
+  mods[size-8][8]=1;   // dark module
+
+  // version info (v7+)
+  if(ver>=7){
+    let rem=ver;
+    for(let i=0;i<12;i++) rem=(rem<<1)^((rem>>>11)*0x1F25);
+    const vbits=(ver<<12)|rem;
+    for(let i=0;i<18;i++){
+      const bit=(vbits>>>i)&1;
+      const a=size-11+i%3, b=(i/3)|0;
+      mods[a][b]=bit; mods[b][a]=bit;
+    }
+  }
+
+  // 数据放置：两列一组自右向左，组内自下而上/自上而下交替。
+  // 方向必须由"第几组"决定并显式翻转——跳过第 6 列（定位线）时不能改变交替节奏。
+  let bitIdx=0, dirUp=true;
+  for(let right=size-1;right>=1;right-=2){
+    if(right===6) right=5;          // 跳过 timing 列，列对变为 (5,4)
+    for(let vert=0;vert<size;vert++){
+      for(let j=0;j<2;j++){
+        const c=right-j;
+        const r=dirUp?size-1-vert:vert;
+        if(mods[r][c]!==null&&mods[r][c]!==undefined&&isFunc(r,c,size))continue;
+        if(mods[r][c]===null||mods[r][c]===undefined){
+          let bit=0;
+          if(bitIdx<out.length*8){
+            const bi=bitIdx>>3, si=7-(bitIdx&7);
+            bit=(out[bi]>>>si)&1;
+          }
+          bitIdx++;
+          mods[r][c]=bit;
+        }
+      }
+    }
+    dirUp=!dirUp;                   // 每完成一组列对翻转一次方向
+  }
+  // 掩码评估
+  let bestMask=0,bestPen=Infinity;
+  if(forceMask!==undefined&&forceMask!==null){
+    bestMask=forceMask;
+  } else {
+    for(let m=0;m<8;m++){
+      applyMask(mods,m,size);
+      writeFormat(mods,m,ec,size);
+      const p=penalty(mods,size);
+      if(p<bestPen){bestPen=p;bestMask=m;}
+      applyMask(mods,m,size);      // 撤销
+    }
+  }
+  applyMask(mods,bestMask,size);
+  writeFormat(mods,bestMask,ec,size);
+  return {size:size,version:ver,mask:bestMask,ec:ec,modules:mods};
+}
+/* 校正图形中心缓存，避免在掩码评估中被反复重算 */
+const _alignCache={};
+function alignCenters(ver,size){
+  if(_alignCache[ver])return _alignCache[ver];
+  const ap=alignPos(ver), out=[];
+  for(const ar of ap)for(const ac of ap){
+    // 与三个 finder 重叠的角不放置校正图形（标准：中心已预留则跳过）
+    if((ar<=8&&ac<=8)||(ar<=8&&ac>=size-9)||(ar>=size-9&&ac<=8))continue;
+    out.push([ar,ac]);
+  }
+  return _alignCache[ver]=out;
+}
+function isFunc(r,c,size){
+  const ver=(size-17)/4;
+  if(r<9&&c<9)return true;                  // 左上 finder + format
+  if(r<9&&c>=size-8)return true;            // 右上 finder + format
+  if(r>=size-8&&c<9)return true;            // 左下 finder + format
+  if(r===6||c===6)return true;              // timing
+  if(ver>=7){
+    if(r<6&&c>=size-11)return true;         // 右上 version info
+    if(r>=size-11&&r<size-8&&c<6)return true; // 左下 version info
+  }
+  if(ver>=2){                               // 校正图形 5×5
+    const cs=alignCenters(ver,size);
+    for(let i=0;i<cs.length;i++){
+      if(Math.abs(r-cs[i][0])<=2&&Math.abs(c-cs[i][1])<=2)return true;
+    }
+  }
+  return false;
+}
+function applyMask(mods,mask,size){
+  for(let r=0;r<size;r++)for(let c=0;c<size;c++){
+    if(isFunc(r,c,size))continue;
+    let inv=false;
+    switch(mask){
+      case 0: inv=(r+c)%2===0; break;
+      case 1: inv=r%2===0; break;
+      case 2: inv=c%3===0; break;
+      case 3: inv=(r+c)%3===0; break;
+      case 4: inv=(((r/2)|0)+((c/3)|0))%2===0; break;
+      case 5: inv=((r*c)%2+(r*c)%3)===0; break;
+      case 6: inv=(((r*c)%2+(r*c)%3)%2)===0; break;
+      case 7: inv=(((r+c)%2+(r*c)%3)%2)===0; break;
+    }
+    if(inv) mods[r][c]^=1;
+  }
+}
+function formatBits(ec,mask){
+  const data=(EC_BITS[ec]<<3)|mask;
+  let rem=data;
+  for(let i=0;i<10;i++) rem=(rem<<1)^((rem>>>9)*0x537);
+  return ((data<<10)|rem)^0x5412;
+}
+function writeFormat(mods,mask,ec,size){
+  const bits=formatBits(ec,mask);
+  const get=i=>(bits>>>i)&1;
+  // 第一份：col 8 的 row 0-7（跳过 row 6 的 timing），再接 row 8 的 col 7-0
+  for(let i=0;i<6;i++) mods[i][8]=get(i);          // bit0..5 → (row i, col 8)
+  mods[7][8]=get(6);                               // bit6
+  mods[8][8]=get(7);                               // bit7（对角线）
+  mods[8][7]=get(8);                               // bit8
+  for(let i=9;i<15;i++) mods[8][14-i]=get(i);      // bit9..14 → (row 8, col 5..0)
+  // 第二份：row 8 的 col size-8..size-1，再接 col 8 的 row size-7..size-1
+  for(let i=0;i<8;i++) mods[8][size-1-i]=get(i);   // bit0..7
+  for(let i=8;i<15;i++) mods[size-15+i][8]=get(i); // bit8..14
+  mods[size-8][8]=1;                               // dark module
+}
+function penalty(mods,size){
+  let p=0;
+  const runScore=n=>n>=5?(n-5)+3:0;
+  for(let r=0;r<size;r++){
+    let run=1,last=mods[r][0];
+    for(let c=1;c<size;c++){
+      if(mods[r][c]===last)run++;
+      else{ p+=runScore(run); run=1; last=mods[r][c]; }
+    }
+    p+=runScore(run);
+  }
+  for(let c=0;c<size;c++){
+    let run=1,last=mods[0][c];
+    for(let r=1;r<size;r++){
+      if(mods[r][c]===last)run++;
+      else{ p+=runScore(run); run=1; last=mods[r][c]; }
+    }
+    p+=runScore(run);
+  }
+  for(let r=0;r<size-1;r++)for(let c=0;c<size-1;c++){
+    const v=mods[r][c];
+    if(v===mods[r][c+1]&&v===mods[r+1][c]&&v===mods[r+1][c+1]) p+=3;
+  }
+  const pat1=[1,0,1,1,1,0,1,0,0,0,0];
+  const pat2=[0,0,0,0,1,0,1,1,1,0,1];
+  const scanLine=(get,n)=>{
+    let s=0;
+    for(let i=0;i+11<=n;i++){
+      let m1=true,m2=true;
+      for(let k=0;k<11;k++){ const v=get(i+k); if(v!==pat1[k])m1=false; if(v!==pat2[k])m2=false; }
+      if(m1)s+=40; if(m2)s+=40;
+    }
+    return s;
+  };
+  for(let r=0;r<size;r++){
+    p+=scanLine(c=>mods[r][c],size);
+    p+=scanLine(c=>mods[c][r],size);
+  }
+  let dark=0;
+  for(let r=0;r<size;r++)for(let c=0;c<size;c++) dark+=mods[r][c];
+  const ratio=dark/(size*size);
+  p+=Math.floor(Math.abs(ratio-0.5)*20)*10;
+  return p;
+}
+
+/* ---------------- 解码 ---------------- */
+/* 严格校验 (cx,cy) 处是否为真正的定位图形：
+   以中心为原点，7×7 结构必须是「外圈黑 / 次圈白 / 3×3 核心黑」。
+   数据区的随机图案几乎不可能同时满足三圈约束，可滤掉绝大部分误报。 */
+function verifyFinder(get,cx,cy,unit,W,H){
+  const at=(dr,dc)=>{
+    const x=Math.round(cx+dc*unit), y=Math.round(cy+dr*unit);
+    if(x<0||y<0||x>=W||y>=H)return -1;
+    return get(x,y);
+  };
+  for(let dr=-3;dr<=3;dr++)for(let dc=-3;dc<=3;dc++){
+    const ring=Math.max(Math.abs(dr),Math.abs(dc));
+    const v=at(dr,dc);
+    if(v<0)return false;
+    if(ring===3){ if(v!==1)return false; }        // 外框：黑
+    else if(ring===2){ if(v!==0)return false; }   // 白环
+    else { if(v!==1)return false; }               // 3×3 核心：黑
+  }
+  return true;
+}
+/* 在列 cx 上，以 cy 为中心 ±4 单元范围内寻找垂直方向的 1:1:3:1:1，
+   成功则返回精确的 finder 中心 y（水平扫描行未必正好穿过核心中线）。 */
+function vertFind(get,cx,cy,unit,W,H){
+  const y0=Math.max(0,Math.round(cy-4*unit));
+  const y1=Math.min(H-1,Math.round(cy+4*unit));
+  const X=Math.round(cx);
+  if(X<0||X>=W) return null;
+  const runs=[];
+  let cur=get(X,y0),len=0;
+  for(let y=y0;y<=y1;y++){
+    const v=get(X,y);
+    if(v===cur)len++; else{runs.push([cur,len]);cur=v;len=1;}
+  }
+  runs.push([cur,len]);
+  for(let i=0;i+4<runs.length;i++){
+    const a=runs[i],b=runs[i+1],c=runs[i+2],d=runs[i+3],e=runs[i+4];
+    if(!(a[0]===1&&b[0]===0&&c[0]===1&&d[0]===0&&e[0]===1))continue;
+    const u=(a[1]+b[1]+c[1]+d[1]+e[1])/7;
+    if(u<1||Math.abs(u-unit)>unit*0.7)continue;
+    const ok=(v,t)=>Math.abs(v-u*t)<=u*1.6;
+    if(!ok(a[1],1)||!ok(b[1],1)||!ok(c[1],3)||!ok(d[1],1)||!ok(e[1],1))continue;
+    let y=y0; for(let k=0;k<i;k++)y+=runs[k][1];
+    y+=a[1]+b[1]+c[1]/2;
+    return {cy:y,unit:u};
+  }
+  return null;
+}
+/* 从二值图像中定位三个 finder（定位图形）中心。
+   水平与垂直方向都必须满足 1:1:3:1:1（黑1 白1 黑3 白1 黑1），
+   否则数据区的随机图案会造成大量误报。 */
+function findFinders(get,W,H){
+  const rows=[];
+  for(let y=0;y<H;y++){
+    const runs=[];
+    let cur=get(0,y),len=0;
+    for(let x=0;x<W;x++){
+      const v=get(x,y);
+      if(v===cur) len++;
+      else{ runs.push([cur,len]); cur=v; len=1; }
+    }
+    runs.push([cur,len]);
+    for(let i=0;i+4<runs.length;i++){
+      const a=runs[i],b=runs[i+1],c=runs[i+2],d=runs[i+3],e=runs[i+4];
+      // 黑1 白1 黑3 白1 黑1
+      if(!(a[0]===1&&b[0]===0&&c[0]===1&&d[0]===0&&e[0]===1))continue;
+      const unit=(a[1]+b[1]+c[1]+d[1]+e[1])/7;
+      if(unit<1)continue;
+      const ok=(v,t)=>Math.abs(v-unit*t)<=unit*1.5;
+      if(!ok(a[1],1)||!ok(b[1],1)||!ok(c[1],3)||!ok(d[1],1)||!ok(e[1],1))continue;
+      if(i>0&&runs[i-1][0]!==0)continue;                 // 左侧须为白
+      if(i+5<runs.length&&runs[i+5][0]!==0)continue;     // 右侧须为白
+      let x0=0; for(let k=0;k<i;k++)x0+=runs[k][1];
+      const cx=x0+a[1]+b[1]+c[1]/2;
+      const vr=vertFind(get,cx,y,unit,W,H);              // 垂直验证并修正中心
+      if(!vr)continue;
+      const u=(unit+vr.unit)/2;
+      // 用修正后中心重新校验水平方向，再做 7×7 结构严格验证
+      if(!verifyFinder(get,cx,vr.cy,u,W,H))continue;
+      rows.push({x:cx,y:vr.cy,unit:u});
+    }
+  }
+  // 聚类（固定半径，避免 unit 抖动导致聚类不稳定）
+  const centers=[];
+  for(const p of rows){
+    let hit=null;
+    for(const c of centers){
+      const rad=Math.max(4,c.ux*3);
+      if(Math.abs(c.x-p.x)<rad&&Math.abs(c.y-p.y)<rad){
+        c.sx+=p.x;c.sy+=p.y;c.su+=p.unit;c.n++;
+        c.x=c.sx/c.n;c.y=c.sy/c.n;c.ux=c.su/c.n;hit=c;break;
+      }
+    }
+    if(!hit) centers.push({x:p.x,y:p.y,ux:p.unit,unit:p.unit,sx:p.x,sy:p.y,su:p.unit,n:1});
+  }
+  centers.sort((a,b)=>b.n-a.n);
+  return centers;
+}
+/* 亚像素精化 finder 中心与模块尺寸。
+   定位图形中心是 3×3 的黑块，其外侧紧邻白环，故从中心向左右/上下
+   扫到「黑→白」跳变即可得到核心边界，取中点即精确中心，边界跨度/3 即模块尺寸。
+   比单纯取 run 中心更抗旋转与缩放误差。 */
+function refineFinder(get,x0,y0,unit,W,H){
+  const yi=Math.round(y0), xi=Math.round(x0);
+  if(xi<0||xi>=W||yi<0||yi>=H) return null;
+  if(get(xi,yi)!==1) return null;                    // 中心必须是黑
+  const lim=Math.max(2,Math.round(unit*2.5));
+  let lx=xi, rx=xi, ty=yi, by=yi;
+  while(lx-1>=0    && get(lx-1,yi)===1 && (xi-lx)<lim) lx--;
+  while(rx+1<W     && get(rx+1,yi)===1 && (rx-xi)<lim) rx++;
+  const cx2=(lx+rx)/2, xc=Math.round(cx2);
+  while(ty-1>=0    && get(xc,ty-1)===1 && (yi-ty)<lim) ty--;
+  while(by+1<H     && get(xc,by+1)===1 && (by-yi)<lim) by++;
+  const cy2=(ty+by)/2;
+  const uw=(rx-lx+1)/3, uh=(by-ty+1)/3;
+  if(!(uw>0&&uh>0)) return null;
+  return {x:cx2, y:cy2, unit:(uw+uh)/2};
+}
+/* 从图像解码：img 为 {width,height,data(RGBA)} */
+function decode(img,_dbg){
+  const W=img.width,H=img.height,D=img.data;
+  // 自适应二值化：取整体均值
+  let sum=0,cnt=0;
+  for(let y=0;y<H;y+=2)for(let x=0;x<W;x+=2){
+    const i=(y*W+x)*4;
+    sum+=(D[i]*299+D[i+1]*587+D[i+2]*114)/1000; cnt++;
+  }
+  const thr=sum/cnt;
+  const get=(x,y)=>{
+    if(x<0||y<0||x>=W||y>=H)return 0;
+    const i=(y*W+x)*4;
+    const l=(D[i]*299+D[i+1]*587+D[i+2]*114)/1000;
+    return l<thr?1:0;                 // 深色=1
+  };
+  const cs=findFinders(get,W,H);
+  if(cs.length<3) return null;
+  /* 从候选中找出构成直角三角形的三个点：直角顶点即左上 finder。
+     再按叉积方向区分右上与左下，避免仅靠坐标大小在旋转时误判。 */
+  let best=null;
+  const cand=cs.slice(0,10);
+  for(let i=0;i<cand.length;i++){
+    for(let j=0;j<cand.length;j++){
+      if(j===i)continue;
+      for(let k=0;k<cand.length;k++){
+        if(k===i||k===j)continue;
+        const A=cand[i],B=cand[j],C=cand[k];
+        const abx=B.x-A.x,aby=B.y-A.y, acx=C.x-A.x,acy=C.y-A.y;
+        const dot=abx*acx+aby*acy;
+        const la=Math.hypot(abx,aby), lc=Math.hypot(acx,acy);
+        if(la<8||lc<8)continue;
+        const cosA=Math.abs(dot/(la*lc));
+        if(cosA>0.25)continue;                       // 夹角需接近 90°
+        const sizeRatio=Math.max(la,lc)/Math.min(la,lc);
+        if(sizeRatio>1.35)continue;                  // 两臂长度应接近
+        const cross=abx*acy-aby*acx;
+        const tr=cross>0?B:C, bl=cross>0?C:B;
+        const score=A.n+B.n+C.n;
+        if(!best||score>best.score) best={tl:A,tr:tr,bl:bl,score:score};
+      }
+    }
+  }
+  if(!best) return null;
+  if(_dbg){ _dbg.centers=cs.slice(0,6); }
+  const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+  // 亚像素精化三个定位点，提升旋转/缩放下的采样精度
+  const rT=refineFinder(get,best.tl.x,best.tl.y,best.tl.unit,W,H)||best.tl;
+  const rR=refineFinder(get,best.tr.x,best.tr.y,best.tr.unit,W,H)||best.tr;
+  const rB=refineFinder(get,best.bl.x,best.bl.y,best.bl.unit,W,H)||best.bl;
+  const tl=rT,tr=rR,bl=rB;
+  if(_dbg){ _dbg.tl=tl; _dbg.tr=tr; _dbg.bl=bl; }
+  const dTop=dist(tl,tr), dLeft=dist(tl,bl);
+  if(dTop<10||dLeft<10) return null;
+  /* 版本判定：模块像素的实测值存在误差，直接反解版本容易差一档。
+     改为枚举各版本、按各自尺寸采样，用 format info 的 BCH 校验自证——
+     只有版本与掩码都正确时校验才通过，从而可靠锁定版本。 */
+  const ux=(tr.x-tl.x)/dTop, uy=(tr.y-tl.y)/dTop;
+  const vx=(bl.x-tl.x)/dLeft, vy=(bl.y-tl.y)/dLeft;
+  const sampleGrid=(sz,ms)=>{
+    const M=new Array(sz);
+    for(let r=0;r<sz;r++){
+      M[r]=new Array(sz);
+      for(let c=0;c<sz;c++){
+        /* tl 即模块 (3,3) 的中心，故模块 (r,c) 中心的偏移量为 (c-3, r-3)。
+           若误用 3.5 会整体偏移半个模块，采样点落在模块边缘，
+           抗噪与抗旋转能力将大幅下降。 */
+        const px=tl.x+ux*(c-3)*ms+vx*(r-3)*ms;
+        const py=tl.y+uy*(c-3)*ms+vy*(r-3)*ms;
+        M[r][c]=get(Math.round(px),Math.round(py));
+      }
+    }
+    return M;
+  };
+  /* 读 format info：两份副本各含 15 位，均带 BCH 校验 */
+  const readFormat=M=>{
+    const pack=a=>{ let b=0; for(let k=0;k<a.length;k++) b|=((a[k]&1)<<k); return b; };
+    const sz=M.length;
+    const seq=[];
+    for(let i=0;i<6;i++)   seq.push(M[i][8]);
+    seq.push(M[7][8],M[8][8],M[8][7]);
+    for(let i=5;i>=0;i--)  seq.push(M[8][i]);
+    const b1=pack(seq);
+    const seq2=[];
+    for(let i=0;i<8;i++)   seq2.push(M[8][sz-1-i]);
+    for(let i=0;i<7;i++)   seq2.push(M[sz-7+i][8]);
+    const b2=pack(seq2);
+    for(const bits of [b1,b2]){
+      for(const ecName of ['M','L']){
+        for(let mask=0;mask<8;mask++){
+          if(formatBits(ecName,mask)===bits) return {ec:ecName,mask:mask};
+        }
+      }
+    }
+    return null;
+  };
+  let picked=null;
+  for(let v=1;v<=10;v++){
+    const sz=v*4+17;
+    const ms=((dTop/(sz-7))+(dLeft/(sz-7)))/2;
+    if(!(ms>1.5))continue;
+    if(sz*ms>Math.max(W,H)*1.6)continue;
+    const M=sampleGrid(sz,ms);
+    const f=readFormat(M);
+    if(f){ picked={ver:v,size:sz,modSize:ms,M:M,fmt:f}; break; }
+  }
+  if(!picked) return null;
+  const ver=picked.ver, size=picked.size, modSize=picked.modSize, M=picked.M, fmt=picked.fmt;
+  if(_dbg){ _dbg.ver=ver; _dbg.size=size; _dbg.modSize=modSize; _dbg.dTop=dTop; _dbg.dLeft=dLeft; }
+
+  if(_dbg){ _dbg.M=M.map(r=>r.slice()); _dbg.fmt=fmt; }
+  if(!fmt||!EC_TBL[fmt.ec]) return null;
+  applyMask(M,fmt.mask,size);
+  // 读码字
+  const bytes=[];
+  let acc=0,nb=0,dirUp=true;
+  for(let right=size-1;right>=1;right-=2){
+    if(right===6) right=5;          // 跳过 timing 列
+    for(let vert=0;vert<size;vert++){
+      for(let j=0;j<2;j++){
+        const c=right-j;
+        const r=dirUp?size-1-vert:vert;
+        if(isFunc(r,c,size))continue;
+        acc=(acc<<1)|M[r][c]; nb++;
+        if(nb===8){ bytes.push(acc); acc=0; nb=0; }
+      }
+    }
+    dirUp=!dirUp;                   // 与编码器保持同一交替节奏
+  }
+  /* 反交织：码字是「按块轮转」存放的——
+     先依次取各块的第 0 个数据码字，再取各块的第 1 个…（不等长时短的跳过），
+     数据放完后再以同样方式放置各块的纠错码字。 */
+  const [ecw,groups]=EC_TBL[fmt.ec][ver];
+  const lens=[];
+  for(const [cnt,dlen] of groups) for(let i=0;i<cnt;i++) lens.push(dlen);
+  const nblk=lens.length;
+  const maxD=Math.max.apply(null,lens);
+  const blocks=lens.map(L=>new Array(L).fill(0));
+  let off=0;
+  for(let i=0;i<maxD;i++){
+    for(let b=0;b<nblk;b++){
+      if(i<lens[b]) blocks[b][i]=bytes[off++];
+    }
+  }
+  const ecbs=lens.map(()=>new Array(ecw).fill(0));
+  for(let i=0;i<ecw;i++){
+    for(let b=0;b<nblk;b++) ecbs[b][i]=bytes[off++];
+  }
+  // 逐块纠错后拼回数据码字
+  const dataBytes=[];
+  for(let b=0;b<nblk;b++){
+    const full=blocks[b].concat(ecbs[b]);
+    if(rsCorrect(full,ecw)<0){
+      // 纠错失败仍尽量保留原文（后续按长度与字符做健壮性兜底）
+      for(let i=0;i<blocks[b].length;i++) dataBytes.push(blocks[b][i]);
+    } else {
+      for(let i=0;i<full.length-ecw;i++) dataBytes.push(full[i]);
+    }
+  }
+  // 解析比特流
+  let bi=0;
+  const takeBit=()=>{ const v=(dataBytes[bi>>3]>>>(7-(bi&7)))&1; bi++; return v; };
+  const takeBits=n=>{ let v=0; for(let i=0;i<n;i++)v=(v<<1)|takeBit(); return v; };
+  if(_dbg){ _dbg.bytes=dataBytes.slice(); _dbg.ver=ver; }
+  /* 比特流由若干「段」组成：每段以 4 位模式指示符开头，紧跟字符计数与数据，
+     全 0 为终止符。编码器常混合使用（如小写用 byte、大写数字用 alphanumeric）。 */
+  const ALNUM='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:';
+  const totalBits=dataBytes.length*8;
+  let text='', byteBuf=[];
+  const flushBytes=()=>{ if(byteBuf.length){ text+=bytesToStr(byteBuf); byteBuf=[]; } };
+  for(let guard=0;guard<32;guard++){
+    if(bi+4>totalBits) break;
+    const m=takeBits(4);
+    if(m===0) break;                          // 终止符
+    let cb;
+    if(m===1)      cb=ver<10?10:12;           // numeric
+    else if(m===2) cb=ver<10?9:11;            // alphanumeric
+    else if(m===4) cb=ver<10?8:16;            // byte
+    else break;                               // 汉字等模式暂不支持
+    if(bi+cb>totalBits) break;
+    const n=takeBits(cb);
+    if(m===1){
+      flushBytes();
+      for(let i=0;i<n;){
+        const rem=n-i;
+        if(rem>=3){ text+=String(takeBits(10)).padStart(3,'0'); i+=3; }
+        else if(rem===2){ text+=String(takeBits(7)).padStart(2,'0'); i+=2; }
+        else { text+=String(takeBits(4)); i+=1; }
+      }
+    } else if(m===2){
+      flushBytes();
+      for(let i=0;i<n;){
+        if(n-i>=2){ const v=takeBits(11); text+=ALNUM[Math.floor(v/45)]+ALNUM[v%45]; i+=2; }
+        else { text+=ALNUM[takeBits(6)]; i+=1; }
+      }
+    } else {
+      for(let i=0;i<n&&bi+8<=totalBits;i++) byteBuf.push(takeBits(8));
+    }
+  }
+  flushBytes();
+  return text;
+}
+
+/* ---------------- 绘制 ---------------- */
+function draw(canvas,text,opts){
+  opts=opts||{};
+  const q=encode(text,opts.ec||'M');
+  const size=q.size;
+  const quiet=opts.quiet===undefined?4:opts.quiet;
+  const total=size+quiet*2;
+  let scale=1;
+  const maxW=opts.maxSize||1000;
+  scale=Math.max(1,Math.floor(maxW/total));
+  const px=total*scale;
+  canvas.width=px; canvas.height=px;
+  const ctx=canvas.getContext('2d');
+  ctx.fillStyle=opts.light||'#ffffff';
+  ctx.fillRect(0,0,px,px);
+  ctx.fillStyle=opts.dark||'#0b1220';
+  for(let r=0;r<size;r++)for(let c=0;c<size;c++){
+    if(q.modules[r][c]) ctx.fillRect((c+quiet)*scale,(r+quiet)*scale,scale,scale);
+  }
+  return {version:q.version,size:size,px:px,code:q};
+}
+
+QM.qr={encode:encode,decode:decode,draw:draw,correct:rsCorrect,utf8Bytes:utf8Bytes,bytesToStr:bytesToStr};
+if(typeof module!=='undefined'&&module.exports) module.exports=QM.qr;
+})();
+
+
+/* ======== 13_qrui.js ======== */
+/* ================= 二维码界面层：展示邀请码 / 扫一扫加入 ================= */
+QM.qrui = (function(){
+'use strict';
+
+/* 在 canvas 上绘制邀请码二维码（内容为核心信息，短小易扫） */
+function renderInvite(canvas,code,opts){
+  if(!canvas||!QM.qr)return null;
+  opts=opts||{};
+  const text=opts.text||code;                 // 默认只放邀请码，码型最简、最易扫
+  try{
+    return QM.qr.draw(canvas,text,{ec:'M',quiet:3,maxSize:opts.maxSize||560,
+      dark:opts.dark||'#0b1220',light:opts.light||'#ffffff'});
+  }catch(e){ return null; }
+}
+
+/* 生成可直接分享的邀请链接 */
+function inviteUrl(code){
+  return location.href.split('#')[0]+'#'+code;
+}
+
+/* ---------- 扫一扫 ---------- */
+const S={
+  on:false, stream:null, raf:0, video:null, canvas:null, ctx:null,
+  cb:null, lastText:'', stableCount:0
+};
+
+function stopScan(){
+  S.on=false;
+  if(S.raf)cancelAnimationFrame(S.raf),S.raf=0;
+  if(S.stream){ try{ S.stream.getTracks().forEach(t=>t.stop()); }catch(e){} S.stream=null; }
+  S.video=null; S.canvas=null; S.ctx=null; S.cb=null; S.lastText=''; S.stableCount=0;
+}
+
+/* 启动相机并持续识别；识别到结果后回调 code 并自动停止 */
+function startScan(canvas,video,onResult,onStatus){
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+    onStatus&&onStatus('err','本设备不支持摄像头，请手动输入邀请码');
+    return false;
+  }
+  if(!QM.qr){ onStatus&&onStatus('err','二维码模块未加载'); return false; }
+  onStatus&&onStatus('wait','正在启动相机…');
+  navigator.mediaDevices.getUserMedia({
+    video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720}}
+  }).then(function(stream){
+    S.stream=stream; S.video=video; S.canvas=canvas;
+    video.srcObject=stream;
+    video.setAttribute('playsinline','');
+    video.muted=true;
+    return video.play();
+  }).then(function(){
+    S.ctx=canvas.getContext('2d',{willReadFrequently:true});
+    S.on=true; S.cb=onResult; S.lastText=''; S.stableCount=0;
+    onStatus&&onStatus('ok','相机已开启，请把二维码对准取景框');
+    loop(onStatus);
+    return true;
+  }).catch(function(err){
+    const n=(err&&err.name)||'';
+    let msg='无法打开摄像头';
+    if(n==='NotAllowedError'||n==='SecurityError') msg='相机权限被拒绝，请在浏览器设置中允许，或手动输入邀请码';
+    else if(n==='NotFoundError'||n==='DevicesNotFoundError') msg='未检测到摄像头，请手动输入邀请码';
+    else if(n==='NotReadableError') msg='摄像头被其他程序占用';
+    onStatus&&onStatus('err',msg);
+    return false;
+  });
+  return true;
+}
+
+function loop(onStatus){
+  if(!S.on)return;
+  const v=S.video,cv=S.canvas,cx=S.ctx;
+  if(v&&v.readyState===v.HAVE_ENOUGH_DATA){
+    const vw=v.videoWidth||640, vh=v.videoHeight||480;
+    // 取画面中央正方形区域，缩小以提速
+    const side=Math.min(vw,vh)*0.8;
+    const sx=(vw-side)/2, sy=(vh-side)/2;
+    const W=Math.min(320,Math.round(side));
+    if(cv.width!==W){ cv.width=W; cv.height=W; }
+    cx.drawImage(v,sx,sy,side,side,0,0,W,W);
+    const img=cx.getImageData(0,0,W,W);
+    let text=null;
+    try{ text=QM.qr.decode({width:W,height:W,data:img.data}); }catch(e){}
+    if(text){
+      const code=extractCode(text);
+      if(code){
+        // 连续两帧一致才采信，避免误识别
+        if(code===S.lastText){ S.stableCount++; } else { S.lastText=code; S.stableCount=1; }
+        if(S.stableCount>=2){
+          S.on=false;
+          const cb=S.cb;
+          stopScan();
+          cb&&cb(code);
+          return;
+        }
+      }
+    }
+  }
+  S.raf=requestAnimationFrame(function(){ loop(onStatus); });
+}
+
+/* 从二维码内容中抽取 6 位房间码：
+   既支持纯邀请码，也支持邀请链接（...#ABC123） */
+/* 房间码字母表刻意排除了易混字符 0/1/I/O，此处须用同一套规则，
+   否则会把形似但永不存在的码当成有效结果返回。 */
+const CH='[A-HJ-NP-Za-hj-np-z2-9]';
+function extractCode(text){
+  if(!text)return null;
+  const s=String(text).trim();
+  const m=s.match(new RegExp('#('+CH+'{6})\\s*$'));
+  if(m) return m[1].toUpperCase();
+  const m2=s.match(new RegExp('[?#&]c=('+CH+'{6})'));
+  if(m2) return m2[1].toUpperCase();
+  if(new RegExp('^'+CH+'{6}$').test(s)) return s.toUpperCase();
+  const m3=s.match(new RegExp('\\b('+CH+'{6})\\b'));
+  if(m3) return m3[1].toUpperCase();
+  return null;
+}
+
+return {renderInvite:renderInvite, inviteUrl:inviteUrl,
+        startScan:startScan, stopScan:stopScan, extractCode:extractCode, state:S};
+})();
+
+
+/* ======== 14_account.js ======== */
+/* ================= 账号系统 · 本地存储 + PBKDF2 加盐哈希 =================
+   说明：单文件 HTML 没有服务器，账号保存在浏览器 localStorage 中。
+   密码绝不明文存储：随机盐 + PBKDF2-SHA256（10 万次迭代）后仅保存摘要。 */
+QM.account = (function(){
+'use strict';
+const KEY='qmaster.accounts.v1';
+const CUR='qmaster.current.v1';
+const IT=100000;
+
+function b64(buf){
+  const b=new Uint8Array(buf); let s='';
+  for(let i=0;i<b.length;i++)s+=String.fromCharCode(b[i]);
+  return btoa(s);
+}
+function unb64(str){
+  const s=atob(str); const a=new Uint8Array(s.length);
+  for(let i=0;i<s.length;i++)a[i]=s.charCodeAt(i);
+  return a;
+}
+/* PBKDF2 派生；不支持 WebCrypto 的环境退化为简易迭代哈希（并标注弱保护） */
+function derive(pw,saltStr){
+  const enc=new TextEncoder().encode(pw);
+  const salt=new TextEncoder().encode(saltStr);
+  const subtle=(self.crypto&&self.crypto.subtle)||(window.crypto&&window.crypto.subtle);
+  if(!subtle) return Promise.resolve({hash:'fallback:'+weakHash(pw,saltStr),weak:true});
+  return subtle.importKey('raw',enc,{name:'PBKDF2'},false,['deriveBits'])
+    .then(k=>subtle.deriveBits({name:'PBKDF2',salt:salt,iterations:IT,hash:'SHA-256'},k,256))
+    .then(bits=>({hash:b64(bits),weak:false}))
+    .catch(()=>({hash:'fallback:'+weakHash(pw,saltStr),weak:true}));
+}
+/* 退化方案：仅用于不支持 WebCrypto 的极老浏览器（如以 file:// 打开的部分环境） */
+function weakHash(pw,salt){
+  let h1=0x811c9dc5,h2=0x01000193;
+  const s=salt+'|'+pw;
+  for(let i=0;i<s.length;i++){
+    h1=((h1^s.charCodeAt(i))*16777619)>>>0;
+    h2=((h2+s.charCodeAt(i))*h1)>>>0;
+  }
+  for(let r=0;r<1000;r++){ h1=((h1*16777619)^h2)>>>0; h2=((h2*31)^h1)>>>0; }
+  return (h1.toString(16).padStart(8,'0')+h2.toString(16).padStart(8,'0'));
+}
+function salt(){
+  const a=new Uint8Array(16);
+  const c=self.crypto||window.crypto;
+  if(c&&c.getRandomValues)c.getRandomValues(a);
+  else for(let i=0;i<16;i++)a[i]=Math.floor(Math.random()*256);
+  return b64(a);
+}
+
+/* ---------- 校验 ---------- */
+const RE_EMAIL=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const RE_PHONE=/^1[3-9]\d{9}$/;
+function idType(id){
+  if(RE_PHONE.test(id))return 'phone';
+  if(RE_EMAIL.test(id))return 'email';
+  return null;
+}
+function mask(id){
+  const t=idType(id);
+  if(t==='phone')return id.slice(0,3)+'****'+id.slice(7);
+  if(t==='email'){
+    const i=id.indexOf('@');
+    const n=id.slice(0,i);
+    return (n.length<=2?n[0]+'*':n.slice(0,2)+'*'.repeat(Math.min(4,n.length-2)))+id.slice(i);
+  }
+  return id.slice(0,3)+'***';
+}
+
+/* ---------- 存储 ---------- */
+function load(){
+  try{
+    const raw=localStorage.getItem(KEY);
+    if(!raw)return {users:[],byId:{}};
+    const o=JSON.parse(raw);
+    if(!o||!Array.isArray(o.users))return {users:[],byId:{}};
+    const byId={};
+    o.users.forEach(u=>{ if(u&&u.id)byId[u.id]=u; });
+    return {users:o.users,byId:byId};
+  }catch(e){ return {users:[],byId:{}}; }
+}
+function save(db){
+  try{ localStorage.setItem(KEY,JSON.stringify({users:db.users,v:1})); return true; }
+  catch(e){ return false; }
+}
+let DB=load();
+
+function avatarOf(id){
+  const set=['♟','♞','♛','♜','♝','♚','⭐','🎯'];
+  let h=0; for(let i=0;i<id.length;i++)h=(h*31+id.charCodeAt(i))>>>0;
+  return set[h%set.length];
+}
+
+const A={
+  get current(){
+    try{ const s=localStorage.getItem(CUR); return s?JSON.parse(s):null; }catch(e){ return null; }
+  },
+  isLogin(){ return !!this.current; },
+  list(){ return DB.users.slice(); },
+
+  /* 注册 */
+  register(id,pw,nick,done){
+    const err=m=>done&&done({ok:false,msg:m});
+    id=(id||'').trim();
+    const t=idType(id);
+    if(!t) return err('请输入正确的手机号或邮箱');
+    if(!pw||pw.length<6) return err('密码至少 6 位');
+    if(DB.byId[id]) return err('该账号已注册，请直接登录');
+    if(DB.users.length>=20) return err('本设备最多保存 20 个账号');
+    const s=salt();
+    derive(pw,s).then(function(r){
+      const u={id:id,type:t,salt:s,hash:r.hash,weak:!!r.weak,
+        nick:(nick||'').trim()||(t==='phone'?'玩家'+id.slice(-4):id.split('@')[0]),
+        avatar:avatarOf(id),created:Date.now(),
+        stat:{play:0,win:0,lose:0,draw:0}};
+      DB.users.push(u); DB.byId[id]=u;
+      if(!save(DB)) return err('浏览器存储不可用，无法注册');
+      A.login(id,pw,done);
+    });
+  },
+
+  /* 登录 */
+  login(id,pw,done){
+    const err=m=>done&&done({ok:false,msg:m});
+    id=(id||'').trim();
+    const u=DB.byId[id];
+    if(!u) return err('账号不存在，请先注册');
+    derive(pw,u.salt).then(function(r){
+      if(r.hash!==u.hash) return err('密码不正确');
+      u.last=Date.now(); save(DB);
+      try{ localStorage.setItem(CUR,JSON.stringify({id:u.id,nick:u.nick,avatar:u.avatar})); }catch(e){}
+      done&&done({ok:true,user:u});
+    });
+  },
+
+  logout(){
+    try{ localStorage.removeItem(CUR); }catch(e){}
+  },
+  remove(id){
+    DB.users=DB.users.filter(u=>u.id!==id);
+    delete DB.byId[id];
+    save(DB);
+    const c=this.current;
+    if(c&&c.id===id)this.logout();
+  },
+  get(id){ return DB.byId[id]||null; },
+
+  /* 战绩 */
+  record(result){
+    const c=this.current; if(!c)return;
+    const u=DB.byId[c.id]; if(!u)return;
+    u.stat=u.stat||{play:0,win:0,lose:0,draw:0};
+    u.stat.play++;
+    if(result==='win')u.stat.win++;
+    else if(result==='lose')u.stat.lose++;
+    else u.stat.draw++;
+    save(DB);
+  },
+  stat(){
+    const c=this.current; if(!c)return null;
+    const u=DB.byId[c.id];
+    return u?(u.stat||{play:0,win:0,lose:0,draw:0}):null;
+  },
+  mask:mask, idType:idType, avatarOf:avatarOf,
+  RE_EMAIL:RE_EMAIL, RE_PHONE:RE_PHONE
+};
+return A;
+})();
+
+
+/* ======== 15_api.js ======== */
+/* ================= 开发者 API =================
+   三种接入方式：
+     ① JS SDK  —— 同页面内 window.QiMaster.xxx(...)
+     ② iframe —— <iframe src="...html?embed=1"> + postMessage 双向通信
+     ③ URL 参数 —— 直接打开指定棋种/模式，或用 ?api=1 暴露 SDK
+   全部只读为主，控制指令均带白名单校验，宿主页面无法借此越权操作 DOM。 */
+(function(){
+'use strict';
+const QM=window.QM;
+
+/* ---------- 读取 URL 参数 ---------- */
+function params(){
+  const o={};
+  try{
+    const q=location.search.substring(1);
+    if(q) q.split('&').forEach(p=>{
+      const i=p.indexOf('=');
+      if(i<0)return;
+      o[decodeURIComponent(p.slice(0,i))]=decodeURIComponent(p.slice(i+1).replace(/\+/g,' '));
+    });
+  }catch(e){}
+  return o;
+}
+
+/* ---------- 事件订阅 ---------- */
+const subs=[];
+function on(type,fn){
+  if(typeof fn!=='function')return ()=>{};
+  const h={type:type,fn:fn};
+  subs.push(h);
+  return function(){ const i=subs.indexOf(h); if(i>=0)subs.splice(i,1); };
+}
+/* 事件协议统一为 { __qm: 事件名, data: 数据本体, ts: 时间戳 }，
+   data 就是订阅回调里 ev.data 的内容，宿主可直接取用，无需再剥一层。 */
+function emit(type,data){
+  const payload=data||null;
+  const ts=Date.now();
+  subs.slice().forEach(h=>{
+    if(h.type==='*'||h.type===type){
+      try{ h.fn({type:type,data:payload,ts:ts}); }
+      catch(e){ console.error('[QiMaster] 订阅回调异常',e); }
+    }
+  });
+  if(EMBEDDED) post({__qm:type,data:payload,ts:ts});
+}
+
+/* ---------- 是否处于 iframe 嵌入模式 ---------- */
+const P=params();
+const EMBEDDED = P.embed==='1'||P.embed==='true'||(function(){
+  try{ return window.self!==window.top; }catch(e){ return false; }
+})();
+
+function post(msg){
+  try{ window.parent&&window.parent.postMessage(msg,'*'); }catch(e){}
+}
+
+/* ---------- 对外 API ---------- */
+const API={
+  version:'1.1.0',
+  on:on,
+  off(fn){ const i=subs.findIndex(h=>h.fn===fn); if(i>=0)subs.splice(i,1); },
+  /* 可用棋种 */
+  games(){
+    const out=[];
+    QM.cats.forEach(c=>c.games.forEach(g=>{
+      out.push({id:g.id,name:g.name,icon:g.icon,cat:c.id,catName:c.name,
+        desc:g.desc,seats:g.seats.slice(),tags:(g.tags||[]).slice()});
+    }));
+    return out;
+  },
+  categories(){ return QM.cats.map(c=>({id:c.id,name:c.name,icon:c.icon,desc:c.desc,
+    games:c.games.map(g=>g.id)})); },
+  modes(){ return QM.modes.map(m=>({id:m.id,name:m.name,desc:m.desc})); },
+
+  /* 打开/启动一局 */
+  open(gameId){ QM.ui.openSetup(gameId); return true; },
+  start(gameId,opt){
+    opt=opt||{};
+    const g=QM.games[gameId];
+    if(!g) return {ok:false,msg:'未知棋种：'+gameId};
+    const n=opt.players||g.seats[0];
+    if(g.seats.indexOf(n)<0) return {ok:false,msg:g.name+'不支持 '+n+' 人，可选：'+g.seats.join('/')};
+    const mode=opt.mode||'pve';
+    if(!QM.modes.some(m=>m.id===mode)) return {ok:false,msg:'未知模式：'+mode};
+    const seats=[];
+    for(let i=0;i<n;i++){
+      if(mode==='pve') seats.push(i===0?'human':'ai');
+      else if(mode==='eva') seats.push('ai');
+      else seats.push('human');
+    }
+    QM.engine.start(g,{mode:mode,level:opt.level||2,players:n,seats:seats,gameId:gameId});
+    return {ok:true,state:this.state()};
+  },
+
+  /* 读取局面 */
+  state(){
+    const s=QM.engine.s, g=QM.engine.game;
+    if(!s||!g)return null;
+    return {
+      game:g.id, gameName:g.name, turn:s.turn, over:!!s.over,
+      winner:(s.winner===undefined?null:s.winner),
+      board:(function(){
+        try{
+          if(g.id==='gomoku'||g.id==='reversi') return s.b? s.b.slice():null;
+          if(g.id==='go') return s.b? s.b.slice():null;
+          if(g.id==='mancala') return s.pit? s.pit.slice():null;
+          if(g.id==='chess') return s.b? s.b.slice():null;
+          if(g.id==='ludo') return s.pieces? JSON.parse(JSON.stringify(s.pieces)):null;
+          if(g.id==='checkers') return s.pieces? JSON.parse(JSON.stringify(s.pieces)):null;
+          return null;
+        }catch(e){ return null; }
+      })()
+    };
+  },
+  /* 局面摘要，便于宿主页面渲染自己的 UI */
+  status(){
+    const s=QM.engine.s, g=QM.engine.game;
+    if(!s||!g)return null;
+    return {game:g.id,turn:s.turn,turnName:g.seatName(s.turn),
+      over:!!s.over,winner:(s.winner===undefined?null:s.winner),
+      text:(g.status?g.status(s):'')||''};
+  },
+
+  /* 控制（iframe/宿主调用） */
+  hint(){ QM.engine.hint&&QM.engine.hint(); return true; },
+  undo(){ QM.engine.undo&&QM.engine.undo(); return true; },
+  restart(){ QM.engine.restart&&QM.engine.restart(); return true; },
+  home(){ QM.net&&QM.net.close(); QM.engine.stop&&QM.engine.stop(); QM.ui.show('pageHome'); return true; },
+
+  /* 联机 */
+  createRoom(gameId,opt){
+    opt=opt||{};
+    const g=QM.games[gameId]; if(!g) return {ok:false,msg:'未知棋种'};
+    const n=opt.players||g.seats[0];
+    let code=null;
+    QM.ui.openRoom(gameId,{players:n,level:opt.level||2});
+    const t=setInterval(function(){
+      if(QM.net.code){ clearInterval(t); code=QM.net.code; emit('roomcreated',{code:code}); }
+    },200);
+    setTimeout(()=>clearInterval(t),15000);
+    return {ok:true,pending:true,note:'房间码将通过 roomcreated 事件返回'};
+  },
+  joinRoom(code,name){
+    const c=String(code||'').trim().toUpperCase();
+    if(!/^[A-Z2-9]{6}$/.test(c)) return {ok:false,msg:'邀请码应为 6 位'};
+    QM.ui.openJoin(null);
+    let ok=false;
+    try{ ok=QM.net.join(c,name||'API玩家',function(type,d){
+      if(type==='joined')emit('joined',{seat:d.seat});
+      if(type==='error')emit('error',{msg:d.msg});
+    }); }catch(e){ return {ok:false,msg:'加入失败：'+e.message}; }
+    return {ok:ok};
+  },
+  roomCode(){ return QM.net.code||null; },
+
+  /* 账号（只读快照，避免暴露凭据） */
+  account(){
+    const A=QM.account;
+    const c=A.current;
+    if(!c) return {login:false};
+    return {login:true,nick:c.nick,mask:A.mask(c.id),stat:A.stat()};
+  },
+
+  /* UI 主题微调（仅影响嵌页面自身） */
+  setTheme(t){
+    const root=document.documentElement;
+    if(!root||!root.style) return false;
+    const set=(k,v)=>{ try{ root.style.setProperty(k,v); }catch(e){ root.style[k]=v; } };
+    if(t==='light'){ set('--bg','#f4f6fb'); set('--txt','#0b1220'); }
+    else { set('--bg','#080e1a'); set('--txt','#e8eefb'); }
+    return true;
+  }
+};
+
+/* ---------- 嵌入模式：隐藏外壳、接收宿主指令 ---------- */
+function applyEmbed(){
+  const p=params();
+  const q=s=>{ try{ return document.querySelector(s); }catch(e){ return null; } };
+  try{ if(document.body) document.body.classList.add('embedded'); }catch(e){}
+  const tb=q('.topbar'); if(tb&&p.chrome!=='1')tb.style.display='none';
+  const ft=q('.foot'); if(ft)ft.style.display='none';
+  const app=q('.app'); if(app){ app.style.padding='0 8px 16px'; app.style.maxWidth='100%'; }
+  const hero=q('.hero'); if(hero)hero.style.display='none';
+  emit('ready',{version:API.version});
+}
+
+/* iframe 指令白名单：宿主只能调用这些，且参数受控 */
+const CMDS={start:1,hint:1,undo:1,restart:1,home:1,open:1,joinRoom:1,setTheme:1,state:1,status:1,games:1};
+window.addEventListener('message',function(e){
+  const d=e.data;
+  if(!d||typeof d!=='object')return;
+  const cmd=d.__qm_cmd;
+  if(!cmd)return;
+  /* 必须只认自有属性：否则 __proto__ / constructor / toString 等
+     继承自 Object.prototype 的键会被误判为合法指令。 */
+  if(typeof cmd!=='string'||!Object.prototype.hasOwnProperty.call(CMDS,cmd)){
+    post({__qm:'error',data:{msg:'不支持的指令：'+cmd}}); return;
+  }
+  let res;
+  try{ res=API[cmd](d.arg,d.opt); }
+  catch(err){ res={ok:false,msg:err.message}; }
+  post({__qm:'result',cmd:cmd,data:res});
+});
+
+/* ---------- 对局事件桥接：把引擎内部事件转发给订阅者/宿主 ---------- */
+(function bridge(){
+  const E=QM.engine;
+  if(!E)return;
+  const wrap=(name,fn)=>{
+    const o=E[name];
+    if(typeof o!=='function')return;
+    E[name]=function(){
+      const r=o.apply(this,arguments);
+      try{ fn.apply(this,arguments); }catch(e){}
+      return r;
+    };
+  };
+  wrap('start',function(g,cfg){ emit('start',{game:g.id,mode:cfg.mode,players:cfg.players}); });
+  wrap('play',function(mv){ emit('move',{move:mv,state:API.status()}); });
+  wrap('finish',function(){ emit('finish',API.status()); });
+  const A=QM.account;
+  if(A&&A.record){
+    const orec=A.record;
+    A.record=function(r){ const x=orec.apply(this,arguments); emit('result',{result:r}); return x; };
+  }
+})();
+
+/* ---------- URL 参数启动 ---------- */
+function applyParams(){
+  const p=params();
+  if(p.game){
+    const g=QM.games[p.game];
+    if(g){
+      if(p.auto==='1'||p.start==='1'){
+        API.start(p.game,{mode:p.mode||'pve',players:Number(p.players)||g.seats[0],level:Number(p.level)||2});
+      } else {
+        QM.ui.openSetup(p.game);
+      }
+    }
+  }
+  if(p.room){ API.joinRoom(p.room,p.name); }
+  if(p.theme) API.setTheme(p.theme);
+  if(p.embed==='1') applyEmbed();
+}
+
+/* ---------- 导出 ---------- */
+window.QiMaster=API;
+QM.api=API;
+QM.apiParams=params();
+
+/* 本模块位于游戏模块之前加载，因此必须延后执行：
+   DOMContentLoaded 会在整段脚本跑完（棋种注册完毕）后触发，
+   退化为下一轮事件循环同样能保证游戏已就绪。
+   若在此处同步执行，QM.games 还是空的，URL 参数开局会静默失效。 */
+function boot(){
+  try{ applyParams(); }catch(e){ console.error('[QiMaster] 参数初始化失败',e); }
+  if(EMBEDDED&&params().embed!=='1'){ try{ applyEmbed(); }catch(e){} }
+}
+if(document.readyState==='loading'&&document.addEventListener){
+  document.addEventListener('DOMContentLoaded',function(){ setTimeout(boot,0); });
+} else {
+  setTimeout(boot,0);
+}
+})();
+
+
+/* ======== 20_gomoku.js ======== */
+/* ================= 五子棋 · 成型类 ================= */
+QM.reg((function(){
+const N=15, EMPTY=0;
+const PAT=[
+  ['11111',5000000],
+  ['011110',100000],
+  ['11110',12000],['01111',12000],['11011',12000],['10111',12000],['11101',12000],['10111',12000],
+  ['001110',7600],['011100',7600],['011010',7200],['010110',7200],
+  ['001112',1400],['211100',1400],['011012',1400],['210110',1400],['10011',1400],['11001',1400],['10101',1300],['2011102',1400],
+  ['001100',700],['001010',700],['010100',700],['010010',650],
+  ['000112',150],['211000',150],['001012',150],['210100',150],
+  ['000100',50],['001000',50]
+];
+const DIRS=[[1,0],[0,1],[1,1],[1,-1]];
+function inside(x,y){return x>=0&&y>=0&&x<N&&y<N;}
+
+/* 在 (x,y) 落 color 子时该点的棋型分（不修改棋盘，p 视为已落） */
+function ptScore(b,x,y,color){
+  let tot=0;
+  for(let d=0;d<4;d++){
+    const dx=DIRS[d][0], dy=DIRS[d][1];
+    let str='';
+    for(let k=-4;k<=4;k++){
+      const i=x+dx*k, j=y+dy*k;
+      if(!inside(i,j)){ str+='2'; continue; }
+      const v=b[j*N+i];
+      if(i===x&&j===y) str+='1';
+      else if(v===0) str+='0';
+      else if(v===color) str+='1';
+      else str+='2';
+    }
+    for(let p=0;p<PAT.length;p++){ if(str.indexOf(PAT[p][0])>=0){ tot+=PAT[p][1]; break; } }
+  }
+  return tot;
+}
+function cand(b,color){
+  const set=new Set();
+  for(let j=0;j<N;j++)for(let i=0;i<N;i++){
+    if(b[j*N+i]!==0){
+      for(let dj=-2;dj<=2;dj++)for(let di=-2;di<=2;di++){
+        const x=i+di,y=j+dj;
+        if(inside(x,y)&&b[y*N+x]===0)set.add(y*N+x);
+      }
+    }
+  }
+  if(!set.size)set.add(112);
+  const me=color, op=3-color;
+  const arr=[...set].map(p=>{
+    const x=p%N, y=(p/N)|0;
+    const a=ptScore(b,x,y,me), d=ptScore(b,x,y,op);
+    const center=(7-Math.abs(x-7))+(7-Math.abs(y-7));
+    return {p:p,x:x,y:y,a:a,d:d,c:center};
+  });
+  return arr;
+}
+function rank(b,color,defW){
+  const arr=cand(b,color);
+  arr.forEach(o=>o.s=o.a+o.d*(defW===undefined?0.88:defW)+o.c*0.5);
+  arr.sort((m,n)=>n.s-m.s);
+  return arr;
+}
+function winAt(b,p,color){
+  const x=p%N,y=(p/N)|0;
+  for(let d=0;d<4;d++){
+    const dx=DIRS[d][0],dy=DIRS[d][1];
+    let c=1;
+    for(let k=1;k<5;k++){const i=x+dx*k,j=y+dy*k;if(inside(i,j)&&b[j*N+i]===color)c++;else break;}
+    for(let k=1;k<5;k++){const i=x-dx*k,j=y-dy*k;if(inside(i,j)&&b[j*N+i]===color)c++;else break;}
+    if(c>=5)return true;
+  }
+  return false;
+}
+
+const G={
+  id:'gomoku', name:'五子棋', icon:'⚫', cat:'shape', desc:'横竖斜先连成五子者胜，最经典的成型之战',
+  seats:[2], tags:['经典','易上手'],
+  rules:'【目标】黑先白后，轮流在交叉点落子，先在横、竖、斜任一方向连成 5 子（含以上）者胜。\n【模式】人机对弈：你执黑先行；联机对弈：生成邀请码，两台设备各执一方；同设备轮流：一台设备两人传着下；一人多弈：你自执黑白，可用提示研究棋型；机机对弈：AI 自我演示。\n【提示】活三、冲四是胜负手：对手活三必须堵，自己做活三要制造"双三"杀棋。',
+  seatName:i=>i===0?'黑方':'白方',
+  seatColor:i=>i===0?'#1b2436':'#eef2fa',
+  newState(cfg){
+    return {n:N,b:new Array(N*N).fill(0),turn:0,last:-1,over:false,winner:null,hist:[]};
+  },
+  layout(w,h,s){
+    const pad=Math.max(14,Math.min(w,h)*0.045);
+    const cs=(Math.min(w,h)-pad*2)/(N-1);
+    const ox=(w-cs*(N-1))/2, oy=(h-cs*(N-1))/2;
+    return {cs:cs,ox:ox,oy:oy,pad:pad};
+  },
+  hover(s,L,x,y){
+    const i=Math.round((x-L.ox)/L.cs), j=Math.round((y-L.oy)/L.cs);
+    if(i<0||j<0||i>=N||j>=N)return null;
+    if(s.b[j*N+i]!==0)return null;
+    const dx=x-(L.ox+i*L.cs), dy=y-(L.oy+j*L.cs);
+    if(dx*dx+dy*dy>(L.cs*0.45)*(L.cs*0.45))return null;
+    return j*N+i;
+  },
+  hit(s,x,y,L){
+    const p=this.hover(s,L,x,y);
+    if(p===null)return null;
+    return {p:p};
+  },
+  apply(s,mv){
+    const c=s.turn+1;
+    s.b[mv.p]=c; s.last=mv.p; s.hist.push(mv.p);
+    if(winAt(s.b,mv.p,c)){ s.over=true; s.winner=s.turn; }
+    else if(s.hist.length>=N*N){ s.over=true; s.winner=null; }
+    else s.turn=1-s.turn;
+    return {anim:{type:'put',p:mv.p,seat:c-1},dur:220};
+  },
+  ai(s,seat,lv){
+    const me=seat+1;
+    const arr=rank(s.b,me, lv===1?0.85:(lv===2?0.88:0.95));
+    if(lv>=3){
+      // 二层验证：模拟落子后看对手最强反击
+      const top=arr.slice(0,6);
+      let best=top[0], bs=-1e18;
+      for(const o of top){
+        s.b[o.p]=me;
+        const opp=rank(s.b,3-me,0.95);
+        const oTop=opp.length?opp[0].s:0;
+        s.b[o.p]=0;
+        const v=o.a+o.d*0.95-oTop*0.72+o.c*0.4;
+        if(v>bs){bs=v;best=o;}
+      }
+      if(best)return {p:best.p};
+    }
+    if(lv===1){
+      const t=arr.slice(0,Math.min(3,arr.length));
+      const o=t[Math.floor(Math.random()*t.length)];
+      return {p:o.p};
+    }
+    return {p:arr[0].p};
+  },
+  status(s){
+    if(s.over)return '';
+    return '第 '+(s.hist.length+1)+' 手 · 连五即胜';
+  },
+  resultText(s){
+    if(s.winner==null)return '棋盘填满，和棋收场';
+    return this.seatName(s.winner)+'连成五子，获胜！';
+  },
+  draw(ctx,s,L,view){
+    const cs=L.cs,ox=L.ox,oy=L.oy,W=cs*(N-1);
+    // 棋盘底
+    const gd=ctx.createLinearGradient(ox,oy,ox+W,oy+W);
+    gd.addColorStop(0,'#f0d9a8');gd.addColorStop(.5,'#e9c98d');gd.addColorStop(1,'#dfba7c');
+    QM.gfx.rr(ctx,ox-padOf(L),oy-padOf(L),W+padOf(L)*2,W+padOf(L)*2,10);
+    ctx.fillStyle=gd;ctx.fill();
+    ctx.strokeStyle='rgba(60,40,20,.35)';ctx.lineWidth=1;ctx.stroke();
+    // 线
+    ctx.strokeStyle='rgba(60,44,24,.62)';ctx.lineWidth=Math.max(.7,cs*0.035);
+    ctx.beginPath();
+    for(let i=0;i<N;i++){
+      ctx.moveTo(ox,oy+i*cs);ctx.lineTo(ox+W,oy+i*cs);
+      ctx.moveTo(ox+i*cs,oy);ctx.lineTo(ox+i*cs,oy+W);
+    }
+    ctx.stroke();
+    // 星位
+    ctx.fillStyle='rgba(60,44,24,.75)';
+    [[3,3],[11,3],[3,11],[11,11],[7,7]].forEach(p=>{
+      ctx.beginPath();ctx.arc(ox+p[0]*cs,oy+p[1]*cs,Math.max(1.6,cs*0.09),0,6.2832);ctx.fill();
+    });
+    // 棋子
+    for(let j=0;j<N;j++)for(let i=0;i<N;i++){
+      const v=s.b[j*N+i]; if(!v)continue;
+      let r=cs*0.44, al=1;
+      if(view.anim&&view.anim.a.type==='put'&&view.anim.a.p===j*N+i){
+        const t=QM.util.clamp((QM.util.now()-view.anim.t0)/view.anim.dur,0,1);
+        r=cs*0.44*(0.35+0.65*t); al=0.3+0.7*t;
+      }
+      ctx.globalAlpha=al;
+      QM.gfx.stone(ctx,ox+i*cs,oy+j*cs,r,v===1?
+        {hi:'#6b7a92',fill:'#232c3c',lo:'#080c14',shadow:1}:
+        {hi:'#ffffff',fill:'#e9eef7',lo:'#9aa7ba',shadow:1,ring:'rgba(0,0,0,.18)'});
+      ctx.globalAlpha=1;
+    }
+    // 最后一手
+    if(s.last>=0&&!view.anim){
+      const x=ox+(s.last%N)*cs,y=oy+((s.last/N)|0)*cs;
+      ctx.strokeStyle='#ff5d5d';ctx.lineWidth=Math.max(1.4,cs*0.06);
+      ctx.beginPath();ctx.arc(x,y,cs*0.2,0,6.2832);ctx.stroke();
+    }
+    // 悬停
+    if(view.hover!==null&&view.hover!==undefined&&!s.over){
+      const x=ox+(view.hover%N)*cs,y=oy+((view.hover/N)|0)*cs;
+      ctx.globalAlpha=.42;
+      QM.gfx.stone(ctx,x,y,cs*0.44,s.turn===0?{hi:'#6b7a92',fill:'#232c3c',lo:'#080c14'}:{hi:'#fff',fill:'#e9eef7',lo:'#9aa7ba'});
+      ctx.globalAlpha=1;
+    }
+  },
+  drawHint(ctx,s,L,mv){
+    const cs=L.cs,ox=L.ox,oy=L.oy;
+    const x=ox+(mv.p%N)*cs,y=oy+((mv.p/N)|0)*cs;
+    const k=0.5+0.5*Math.sin(QM.util.now()/180);
+    ctx.strokeStyle='rgba(61,218,215,'+(0.45+k*0.5)+')';ctx.lineWidth=Math.max(2,cs*0.09);
+    ctx.beginPath();ctx.arc(x,y,cs*0.5,0,6.2832);ctx.stroke();
+  }
+};
+function padOf(L){return L.pad*0.62;}
+return G;
+})());
+
+
+/* ======== 21_reversi.js ======== */
+/* ================= 黑白棋 · 得分类 ================= */
+QM.reg((function(){
+const N=8;
+const DIR=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+const W=[
+  120,-20, 20,  5,  5, 20,-20,120,
+  -20,-40, -5, -5, -5, -5,-40, -20,
+   20, -5, 15,  3,  3, 15, -5,  20,
+    5, -5,  3,  3,  3,  3, -5,   5,
+    5, -5,  3,  3,  3,  3, -5,   5,
+   20, -5, 15,  3,  3, 15, -5,  20,
+  -20,-40, -5, -5, -5, -5,-40, -20,
+  120,-20, 20,  5,  5, 20,-20,120
+];
+function at(b,x,y){return (x<0||y<0||x>=N||y>=N)?-1:b[y*N+x];}
+function flips(b,x,y,c){
+  if(at(b,x,y)!==0)return null;
+  const op=3-c, out=[];
+  for(let d=0;d<8;d++){
+    const dx=DIR[d][0],dy=DIR[d][1];
+    let i=x+dx,j=y+dy,line=[];
+    while(at(b,i,j)===op){ line.push(j*N+i); i+=dx;j+=dy; }
+    if(line.length&&at(b,i,j)===c) for(let k=0;k<line.length;k++) out.push(line[k]);
+  }
+  return out.length?out:null;
+}
+function legal(b,c){
+  const r=[];
+  for(let j=0;j<N;j++)for(let i=0;i<N;i++) if(b[j*N+i]===0&&flips(b,i,j,c)) r.push({p:j*N+i,x:i,y:j});
+  return r;
+}
+function doMove(b,p,c){
+  const x=p%N,y=(p/N)|0,bak=b.slice();
+  b[p]=c;
+  for(let d=0;d<8;d++){
+    const dx=DIR[d][0],dy=DIR[d][1];
+    let i=x+dx,j=y+dy,line=[];
+    while(at(b,i,j)===3-c){ line.push(j*N+i); i+=dx;j+=dy; }
+    if(line.length&&at(b,i,j)===c) line.forEach(q=>b[q]=c);
+  }
+  return bak;
+}
+function cnt(b,c){let n=0;for(let i=0;i<64;i++)if(b[i]===c)n++;return n;}
+function ev(b,c){
+  let s=0,my=0,op=0,mym=0,opm=0;
+  for(let i=0;i<64;i++){
+    if(b[i]===c){s+=W[i];my++;}
+    else if(b[i]===3-c){s-=W[i];op++;}
+  }
+  mym=legal(b,c).length; opm=legal(b,3-c).length;
+  const empt=64-my-op;
+  if(empt<12){ s+=(my-op)*14; }
+  else { s+=(my-op)*0.6; s+=(mym-opm)*7; }
+  // 角与角边
+  const cor=[[0,0],[0,7],[7,0],[7,7]];
+  cor.forEach(k=>{
+    const v=b[k[1]*N+k[0]];
+    if(v===c)s+=40; else if(v===3-c)s-=40;
+  });
+  return s;
+}
+function ab(b,c,d,al,be,pass){
+  const ms=legal(b,c);
+  if(d<=0){
+    if(pass>=2||!legal(b,3-c).length) return ev(b,c);
+    return ev(b,c);
+  }
+  if(!ms.length){
+    if(pass>=1) return ev(b,c)*(1); 
+    return -ab(b,3-c,d-1,-be,-al,pass+1);
+  }
+  ms.sort((m,n)=>(W[n.p]-W[m.p]));
+  let best=-1e9;
+  for(const m of ms){
+    const bak=doMove(b,m.p,c);
+    const v=-ab(b,3-c,d-1,-be,-al,0);
+    b.set?0:0; for(let i=0;i<64;i++)b[i]=bak[i];
+    if(v>best)best=v;
+    if(best>al)al=best;
+    if(al>=be)break;
+  }
+  return best;
+}
+
+const G={
+  id:'reversi', name:'黑白棋', icon:'🌗', cat:'score', desc:'翻转夹住的敌子，终局子多者胜',
+  seats:[2], tags:['翻转','计分'],
+  rules:'【目标】棋盘共 64 格。终局时己方棋子数量多者胜（得分类：以累积子数决胜负）。\n【落子】必须落在能"夹住"至少一枚敌子的空格上——即在任一方向上，己方两子之间全是敌方棋子。落子后被夹住的敌子全部翻面归己。\n【通行】一方无合法着法则跳过；双方连续无棋可走即终局。\n【要点】四角是永不被翻的宝地，角旁的"星位/三角"易送角，慎落。',
+  seatName:i=>i===0?'黑棋':'白棋',
+  seatColor:i=>i===0?'#1b2436':'#eef2fa',
+  newState(cfg){
+    const b=new Array(64).fill(0);
+    b[27]=2;b[28]=1;b[35]=1;b[36]=2;
+    return {b:b,turn:0,over:false,winner:null,pass:0,last:-1,flipped:[]};
+  },
+  layout(w,h,s){
+    const size=Math.min(w,h)-8;
+    const cs=size/N, ox=(w-cs*N)/2, oy=(h-cs*N)/2;
+    return {cs:cs,ox:ox,oy:oy,pad:4};
+  },
+  hover(s,L,x,y){
+    const i=Math.floor((x-L.ox)/L.cs), j=Math.floor((y-L.oy)/L.cs);
+    if(i<0||j<0||i>=N||j>=N)return null;
+    return j*N+i;
+  },
+  hit(s,x,y,L){
+    const p=this.hover(s,L,x,y);
+    if(p===null||s.b[p]!==0)return null;
+    if(!flips(s.b,p%N,(p/N)|0,s.turn+1))return null;
+    return {p:p};
+  },
+  apply(s,mv){
+    const c=s.turn+1;
+    const f=flips(s.b,mv.p%N,(mv.p/N)|0,c)||[];
+    const bak=s.b.slice();
+    doMove(s.b,mv.p,c);
+    s.last=mv.p; s.flipped=f;
+    // 换手与跳过判定
+    let nt=1-s.turn;
+    if(!legal(s.b,nt+1).length){
+      if(!legal(s.b,c).length){ s.over=true; }
+      else{ nt=s.turn; s.pass++; }
+    } else s.pass=0;
+    if(s.over){
+      const a=cnt(s.b,1),b2=cnt(s.b,2);
+      s.winner = a===b2?null:(a>b2?0:1);
+      s.score=[a,b2];
+    } else s.turn=nt;
+    return {anim:{type:'put',p:mv.p,f:f},dur:360};
+  },
+  ai(s,seat,lv){
+    const c=seat+1, b=s.b;
+    const ms=legal(b,c);
+    if(!ms.length)return null;
+    const empt=cnt(b,0);
+    let depth = lv===1?2:(lv===2?4:Math.min(6, empt<=10?empt:5));
+    if(empt<=8) depth=empt;
+    if(lv===1&&Math.random()<0.35) return {p:QM.util.pick(ms).p};
+    let best=null,bs=-1e9;
+    ms.sort((m,n)=>W[n.p]-W[m.p]);
+    for(const m of ms){
+      const bak=b.slice();
+      doMove(b,m.p,c);
+      const v=-ab(b,3-c,depth-1,-1e9,1e9,0);
+      for(let i=0;i<64;i++)b[i]=bak[i];
+      const sc=v+(lv===1?Math.random()*12:0);
+      if(sc>bs){bs=sc;best=m;}
+    }
+    return {p:best.p};
+  },
+  status(s){
+    const a=cnt(s.b,1),b=cnt(s.b,2);
+    return '黑 '+a+' : '+b+' 白'+(s.pass?'（对方无棋，已跳过）':'');
+  },
+  resultText(s){
+    if(s.winner==null)return '双方 '+s.score[0]+' : '+s.score[1]+'，平局';
+    return '终局 '+s.score[0]+' : '+s.score[1]+' —— '+this.seatName(s.winner)+'子数更多，获胜！';
+  },
+  draw(ctx,s,L,view){
+    const cs=L.cs,ox=L.ox,oy=L.oy;
+    QM.gfx.rr(ctx,ox-4,oy-4,cs*N+8,cs*N+8,8);
+    ctx.fillStyle='#12503f';ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.14)';ctx.lineWidth=1;ctx.stroke();
+    for(let i=0;i<=N;i++){
+      QM.gfx.line(ctx,ox+i*cs,oy,ox+i*cs,oy+cs*N,'rgba(0,0,0,.35)',1);
+      QM.gfx.line(ctx,ox,oy+i*cs,ox+cs*N,oy+i*cs,'rgba(0,0,0,.35)',1);
+    }
+    [[2,2],[6,2],[2,6],[6,6]].forEach(p=>QM.gfx.disc(ctx,ox+p[0]*cs,oy+p[1]*cs,cs*0.07,'rgba(0,0,0,.5)'));
+    // 合法点
+    if(!s.over&&!view.anim){
+      const ms=legal(s.b,s.turn+1);
+      ctx.fillStyle='rgba(61,218,215,.28)';
+      ms.forEach(m=>QM.gfx.disc(ctx,ox+(m.p%N)*cs+cs/2,oy+((m.p/N)|0)*cs+cs/2,cs*0.1));
+    }
+    for(let j=0;j<N;j++)for(let i=0;i<N;i++){
+      const v=s.b[j*N+i]; if(!v)continue;
+      let k=1;
+      if(view.anim&&view.anim.a.type==='put'){
+        const t=QM.util.clamp((QM.util.now()-view.anim.t0)/view.anim.dur,0,1);
+        if(view.anim.a.f.indexOf(j*N+i)>=0){
+          // 翻转动画：先缩到 0 再展开为目标色
+          k=Math.abs(Math.cos(t*Math.PI));
+          const show = t<0.5? (3-v) : v;
+          drawOne(ctx,ox+i*cs+cs/2,oy+j*cs+cs/2,cs*0.41*k,show);
+          continue;
+        }
+      }
+      drawOne(ctx,ox+i*cs+cs/2,oy+j*cs+cs/2,cs*0.41,v);
+    }
+    if(s.last>=0){
+      ctx.strokeStyle='rgba(240,180,41,.9)';ctx.lineWidth=2;
+      const x=ox+(s.last%N)*cs,y=oy+((s.last/N)|0)*cs;
+      ctx.strokeRect(x+2,y+2,cs-4,cs-4);
+    }
+    if(view.hover!==null&&!s.over&&s.b[view.hover]===0&&flips(s.b,view.hover%N,(view.hover/N)|0,s.turn+1)){
+      ctx.globalAlpha=.35;
+      drawOne(ctx,ox+(view.hover%N)*cs+cs/2,oy+((view.hover/N)|0)*cs+cs/2,cs*0.41,s.turn+1);
+      ctx.globalAlpha=1;
+    }
+  },
+  drawHint(ctx,s,L,mv){
+    const cs=L.cs,ox=L.ox,oy=L.oy;
+    const k=0.5+0.5*Math.sin(QM.util.now()/180);
+    ctx.strokeStyle='rgba(61,218,215,'+(0.4+k*0.5)+')';ctx.lineWidth=Math.max(2,cs*0.08);
+    ctx.strokeRect(ox+(mv.p%N)*cs+3,oy+((mv.p/N)|0)*cs+3,cs-6,cs-6);
+  }
+};
+function drawOne(ctx,x,y,r,v){
+  if(r<=0.4)return;
+  if(v===1) QM.gfx.stone(ctx,x,y,r,{hi:'#5c6b85',fill:'#1b2436',lo:'#05080f',shadow:1});
+  else QM.gfx.stone(ctx,x,y,r,{hi:'#ffffff',fill:'#eef2fa',lo:'#9aa7ba',shadow:1});
+}
+return G;
+})());
+
+
+/* ======== 22_go.js ======== */
+/* ================= 围棋 · 占地类 ================= */
+QM.reg((function(){
+const N=9, TOT=81;
+function nb(i){
+  const x=i%N,y=(i/N)|0,r=[];
+  if(x>0)r.push(i-1); if(x<N-1)r.push(i+1);
+  if(y>0)r.push(i-N); if(y<N-1)r.push(i+N);
+  return r;
+}
+function grp(b,i){
+  const c=b[i], st=[i], out=[], libs=[], seen={}; seen[i]=1;
+  while(st.length){
+    const q=st.pop(); out.push(q);
+    for(const j of nb(q)){
+      if(b[j]===0){ if(libs.indexOf(j)<0)libs.push(j); }
+      else if(b[j]===c&&!seen[j]){seen[j]=1;st.push(j);}
+    }
+  }
+  return {st:out,libs:libs,c:c};
+}
+/* 在 b 上落 c 于 p，返回 {cap:[], ok:bool} —— 不修改 b，返回新棋盘 */
+function sim(b,p,c){
+  const t=b.slice();
+  if(t[p]!==0)return null;
+  t[p]=c;
+  const op=3-c, cap=[];
+  for(const j of nb(p)){
+    if(t[j]===op){
+      const g=grp(t,j);
+      if(g.libs.length===0) g.st.forEach(q=>{t[q]=0;cap.push(q);});
+    }
+  }
+  const me=grp(t,p);
+  if(me.libs.length===0) return null; // 自杀
+  return {b:t,cap:cap,libs:me.libs.length,st:me.st.length};
+}
+function bkey(b){ return b.join(''); }
+function legalMoves(s,c){
+  const out=[];
+  for(let i=0;i<TOT;i++){
+    if(s.b[i]!==0||i===s.ko)continue;
+    const r=sim(s.b,i,c);
+    if(!r)continue;
+    if(s.hist&&s.hist[bkey(r.b)])continue; // 禁全同再现（含劫），保证对局必然终止
+    out.push(i);
+  }
+  return out;
+}
+function territory(b){
+  const vis=new Array(TOT).fill(0), own=[0,0,0];
+  for(let i=0;i<TOT;i++){
+    if(b[i]!==0){ own[b[i]]++; continue; }
+    if(vis[i])continue;
+    // 洪水填充空区
+    const st=[i], reg=[], touch={}; vis[i]=1;
+    while(st.length){
+      const q=st.pop(); reg.push(q);
+      for(const j of nb(q)){
+        if(b[j]===0){ if(!vis[j]){vis[j]=1;st.push(j);} }
+        else touch[b[j]]=1;
+      }
+    }
+    const ks=Object.keys(touch);
+    if(ks.length===1) own[+ks[0]]+=reg.length;
+  }
+  return own; // [_,黑,白]
+}
+
+const G={
+  id:'go', name:'围棋', icon:'⛩️', cat:'area', desc:'以子围空，占地多者胜（9 路快棋）',
+  seats:[2], tags:['围地','9路'],
+  rules:'【目标】棋盘 9×9（快棋）。终局时，己方在盘上的棋子数 + 己方围住的空点，合计多者胜；黑方贴 3.5 子。\n【气与提子】棋子相邻的空点为"气"，无气即被提掉，从盘上取走。落子后先提对方无气之子，再判自身。禁止自杀。\n【打劫】刚提一子时，对方不能立即回提该点（劫争须先劫材）。\n【终局】双方连续各"停一手"即进入数子；明显死棋请在停一手前提净。\n【要点】先占角、后拆边、再向中腹；"金角银边草肚皮"。',
+  seatName:i=>i===0?'黑方':'白方',
+  seatColor:i=>i===0?'#1b2436':'#eef2fa',
+  newState(cfg){
+    const b=new Array(TOT).fill(0);
+    const hist={}; hist[bkey(b)]=1;
+    return {b:b,turn:0,ko:-1,passes:0,over:false,winner:null,cap:[0,0],last:-1,score:null,moves:0,hist:hist};
+  },
+  layout(w,h,s){
+    const size=Math.min(w,h)-10;
+    const cs=size/(N-1);
+    return {cs:cs,ox:(w-cs*(N-1))/2,oy:(h-cs*(N-1))/2,pad:cs*0.7};
+  },
+  hover(s,L,x,y){
+    const i=Math.round((x-L.ox)/L.cs), j=Math.round((y-L.oy)/L.cs);
+    if(i<0||j<0||i>=N||j>=N)return null;
+    const dx=x-(L.ox+i*L.cs),dy=y-(L.oy+j*L.cs);
+    if(dx*dx+dy*dy>(L.cs*0.42)*(L.cs*0.42))return null;
+    return j*N+i;
+  },
+  hit(s,x,y,L){
+    const p=this.hover(s,L,x,y);
+    if(p===null)return null;
+    if(s.b[p]!==0||p===s.ko)return null;
+    const r=sim(s.b,p,s.turn+1);
+    if(!r)return null;
+    if(s.hist&&s.hist[bkey(r.b)])return null;
+    return {p:p};
+  },
+  apply(s,mv){
+    if(mv.pass){
+      s.passes++; s.last=-1;
+      if(s.passes>=2){ this.finish(s); return null; }
+      s.turn=1-s.turn; return null;
+    }
+    s.passes=0;
+    const c=s.turn+1, r=sim(s.b,mv.p,c);
+    s.b=r.b; s.cap[s.turn]+=r.cap.length; s.last=mv.p; s.moves=(s.moves||0)+1;
+    if(!s.hist)s.hist={};
+    s.hist[bkey(r.b)]=1;
+    if(s.moves>=260){ this.finish(s); return null; }
+    // 劫：提一子且己方该子为单子单气
+    s.ko = (r.cap.length===1 && r.st===1 && r.libs===1) ? r.cap[0] : -1;
+    s.turn=1-s.turn;
+    return {anim:{type:'put',p:mv.p},dur:200};
+  },
+  finish(s){
+    const own=territory(s.b);
+    const blk=own[1], wht=own[2];
+    s.score=[blk,wht+3.5];
+    s.winner = s.score[0]>s.score[1]?0:1;
+    s.over=true;
+  },
+  checkOver(){},
+  ai(s,seat,lv){
+    const c=seat+1, op=3-c;
+    const ms=legalMoves(s,c);
+    if(!ms.length) return {pass:true};
+    const empt=TOT-s.cap[0]-s.cap[1]-s.b.filter(v=>v).length;
+    const opening = s.b.filter(v=>v).length<6;
+    // 候选打分
+    let best=null,bs=-1e9;
+    for(const p of ms){
+      const r=sim(s.b,p,c);
+      let sc=0;
+      // 1) 吃子
+      if(r.cap.length){
+        sc += r.cap.length>=3 ? 400 : (r.cap.length===2?180:70);
+        // 吃掉的块越大越值
+      }
+      // 2) 逃/救：己方是否有仅 1 气的块
+      // （落子后检查己方所有块）
+      let mineDanger=0, oppAtari=0;
+      const seen={};
+      for(let i=0;i<TOT;i++){
+        if(r.b[i]!==0&&!seen[i]){
+          const g=grp(r.b,i); g.st.forEach(q=>seen[q]=1);
+          if(g.c===c){
+            if(g.libs.length===1) mineDanger += g.st.length*45;
+            else if(g.libs.length===2) mineDanger += g.st.length*6;
+          } else {
+            if(g.libs.length===1) oppAtari += g.st.length*30;
+            else if(g.libs.length===2) oppAtari += g.st.length*5;
+          }
+        }
+      }
+      sc += oppAtari - mineDanger;
+      // 3) 己方落子块气数
+      if(r.libs===1) sc -= 30;
+      if(r.libs>=3) sc += r.libs*2;
+      // 4) 形状：邻接己子/敌子
+      let myN=0,opN=0;
+      for(const j of nb(p)){ if(s.b[j]===c)myN++; else if(s.b[j]===op)opN++; }
+      sc += myN*3 + opN*4;
+      // 5) 位置：开局偏 2-3 线
+      const x=p%N,y=(p/N)|0;
+      const edge=Math.min(x,y,N-1-x,N-1-y);
+      if(opening){ if(edge===2||edge===3) sc+=14; else if(edge<=1) sc-=8; else sc-=4; }
+      else { sc += (edge===1?1:0); }
+      // 6) 不填自己的眼：四邻皆己子且该点只连己方
+      if(myN===4) sc -= 60;
+      // 7) 避免被征/无谓送吃：落点紧邻敌强块
+      sc += (Math.random()*(lv===1?10:2));
+      if(sc>bs){bs=sc;best=p;}
+    }
+    if(bs<-15 && !opening) return {pass:true};
+    return {p:best};
+  },
+  status(s){
+    const b=s.b.filter(v=>v===1).length, w=s.b.filter(v=>v===2).length;
+    return '提子 黑 '+s.cap[0]+' : '+s.cap[1]+' 白';
+  },
+  resultText(s){
+    return '数子结果：黑 '+s.score[0]+' 目 : 白 '+s.score[1]+' 目（含黑贴 3.5 子）\n—— '+this.seatName(s.winner)+'占地更多，获胜！';
+  },
+  actions:[{t:'停一手',f:(s,v,E)=>{ if(s.over)return; s.passes++; s.last=-1;
+      if(s.passes>=2){ G.finish(s); E.after(null); return 'keep'; }
+      s.turn=1-s.turn; E.after(null); return 'keep'; }}],
+  draw(ctx,s,L,view){
+    const cs=L.cs,ox=L.ox,oy=L.oy,W=cs*(N-1),p=L.pad*0.62;
+    const gd=ctx.createLinearGradient(ox,oy,ox+W,oy+W);
+    gd.addColorStop(0,'#f2dca8');gd.addColorStop(1,'#e2bd7f');
+    QM.gfx.rr(ctx,ox-p,oy-p,W+p*2,W+p*2,8); ctx.fillStyle=gd;ctx.fill();
+    ctx.strokeStyle='rgba(70,48,20,.4)';ctx.lineWidth=1;ctx.stroke();
+    ctx.strokeStyle='rgba(70,48,20,.7)';
+    for(let i=0;i<N;i++){
+      ctx.lineWidth=(i===0||i===N-1)?Math.max(1.4,cs*.055):Math.max(.7,cs*.03);
+      ctx.beginPath();ctx.moveTo(ox,oy+i*cs);ctx.lineTo(ox+W,oy+i*cs);
+      ctx.moveTo(ox+i*cs,oy);ctx.lineTo(ox+i*cs,oy+W);ctx.stroke();
+    }
+    ctx.fillStyle='rgba(70,48,20,.8)';
+    [[2,2],[6,2],[2,6],[6,6],[4,4]].forEach(k=>QM.gfx.disc(ctx,ox+k[0]*cs,oy+k[1]*cs,Math.max(1.6,cs*.09)));
+    for(let i=0;i<TOT;i++){
+      const v=s.b[i]; if(!v)continue;
+      let r=cs*0.45;
+      if(view.anim&&view.anim.a.p===i){
+        const t=QM.util.clamp((QM.util.now()-view.anim.t0)/view.anim.dur,0,1);
+        r=cs*0.45*(0.4+0.6*t);
+      }
+      QM.gfx.stone(ctx,ox+(i%N)*cs,oy+((i/N)|0)*cs,r,v===1?
+        {hi:'#5f6e88',fill:'#1d2637',lo:'#05080e',shadow:1}:
+        {hi:'#fff',fill:'#eef2fa',lo:'#96a3b6',shadow:1});
+    }
+    if(s.last>=0&&s.b[s.last]){
+      ctx.strokeStyle='#ff5d5d';ctx.lineWidth=Math.max(1.4,cs*.07);
+      ctx.beginPath();ctx.arc(ox+(s.last%N)*cs,oy+((s.last/N)|0)*cs,cs*.17,0,6.2832);ctx.stroke();
+    }
+    if(view.hover!==null&&!s.over&&s.b[view.hover]===0){
+      ctx.globalAlpha=.4;
+      QM.gfx.stone(ctx,ox+(view.hover%N)*cs,oy+((view.hover/N)|0)*cs,cs*.45,s.turn===0?{hi:'#5f6e88',fill:'#1d2637',lo:'#05080e'}:{hi:'#fff',fill:'#eef2fa',lo:'#96a3b6'});
+      ctx.globalAlpha=1;
+    }
+  },
+  drawHint(ctx,s,L,mv){
+    if(mv.pass){ QM.gfx.txt(ctx,'建议：停一手',L.ox+L.cs*4,L.oy-L.pad*0.3,14,'#3ddad7'); return; }
+    const cs=L.cs,ox=L.ox,oy=L.oy;
+    const k=0.5+0.5*Math.sin(QM.util.now()/180);
+    ctx.strokeStyle='rgba(61,218,215,'+(0.4+k*0.5)+')';ctx.lineWidth=Math.max(2,cs*.09);
+    ctx.beginPath();ctx.arc(ox+(mv.p%N)*cs,oy+((mv.p/N)|0)*cs,cs*.42,0,6.2832);ctx.stroke();
+  }
+};
+return G;
+})());
+
+
+/* ======== 23_mancala.js ======== */
+/* ================= 播棋 · 取子类 ================= */
+QM.reg((function(){
+const P=6, TOT=14;           // 0..5 玩家A坑，6 A家；7..12 玩家B坑，13 B家
+function own(i,s){ return i>=0&&i<=(s-1?5:5); }
+function sideOf(i){ return i<6?0:1; }
+function homeOf(s){ return s===0?6:13; }
+function opp(i){ return 12-i; }
+function moves(s,seat){
+  const out=[];
+  for(let i=0;i<P;i++){ const p=seat===0?i:(7+i); if(s.board[p]>0)out.push(p); }
+  return out;
+}
+function applyMove(s,p){
+  const seat=sideOf(p);
+  let n=s.board[p]; s.board[p]=0; let cur=p;
+  let last=-1;
+  while(n>0){
+    cur=(cur+1)%TOT;
+    if(cur===homeOf(1-seat))continue;
+    s.board[cur]++; n--; last=cur;
+  }
+  let again=false;
+  if(last===homeOf(seat)){ again=true; }
+  else if(sideOf(last)===seat && s.board[last]===1 && s.board[opp(last)]>0){
+    const gain=s.board[opp(last)]+1;
+    s.board[homeOf(seat)]+=gain;
+    s.board[last]=0; s.board[opp(last)]=0;
+    s.lastGain=gain; s.lastPit=last;
+  }
+  // 结束判定
+  let a=0,b=0;
+  for(let i=0;i<6;i++)a+=s.board[i];
+  for(let i=7;i<13;i++)b+=s.board[i];
+  if(a===0||b===0){
+    s.board[homeOf(0)]+=a; s.board[homeOf(1)]+=b;
+    for(let i=0;i<6;i++)s.board[i]=0;
+    for(let i=7;i<13;i++)s.board[i]=0;
+    s.over=true;
+  } else if(!again) s.turn=1-seat;
+  return again;
+}
+function ev(s,seat){
+  return s.board[homeOf(seat)]-s.board[homeOf(1-seat)];
+}
+function ab(s,seat,d,al,be,maxSeat){
+  if(s.over||d<=0) return ev(s,maxSeat);
+  const ms=moves(s,seat);
+  if(!ms.length) return ev(s,maxSeat);
+  const maximizing = (seat===maxSeat);
+  let best = maximizing?-1e9:1e9;
+  const bak=s.board.slice(), bk=s.turn, bo=s.over;
+  for(const m of ms){
+    const st={board:s.board,turn:seat,over:s.over,lastGain:0,lastPit:-1};
+    const sc=s.board.slice();
+    const again=applyMove(st,m);
+    let v;
+    if(again) v=ab(st,seat,d-1,al,be,maxSeat);
+    else v=ab(st,1-seat,d-1,al,be,maxSeat);
+    // 恢复
+    for(let i=0;i<TOT;i++)s.board[i]=sc[i];
+    s.turn=bk; s.over=bo;
+    if(maximizing){ if(v>best)best=v; if(best>al)al=best; }
+    else { if(v<best)best=v; if(best<be)be=best; }
+    if(al>=be)break;
+  }
+  return best;
+}
+
+const G={
+  id:'mancala', name:'播棋', icon:'🖐️', cat:'take', desc:'播种取子，夺取对方石子多者胜',
+  seats:[2], tags:['非洲棋','抓取'],
+  rules:'【目标】把自己的石子播撒并"夺取"对方坑中的石子，收入自家石库（右侧大坑），终局石库石子多者胜。\n【走法】点击己方任意一个非空小坑，取出全部石子，按逆时针方向逐坑播撒一粒（跳过对方石库）。\n【再走】最后一粒正好落入自家石库，则可再走一次。\n【夺取】最后一粒落入己方空坑，且正对面（对方）坑中有子，则把这两个坑的全部石子收入自家石库。\n【终局】一方 6 个小坑全空时结束，对方剩余石子全部归入其石库，比拼石库石子数。\n【要点】算准最后一粒的落点，是"再走一次"和"夺取"的关键。',
+  seatName:i=>i===0?'下方':'上方',
+  seatColor:i=>i===0?'#3ddad7':'#f0b429',
+  newState(cfg){
+    const b=new Array(TOT).fill(4);
+    b[6]=0;b[13]=0;
+    return {board:b,turn:0,over:false,winner:null,lastGain:0,lastPit:-1,lastFrom:-1};
+  },
+  layout(w,h,s){
+    const cw=Math.min(w/8.4,h/4.2);
+    const bw=cw*7.4, bh=cw*3.2;
+    return {cw:cw,ox:(w-bw)/2,oy:(h-bh)/2,bw:bw,bh:bh};
+  },
+  pitRect(L,i){
+    const {cw,ox,oy,bw,bh}=L;
+    if(i===6)  return {x:ox+bw-cw*0.72,y:oy+cw*0.32,w:cw*1.24,h:bh-cw*0.64,r:cw*0.6};
+    if(i===13) return {x:ox-cw*0.52,y:oy+cw*0.32,w:cw*1.24,h:bh-cw*0.64,r:cw*0.6};
+    const k=i<6?i:(12-i);
+    const row=i<6?1:0;
+    return {x:ox+cw*0.62+k*cw,y:oy+cw*0.28+row*(bh-cw*0.9),w:cw*0.86,h:cw*0.86,r:cw*0.43};
+  },
+  hover(s,L,x,y){
+    for(let i=0;i<TOT;i++){
+      const r=this.pitRect(L,i);
+      if(x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h)return i;
+    }
+    return null;
+  },
+  hit(s,x,y,L){
+    const p=this.hover(s,L,x,y);
+    if(p===null)return null;
+    if(p===6||p===13)return null;
+    if(sideOf(p)!==s.turn)return null;
+    if(s.board[p]<=0)return null;
+    return {p:p};
+  },
+  apply(s,mv){
+    s.lastFrom=mv.p; s.lastGain=0; s.lastPit=-1;
+    const st={board:s.board,turn:s.turn,over:s.over,lastGain:0,lastPit:-1};
+    const again=applyMove(st,mv.p);
+    s.board=st.board; s.over=st.over; s.lastGain=st.lastGain; s.lastPit=st.lastPit;
+    if(!again&&!s.over) s.turn=1-s.turn;
+    if(s.over){
+      const a=s.board[6],b=s.board[13];
+      s.winner=a===b?null:(a>b?0:1);
+      s.score=[a,b];
+    }
+    return {anim:{type:'sow',p:mv.p},dur:420};
+  },
+  ai(s,seat,lv){
+    const ms=moves(s,seat);
+    if(!ms.length)return null;
+    const depth = lv===1?3:(lv===2?6:9);
+    let best=null,bs=-1e9;
+    for(const m of ms){
+      const sc=s.board.slice(), bk=s.turn, bo=s.over;
+      const st={board:s.board,turn:seat,over:s.over,lastGain:0,lastPit:-1};
+      const again=applyMove(st,m);
+      let v;
+      if(again) v=ab(st,seat,depth-1,-1e9,1e9,seat);
+      else v=ab(st,1-seat,depth-1,-1e9,1e9,seat);
+      for(let i=0;i<TOT;i++)s.board[i]=sc[i];
+      s.turn=bk; s.over=bo;
+      v += (lv===1?Math.random()*4:0) + s.board[m]*0.01;
+      if(v>bs){bs=v;best=m;}
+    }
+    return {p:best};
+  },
+  status(s){ return '石库 '+s.board[6]+' : '+s.board[13]; },
+  resultText(s){
+    if(s.winner==null)return '双方各 '+s.score[0]+' 颗，平局';
+    return '终局 '+s.score[0]+' : '+s.score[1]+' —— '+this.seatName(s.winner)+'夺取更多石子，获胜！';
+  },
+  draw(ctx,s,L,view){
+    const {cw,ox,oy,bw,bh}=L;
+    QM.gfx.rr(ctx,ox-cw*0.62,oy-cw*0.1,bw+cw*1.24,bh+cw*0.2,cw*0.5);
+    const gd=ctx.createLinearGradient(0,oy,0,oy+bh);
+    gd.addColorStop(0,'#8a5a2b');gd.addColorStop(1,'#5e3a17');
+    ctx.fillStyle=gd;ctx.fill();
+    ctx.strokeStyle='rgba(255,220,170,.25)';ctx.lineWidth=1.5;ctx.stroke();
+    for(let i=0;i<TOT;i++){
+      const r=this.pitRect(L,i);
+      const isHome=(i===6||i===13);
+      const cnt=s.board[i];
+      // 坑
+      ctx.beginPath();
+      if(isHome){ QM.gfx.rr(ctx,r.x,r.y,r.w,r.h,r.r); }
+      else ctx.arc(r.x+r.w/2,r.y+r.h/2,r.r,0,6.2832);
+      ctx.fillStyle='rgba(0,0,0,.28)';ctx.fill();
+      ctx.strokeStyle='rgba(255,220,170,.18)';ctx.lineWidth=1;ctx.stroke();
+      // 高亮可走
+      if(!s.over&&!isHome&&sideOf(i)===s.turn&&cnt>0){
+        ctx.strokeStyle='rgba(61,218,215,.75)';ctx.lineWidth=2;ctx.stroke();
+      }
+      if(view.hover===i&&!isHome){
+        ctx.strokeStyle='rgba(255,255,255,.5)';ctx.lineWidth=2;ctx.stroke();
+      }
+      // 石子
+      if(cnt>0){
+        const n=Math.min(cnt,isHome?14:12);
+        const rad=isHome?cw*0.13:cw*0.115;
+        const cx=r.x+r.w/2, cy=r.y+r.h/2;
+        for(let k=0;k<n;k++){
+          const a=k*2.399, rr=(isHome?r.w*0.32:r.r*0.52)*Math.sqrt(k/Math.max(1,n))*1.5;
+          let px=cx+Math.cos(a)*rr, py=cy+Math.sin(a)*rr;
+          if(isHome){ px=cx+Math.cos(a)*r.w*0.3; py=cy+Math.sin(a)*(r.h*0.36); }
+          QM.gfx.stone(ctx,px,py,rad,{hi:'#ffe9c9',fill:'#d9a86a',lo:'#7a4c1d',ring:'rgba(60,30,0,.3)'});
+        }
+        if(cnt>(isHome?14:12)) QM.gfx.txt(ctx,'+',cx,cy,rad*1.5,'#fff');
+        if(!isHome) QM.gfx.txt(ctx,cnt,r.x+r.w/2,r.y+r.h+r.h*0.2,cw*0.3,'rgba(255,235,200,.85)');
+        else QM.gfx.txt(ctx,cnt,cx,cy,cw*0.42,'#fff','center','800');
+      }
+    }
+    // 座次标记
+    QM.gfx.txt(ctx,'▲ 你 / 下方',ox-cw*0.0,oy+bh+cw*0.25,cw*0.3,'rgba(61,218,215,.9)');
+    QM.gfx.txt(ctx,'上方',ox+bw-cw*0.2,oy-cw*0.28,cw*0.3,'rgba(240,180,41,.9)');
+    if(s.lastPit>=0){
+      QM.gfx.txt(ctx,'夺取 +'+s.lastGain,ox+bw/2,oy+bh+cw*0.25,cw*0.32,'#57d98a');
+    }
+  },
+  drawHint(ctx,s,L,mv){
+    const r=this.pitRect(L,mv.p);
+    const k=0.5+0.5*Math.sin(QM.util.now()/180);
+    ctx.strokeStyle='rgba(61,218,215,'+(0.4+k*0.5)+')';ctx.lineWidth=3;
+    ctx.beginPath();ctx.arc(r.x+r.w/2,r.y+r.h/2,r.r+4,0,6.2832);ctx.stroke();
+  }
+};
+return G;
+})());
+
+
+/* ======== 24_chess.js ======== */
+/* ================= 中国象棋 · 灭子类 ================= */
+QM.reg((function(){
+const W=9,H=90/9|0; H; const HH=10;
+// 棋子：1帅 2仕 3相 4马 5车 6炮 7兵，红正黑负
+const VAL=[0,10000,220,220,430,900,480,100];
+const NAME_R={1:'帥',2:'仕',3:'相',4:'馬',5:'車',6:'炮',7:'兵'};
+const NAME_B={1:'將',2:'士',3:'象',4:'馬',5:'車',6:'砲',7:'卒'};
+const DX=[1,-1,0,0], DY=[0,0,1,-1];
+function X(i){return i%9;} function Y(i){return (i/9)|0;}
+function inside(x,y){return x>=0&&x<9&&y>=0&&y<10;}
+function pal(side,x,y){ // 九宫
+  if(x<3||x>5)return false;
+  return side>0 ? (y>=7&&y<=9) : (y>=0&&y<=2);
+}
+function initBoard(){
+  const b=new Array(90).fill(0);
+  const back=[5,4,3,2,1,2,3,4,5];
+  for(let x=0;x<9;x++){ b[0*9+x]=-back[x]; b[9*9+x]=back[x]; }
+  b[2*9+1]=-6; b[2*9+7]=-6; b[7*9+1]=6; b[7*9+7]=6;
+  for(let x=0;x<9;x+=2){ b[3*9+x]=-7; b[6*9+x]=7; }
+  return b;
+}
+function kingIdx(b,side){
+  for(let i=0;i<90;i++) if(b[i]===side*1) return i;
+  return -1;
+}
+/* idx 是否被 by 方攻击 */
+function attacked(b,idx,by){
+  const x=X(idx),y=Y(idx);
+  // 兵/卒  // 兵横走攻击：by 方兵位于 (x±1, y)，且该兵已过河
+  for(const sx of [-1,1]){
+    const px=x+sx;
+    if(inside(px,y) && b[y*9+px]===by*7 && (by>0? y<=4 : y>=5)) return true;
+  }
+  // 兵前进攻击：红兵向上吃，故红兵在 idx 下方 (y+1)；黑卒在 (y-1)
+  { const py2 = by>0 ? y+1 : y-1;
+    if(inside(x,py2) && b[py2*9+x]===by*7) return true;
+  }
+  // 马
+  const MH=[[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]];
+  for(const m of MH){
+    const hx=x+m[0], hy=y+m[1];
+    if(!inside(hx,hy))continue;
+    if(b[hy*9+hx]!==by*4)continue;
+    // 马腿：从马到目标的方向，腿在相邻正交格
+    const lx = Math.abs(m[0])===2 ? x+Math.sign(m[0]) : x;
+    const ly = Math.abs(m[1])===2 ? y+Math.sign(m[1]) : y;
+    if(b[ly*9+lx]===0) return true;
+  }
+  // 车 / 炮 / 将（直线）
+  for(let d=0;d<4;d++){
+    const dx=DX[d],dy=DY[d];
+    let i=x+dx,j=y+dy,first=0;
+    while(inside(i,j)){
+      const p=b[j*9+i];
+      if(p!==0){
+        if(first===0){
+          if(p===by*5) return true;                 // 车
+          if(p===by*1 && (Math.abs(dx)+Math.abs(dy))===1){} // 将（同宫，下面统一处理）
+          first=1;
+        } else {
+          if(p===by*6) return true;                 // 炮（隔一子）
+          break;
+        }
+      }
+      i+=dx;j+=dy;
+    }
+  }
+  // 将：同列照面（中间无子）
+  const kk=kingIdx(b,by);
+  if(kk>=0){
+    const kx=X(kk),ky=Y(kk);
+    if(kx===x){
+      let mn=Math.min(ky,y),mx=Math.max(ky,y),blk=0;
+      for(let j=mn+1;j<mx;j++) if(b[j*9+kx]!==0)blk=1;
+      if(!blk) return true;
+    }
+    // 将贴身（相邻正交）
+    if(Math.abs(kx-x)+Math.abs(ky-y)===1) return true;
+  }
+  // 仕/士：相邻对角
+  for(const sx of [-1,1])for(const sy of [-1,1]){
+    const px=x+sx,py=y+sy;
+    if(inside(px,py)&&b[py*9+px]===by*2) return true;
+  }
+  // 相/象：相邻对角（对方象不到河对岸，位置本身已保证）
+  for(const sx of [-2,2])for(const sy of [-2,2]){
+    const px=x+sx,py=y+sy;
+    if(inside(px,py)&&b[py*9+px]===by*3){
+      // 象眼
+      if(b[(y+sy/2)*9+(x+sx/2)]===0) return true;
+    }
+  }
+  return false;
+}
+function inCheck(b,side){
+  const k=kingIdx(b,side);
+  if(k<0)return true;
+  return attacked(b,k,-side);
+}
+function genPseudo(b,side,caps){
+  const out=[];
+  for(let f=0;f<90;f++){
+    const p=b[f]; if(p===0||(p>0?1:-1)!==side)continue;
+    const t=Math.abs(p), x=X(f), y=Y(f);
+    const add=(i,j)=>{
+      if(!inside(i,j))return;
+      const q=b[j*9+i];
+      if(q!==0&&(q>0?1:-1)===side)return;
+      if(caps&&q===0)return;
+      out.push([f,j*9+i]);
+    };
+    if(t===1){
+      for(let d=0;d<4;d++){
+        const i=x+DX[d],j=y+DY[d];
+        if(inside(i,j)&&pal(side,i,j))add(i,j);
+      }
+    } else if(t===2){
+      for(const s1 of [-1,1])for(const s2 of [-1,1]){
+        const i=x+s1,j=y+s2;
+        if(pal(side,i,j))add(i,j);
+      }
+    } else if(t===3){
+      for(const s1 of [-2,2])for(const s2 of [-2,2]){
+        const i=x+s1,j=y+s2;
+        if(!inside(i,j))continue;
+        if(side>0? j<5 : j>4)continue;      // 不过河
+        if(b[(y+s2/2)*9+(x+s1/2)]!==0)continue; // 塞象眼
+        add(i,j);
+      }
+    } else if(t===4){
+      const MH=[[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]];
+      for(const m of MH){
+        const i=x+m[0],j=y+m[1];
+        if(!inside(i,j))continue;
+        const lx=Math.abs(m[0])===2?x+Math.sign(m[0]):x;
+        const ly=Math.abs(m[1])===2?y+Math.sign(m[1]):y;
+        if(b[ly*9+lx]!==0)continue; // 蹩马腿
+        add(i,j);
+      }
+    } else if(t===5){
+      for(let d=0;d<4;d++){
+        let i=x+DX[d],j=y+DY[d];
+        while(inside(i,j)){
+          const q=b[j*9+i];
+          if(q===0){ if(!caps)out.push([f,j*9+i]); }
+          else { if((q>0?1:-1)!==side)out.push([f,j*9+i]); break; }
+          i+=DX[d];j+=DY[d];
+        }
+      }
+    } else if(t===6){
+      for(let d=0;d<4;d++){
+        let i=x+DX[d],j=y+DY[d],jumped=false;
+        while(inside(i,j)){
+          const q=b[j*9+i];
+          if(!jumped){
+            if(q===0){ if(!caps)out.push([f,j*9+i]); }
+            else jumped=true;
+          } else {
+            if(q!==0){ if((q>0?1:-1)!==side)out.push([f,j*9+i]); break; }
+          }
+          i+=DX[d];j+=DY[d];
+        }
+      }
+    } else if(t===7){
+      const fwd = side>0?-1:1;
+      const j=y+fwd;
+      if(inside(x,j))add(x,j);
+      const crossed = side>0 ? y<=4 : y>=5;
+      if(crossed){
+        if(inside(x-1,y))add(x-1,y);
+        if(inside(x+1,y))add(x+1,y);
+      }
+    }
+  }
+  return out;
+}
+function genLegal(b,side){
+  const out=[];
+  for(const m of genPseudo(b,side,false)){
+    const cap=b[m[1]];
+    b[m[1]]=b[m[0]]; b[m[0]]=0;
+    let ok=true;
+    // 将帅照面
+    const kr=kingIdx(b,1), kb=kingIdx(b,-1);
+    if(kr>=0&&kb>=0&&X(kr)===X(kb)){
+      let blk=0,mn=Math.min(Y(kr),Y(kb)),mx=Math.max(Y(kr),Y(kb));
+      for(let j=mn+1;j<mx;j++) if(b[j*9+X(kr)]!==0)blk=1;
+      if(!blk)ok=false;
+    }
+    if(ok&&inCheck(b,side))ok=false;
+    b[m[0]]=b[m[1]]; b[m[1]]=cap;
+    if(ok)out.push(m);
+  }
+  return out;
+}
+function evalBoard(b){
+  let s=0;
+  for(let i=0;i<90;i++){
+    const p=b[i]; if(!p)continue;
+    const t=Math.abs(p),x=X(i),y=Y(i);
+    let v=VAL[t];
+    if(t===7){
+      const adv = p>0 ? (9-y) : (y+1);
+      v += adv*adv*2;
+      if(p>0&&y<=4)v+=45; if(p<0&&y>=5)v+=45;
+      if(x===4)v+=6;
+    } else if(t===4){
+      v += (4-Math.abs(x-4))*7 + (4-Math.abs(y-4.5))*4;
+    } else if(t===5){
+      v += (y<=4?8:0) + (x===4?3:0);
+    } else if(t===6){
+      v += (4-Math.abs(x-4))*3 + (y===7||y===2?8:0);
+    } else if(t===1){
+      v += (y<=7?0:0);
+    }
+    s += p>0? v : -v;
+  }
+  return s;
+}
+function order(ms,b){
+  ms.sort((m,n)=>{
+    const a=b[m[1]]?VAL[Math.abs(b[m[1]])]*10-VAL[Math.abs(b[m[0]])]:0;
+    const c=b[n[1]]?VAL[Math.abs(b[n[1]])]*10-VAL[Math.abs(b[n[0]])]:0;
+    return c-a;
+  });
+}
+let NODES=0, DEADLINE=0;
+function quiesce(b,side,al,be,qd){
+  NODES++;
+  const stand = side>0? evalBoard(b) : -evalBoard(b);
+  if(qd>=3||NODES>400000) return stand;
+  if(stand>=be)return be;
+  if(stand>al)al=stand;
+  const ms=genPseudo(b,side,true);
+  order(ms,b);
+  for(const m of ms){
+    const cap=b[m[1]];
+    b[m[1]]=b[m[0]]; b[m[0]]=0;
+    let ok=true;
+    const kr=kingIdx(b,1),kb=kingIdx(b,-1);
+    if(kr>=0&&kb>=0&&X(kr)===X(kb)){
+      let blk=0,mn=Math.min(Y(kr),Y(kb)),mx=Math.max(Y(kr),Y(kb));
+      for(let j=mn+1;j<mx;j++) if(b[j*9+X(kr)]!==0)blk=1;
+      if(!blk)ok=false;
+    }
+    if(ok&&inCheck(b,side))ok=false;
+    let v;
+    if(ok) v=-quiesce(b,-side,-be,-al,qd+1);
+    b[m[0]]=b[m[1]]; b[m[1]]=cap;
+    if(!ok)continue;
+    if(v>=be)return be;
+    if(v>al)al=v;
+  }
+  return al;
+}
+function search(b,side,depth,al,be,ply){
+  NODES++;
+  if(NODES>400000||Date.now()>DEADLINE) return (side>0?evalBoard(b):-evalBoard(b));
+  if(depth<=0) return quiesce(b,side,al,be,0);
+  const ms=genLegal(b,side);
+  if(!ms.length) return -90000+ply;
+  order(ms,b);
+  let best=-1e9;
+  for(const m of ms){
+    const cap=b[m[1]];
+    b[m[1]]=b[m[0]]; b[m[0]]=0;
+    const v=-search(b,-side,depth-1,-be,-al,ply+1);
+    b[m[0]]=b[m[1]]; b[m[1]]=cap;
+    if(v>best)best=v;
+    if(best>al)al=best;
+    if(al>=be)break;
+  }
+  return best;
+}
+function bestMove(b,side,maxDepth,msDeadline){
+  NODES=0; DEADLINE=Date.now()+msDeadline;
+  const ms=genLegal(b,side);
+  if(!ms.length)return null;
+  order(ms,b);
+  let bm=ms[0], bs=-1e9;
+  for(let d=1;d<=maxDepth;d++){
+    let cur=null,cs=-1e9,al=-1e9,timedOut=false;
+    for(const m of ms){
+      const cap=b[m[1]];
+      b[m[1]]=b[m[0]]; b[m[0]]=0;
+      const v=-search(b,-side,d-1,-1e9,-al,1);
+      b[m[0]]=b[m[1]]; b[m[1]]=cap;
+      if(Date.now()>DEADLINE){timedOut=true;break;}
+      if(v>cs){cs=v;cur=m;}
+      if(v>al)al=v;
+    }
+    if(cur&&!timedOut){ bm=cur; bs=cs; }
+    if(timedOut)break;
+    if(bs>88000)break;
+  }
+  return bm;
+}
+
+const G={
+  id:'chess', name:'中国象棋', icon:'🐎', cat:'kill', desc:'将死对方主帅者胜，最典型的灭子之战',
+  seats:[2], tags:['完整规则','楚河汉界'],
+  rules:'【目标】把对方的"将/帅"将死或困毙即胜（灭子类：吃掉关键棋子、擒贼先擒王）。\n【走法】车走直线；马走日、蹩马腿；相/象走田、塞象眼且不过河；仕/士斜行于九宫；将/帅直行于九宫，两王不得照面；炮需隔一子才能吃；兵/卒只进不退，过河后可横行。\n【禁手】任何走法都不得让自己被将军。\n【判负】被将死或无任何合法走法（困毙）判负；连续 120 步无吃子判和。\n【要点】开局抢出车马炮，中局算清"捉双"与"抽将"，残局兵的推进价值极高。',
+  seatName:i=>i===0?'红方':'黑方',
+  seatColor:i=>i===0?'#e2483d':'#2b3244',
+  newState(cfg){
+    return {board:initBoard(),turn:0,over:false,winner:null,last:null,half:0,check:false,capNone:0};
+  },
+  layout(w,h,s){
+    const pad=Math.max(10,Math.min(w,h)*0.03);
+    const cs=Math.min((w-pad*2)/8,(h-pad*2)/9);
+    return {cs:cs,ox:(w-cs*8)/2,oy:(h-cs*9)/2,pad:pad};
+  },
+  hover(s,L,x,y){
+    const i=Math.round((x-L.ox)/L.cs), j=Math.round((y-L.oy)/L.cs);
+    if(i<0||i>8||j<0||j>9)return null;
+    const dx=x-(L.ox+i*L.cs),dy=y-(L.oy+j*L.cs);
+    if(dx*dx+dy*dy>(L.cs*0.46)*(L.cs*0.46))return null;
+    return j*9+i;
+  },
+  hit(s,x,y,L){
+    const p=this.hover(s,L,x,y);
+    if(p===null)return null;
+    const view=QM.engine.view;
+    const side=s.turn===0?1:-1;
+    const pc=s.board[p];
+    if(view.sel!==null&&view.sel!==undefined){
+      if(view.sel===p){ view.sel=null; return 'again'; }
+      const legal=genLegal(s.board,side);
+      for(const m of legal) if(m[0]===view.sel&&m[1]===p){ view.sel=null; return {from:m[0],to:m[1]}; }
+    }
+    if(pc!==0&&(pc>0?1:-1)===side){ view.sel=p; return 'again'; }
+    return null;
+  },
+  apply(s,mv){
+    const side=s.turn===0?1:-1;
+    const cap=s.board[mv.to];
+    s.board[mv.to]=s.board[mv.from]; s.board[mv.from]=0;
+    s.last=mv; s.half = cap?0:s.half+1;
+    s.check = inCheck(s.board,-side);
+    const ms=genLegal(s.board,-side);
+    if(!ms.length){ s.over=true; s.winner=s.turn; s.mate=true; }
+    else if(s.half>=120){ s.over=true; s.winner=null; }
+    else s.turn=1-s.turn;
+    return {anim:{type:'move',from:mv.from,to:mv.to},dur:260};
+  },
+  ai(s,seat,lv){
+    const side=seat===0?1:-1;
+    const depth = lv===1?1:(lv===2?3:4);
+    const dl = lv===1?250:(lv===2?900:2400);
+    const b=s.board.slice();
+    let m=bestMove(b,side,depth,dl);
+    if(!m){ const ms=genLegal(b,side); m=ms[0]; }
+    if(lv===1&&Math.random()<0.25){ const ms=genLegal(b,side); if(ms.length>1)m=ms[Math.floor(Math.random()*Math.min(4,ms.length))]; }
+    return m?{from:m[0],to:m[1]}:null;
+  },
+  status(s){
+    if(s.over)return '';
+    if(s.check)return '将军！须应将';
+    return '第 '+(s.half+1)+' 回合 · 擒贼先擒王';
+  },
+  resultText(s){
+    if(s.winner==null)return '连续 120 步无吃子，判和';
+    return this.seatName(s.winner)+(s.mate?'将死对方':'获胜')+'！';
+  },
+  draw(ctx,s,L,view){
+    const cs=L.cs,ox=L.ox,oy=L.oy;
+    // 底
+    const gd=ctx.createLinearGradient(ox,oy,ox+cs*8,oy+cs*9);
+    gd.addColorStop(0,'#f3ddb0');gd.addColorStop(1,'#e3c088');
+    QM.gfx.rr(ctx,ox-cs*0.55,oy-cs*0.55,cs*8+cs*1.1,cs*9+cs*1.1,cs*0.3);
+    ctx.fillStyle=gd;ctx.fill();
+    ctx.strokeStyle='rgba(80,52,20,.55)';ctx.lineWidth=Math.max(1.2,cs*0.05);ctx.stroke();
+    ctx.strokeStyle='rgba(80,52,20,.75)';ctx.lineWidth=Math.max(.8,cs*0.032);
+    ctx.beginPath();
+    for(let j=0;j<10;j++){ ctx.moveTo(ox,oy+j*cs);ctx.lineTo(ox+cs*8,oy+j*cs); }
+    for(let i=0;i<9;i++){
+      if(i===0||i===8){ ctx.moveTo(ox+i*cs,oy);ctx.lineTo(ox+i*cs,oy+cs*9); }
+      else { ctx.moveTo(ox+i*cs,oy);ctx.lineTo(ox+i*cs,oy+cs*4); ctx.moveTo(ox+i*cs,oy+cs*5);ctx.lineTo(ox+i*cs,oy+cs*9); }
+    }
+    // 九宫斜线
+    ctx.moveTo(ox+3*cs,oy);ctx.lineTo(ox+5*cs,oy+2*cs);
+    ctx.moveTo(ox+5*cs,oy);ctx.lineTo(ox+3*cs,oy+2*cs);
+    ctx.moveTo(ox+3*cs,oy+7*cs);ctx.lineTo(ox+5*cs,oy+9*cs);
+    ctx.moveTo(ox+5*cs,oy+7*cs);ctx.lineTo(ox+3*cs,oy+9*cs);
+    ctx.stroke();
+    QM.gfx.txt(ctx,'楚 河',ox+cs*2,oy+cs*4.5,cs*0.52,'rgba(90,60,25,.55)');
+    QM.gfx.txt(ctx,'漢 界',ox+cs*6,oy+cs*4.5,cs*0.52,'rgba(90,60,25,.55)');
+    // 炮兵位标记
+    const mark=(px,py)=>{
+      const x=ox+px*cs,y=oy+py*cs,l=cs*0.14,g=cs*0.09;
+      ctx.strokeStyle='rgba(80,52,20,.75)';ctx.lineWidth=Math.max(.8,cs*0.03);
+      [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(d=>{
+        if((px+d[0]<0||px+d[0]>8)&&Math.abs(d[0])===1){}
+        ctx.beginPath();
+        ctx.moveTo(x+d[0]*g,y+d[1]*g);
+        ctx.lineTo(x+d[0]*(g+l),y+d[1]*g);
+        ctx.moveTo(x+d[0]*g,y+d[1]*g);
+        ctx.lineTo(x+d[0]*g,y+d[1]*(g+l));
+        ctx.stroke();
+      });
+    };
+    [[1,2],[7,2],[1,7],[7,7]].forEach(p=>mark(p[0],p[1]));
+    [0,2,4,6,8].forEach(x=>{mark(x,3);mark(x,6);});
+    // 选中/可走
+    const side=s.turn===0?1:-1;
+    if(view.sel!==null&&view.sel!==undefined&&s.board[view.sel]!==0){
+      const x=ox+X(view.sel)*cs,y=oy+Y(view.sel)*cs;
+      ctx.strokeStyle='#3ddad7';ctx.lineWidth=Math.max(2,cs*0.07);
+      ctx.strokeRect(x-cs*0.46,y-cs*0.46,cs*0.92,cs*0.92);
+      genLegal(s.board,side).forEach(m=>{
+        if(m[0]!==view.sel)return;
+        const tx=ox+X(m[1])*cs,ty=oy+Y(m[1])*cs;
+        if(s.board[m[1]]!==0){ ctx.strokeStyle='rgba(226,72,61,.85)';ctx.lineWidth=Math.max(2,cs*0.07);
+          ctx.beginPath();ctx.arc(tx,ty,cs*0.46,0,6.2832);ctx.stroke(); }
+        else QM.gfx.disc(ctx,tx,ty,cs*0.14,'rgba(61,218,215,.55)');
+      });
+    }
+    // 最后一手
+    if(s.last){
+      ctx.strokeStyle='rgba(240,180,41,.9)';ctx.lineWidth=Math.max(1.6,cs*0.05);
+      [s.last.from,s.last.to].forEach(q=>ctx.strokeRect(ox+X(q)*cs-cs*0.44,oy+Y(q)*cs-cs*0.44,cs*0.88,cs*0.88));
+    }
+    // 棋子
+    let animPair=null;
+    if(view.anim&&view.anim.a.type==='move'){
+      const t=QM.util.clamp((QM.util.now()-view.anim.t0)/view.anim.dur,0,1);
+      animPair={from:view.anim.a.from,to:view.anim.a.to,t:t};
+    }
+    for(let i=0;i<90;i++){
+      const p=s.board[i]; if(!p)continue;
+      let px=ox+X(i)*cs, py=oy+Y(i)*cs;
+      if(animPair&&i===animPair.to){
+        const fx=ox+X(animPair.from)*cs, fy=oy+Y(animPair.from)*cs;
+        px=fx+(px-fx)*animPair.t; py=fy+(py-fy)*animPair.t;
+      }
+      if(animPair&&i===animPair.from)continue;
+      const red=p>0;
+      const r=cs*0.43;
+      // 底
+      ctx.save();ctx.shadowColor='rgba(0,0,0,.4)';ctx.shadowBlur=cs*0.22;ctx.shadowOffsetY=cs*0.08;
+      QM.gfx.disc(ctx,px,py,r,'#f6e6c8');
+      ctx.restore();
+      ctx.strokeStyle=red?'#b8352b':'#3a3a3a';ctx.lineWidth=Math.max(1,cs*0.045);
+      ctx.beginPath();ctx.arc(px,py,r,0,6.2832);ctx.stroke();
+      ctx.beginPath();ctx.arc(px,py,r*0.82,0,6.2832);ctx.strokeStyle=red?'rgba(184,53,43,.45)':'rgba(58,58,58,.4)';ctx.stroke();
+      const nm=(red?NAME_R:NAME_B)[Math.abs(p)];
+      QM.gfx.txt(ctx,nm,px,py,cs*0.5,red?'#c13a2e':'#22262f','center','800');
+    }
+    // 将军提示
+    if(s.check&&!s.over){
+      const k=kingIdx(s.board,-side);
+      if(k>=0){
+        ctx.strokeStyle='#ff4d4d';ctx.lineWidth=Math.max(2,cs*0.08);
+        ctx.beginPath();ctx.arc(ox+X(k)*cs,oy+Y(k)*cs,cs*0.5,0,6.2832);ctx.stroke();
+      }
+    }
+    if(view.hover!==null&&view.hover!==undefined){
+      ctx.strokeStyle='rgba(255,255,255,.35)';ctx.lineWidth=2;
+      ctx.strokeRect(ox+X(view.hover)*cs-cs*0.44,oy+Y(view.hover)*cs-cs*0.44,cs*0.88,cs*0.88);
+    }
+  },
+  drawHint(ctx,s,L,mv){
+    const cs=L.cs,ox=L.ox,oy=L.oy;
+    const k=0.5+0.5*Math.sin(QM.util.now()/180);
+    ctx.strokeStyle='rgba(61,218,215,'+(0.4+k*0.5)+')';ctx.lineWidth=Math.max(2,cs*0.07);
+    [mv.from,mv.to].forEach(q=>{
+      ctx.beginPath();ctx.arc(ox+X(q)*cs,oy+Y(q)*cs,cs*0.5,0,6.2832);ctx.stroke();
+    });
+  }
+};
+return G;
+})());
+
+
+/* ======== 25_ludo.js ======== */
+/* ================= 飞行棋 · 到达类 ================= */
+QM.reg((function(){
+const P=[[6,13],[6,12],[6,11],[6,10],[6,9],[5,8],[4,8],[3,8],[2,8],[1,8],[0,8],[0,7],[0,6],[1,6],[2,6],[3,6],[4,6],[5,6],
+        [6,5],[6,4],[6,3],[6,2],[6,1],[6,0],[7,0],[8,0],[8,1],[8,2],[8,3],[8,4],[8,5],[9,6],[10,6],[11,6],[12,6],[13,6],[14,6],
+        [14,7],[14,8],[13,8],[12,8],[11,8],[10,8],[9,8],[8,9],[8,10],[8,11],[8,12],[8,13],[8,14],[7,14],[6,14]];
+const START=[0,13,26,39];
+const NAMES={0:'红方',13:'绿方',26:'黄方',39:'蓝方'};
+const COLORS={0:'#e2483d',13:'#3fbf6f',26:'#f0b429',39:'#4a90e2'};
+const HOME={
+  0:[[7,13],[7,12],[7,11],[7,10],[7,9],[7,8]],
+  13:[[1,7],[2,7],[3,7],[4,7],[5,7],[6,7]],
+  26:[[7,1],[7,2],[7,3],[7,4],[7,5],[7,6]],
+  39:[[13,7],[12,7],[11,7],[10,7],[9,7],[8,7]]
+};
+const BASE={0:[[1,10],[3,10],[1,12],[3,12]],13:[[1,1],[3,1],[1,3],[3,3]],26:[[10,1],[12,1],[10,3],[12,3]],39:[[10,10],[12,10],[10,12],[12,12]]};
+const BASEC={0:[1,9,6,6],13:[0,0,6,6],26:[9,0,6,6],39:[9,9,6,6]};
+const SEAT_START={2:[0,26],3:[0,13,26],4:[0,13,26,39]};
+const END=57;
+function seatStart(s,i){ return s.start[i]; }
+function coordOf(s,seat,i){
+  const pc=s.pieces[seat*4+i], pos=pc.pos;
+  const st=seatStart(s,seat);
+  if(pos<0) return BASE[st][i];
+  if(pos<=50) return P[(st+pos)%52];
+  if(pos<=END-1) return HOME[st][pos-51];
+  return [7,7];
+}
+function isSafe(s,seat,pos){
+  if(pos<0||pos>50)return true;
+  const st=seatStart(s,seat);
+  for(let k=0;k<s.n;k++){ if((START.indexOf(seatStart(s,k))+0)>=0 && (st+pos)%52===seatStart(s,k)) return true; }
+  return false;
+}
+function rollMoves(s,seat,d){
+  const out=[];
+  for(let i=0;i<4;i++){
+    const idx=seat*4+i, pc=s.pieces[idx];
+    if(pc.pos>=END)continue;
+    if(pc.pos<0){ if(d===6) out.push({piece:idx,to:0,takeoff:true}); continue; }
+    const to=pc.pos+d;
+    if(to>END)continue;
+    out.push({piece:idx,to:to});
+  }
+  return out;
+}
+function occupantAt(s,seat,pos){
+  if(pos<0||pos>50)return -1;
+  const g=(seatStart(s,seat)+pos)%52;
+  for(let k=0;k<s.n*4;k++){
+    const pc=s.pieces[k];
+    if(pc.pos<0||pc.pos>50)continue;
+    if((seatStart(s,(k/4)|0)+pc.pos)%52===g) return k;
+  }
+  return -1;
+}
+
+const G={
+  id:'ludo', name:'飞行棋', icon:'🎲', cat:'reach', desc:'掷骰起飞，四子先全部抵达终点者胜',
+  seats:[2,3,4], tags:['骰子','撞子'],
+  seatNote:{2:'对角厮杀',3:'三方混战',4:'四方争霸'},
+  rules:'【目标】把自己 4 枚棋子全部送进中心终点区，先完成者胜（到达类：抢先抵达终点）。\n【起飞】掷出 6 点才能把一枚棋子从基地送上起点，并可再掷一次。\n【飞行】按箭头方向沿外圈前进，点数即步数；到达自家门前要精确点数才能进入终点区。\n【撞子】落点与敌方棋子重合（不在安全格/起点格上时），将其送回对方基地，并可再掷一次。\n【再掷】掷出 6 点、撞子、棋子归位，这三种情况都可以再掷一次。\n【安全】各色起点格为安全格，棋子停在上面不会被撞。',
+  seatName(i){
+    const s=QM.engine.s;
+    if(s&&s.start) return NAMES[s.start[i]]||('第'+(i+1)+'方');
+    return ['红方','绿方','黄方','蓝方'][i]||('第'+(i+1)+'方');
+  },
+  seatColor(i){
+    const s=QM.engine.s;
+    if(s&&s.start) return COLORS[s.start[i]]||'#888';
+    return COLORS[START[i]]||'#888';
+  },
+  newState(cfg){
+    const n=cfg.players, start=SEAT_START[n].slice();
+    const pieces=[];
+    for(let k=0;k<n;k++)for(let i=0;i<4;i++)pieces.push({seat:k,pos:-1});
+    return {n:n,start:start,pieces:pieces,turn:0,dice:0,phase:'roll',moves:[],over:false,winner:null,six:0,rank:[],pendingAgain:false};
+  },
+  layout(w,h,s){
+    const cs=Math.min(w/15.4,h/15.4);
+    return {cs:cs,ox:(w-cs*15)/2,oy:(h-cs*15)/2};
+  },
+  cell(L,x,y){ return [L.ox+x*L.cs+L.cs/2, L.oy+y*L.cs+L.cs/2]; },
+  hover(s,L,px,py){ return null; },
+  hit(s,x,y,L){
+    if(s.phase!=='move')return null;
+    const r=L.cs*0.46;
+    for(const m of s.moves){
+      const c=this.coordPiece(s,m.piece);
+      const p=this.cell(L,c[0],c[1]);
+      const dx=x-p[0],dy=y-p[1];
+      if(dx*dx+dy*dy<=r*r*1.4) return {type:'move',piece:m.piece};
+    }
+    return null;
+  },
+  coordPiece(s,idx){
+    const seat=(idx/4)|0, i=idx%4, pc=s.pieces[idx], st=seatStart(s,seat);
+    if(pc.pos<0)return BASE[st][i];
+    if(pc.pos<=50)return P[(st+pc.pos)%52];
+    if(pc.pos<=56)return HOME[st][pc.pos-51];
+    return [7,7];
+  },
+  apply(s,mv){
+    if(mv.type==='roll'){
+      const d=1+Math.floor(Math.random()*6);
+      s.dice=d;
+      let again=false;
+      if(d===6){ s.six++; if(s.six>=3){ s.six=0; s.dice=d; s.moves=[]; s.phase='roll'; s.turn=(s.turn+1)%s.n; return {anim:{type:'dice'},dur:200}; } again=true; }
+      else s.six=0;
+      let ms=rollMoves(s,s.turn,d);
+      if(!ms.length){ s.phase='roll'; s.six=0; s.turn=(s.turn+1)%s.n; return {anim:{type:'dice'},dur:200}; }
+      s.moves=ms;
+      if(ms.length===1){ return this.doMove(s,ms[0],again); }
+      s.phase='move'; s.pendingAgain=again; s.turn=s.turn;
+      return {anim:{type:'dice'},dur:200};
+    }
+    const m=s.moves.filter(q=>q.piece===mv.piece)[0];
+    if(!m)return null;
+    return this.doMove(s,m,s.pendingAgain);
+  },
+  doMove(s,m,again){
+    const pc=s.pieces[m.piece], seat=(m.piece/4)|0, st=seatStart(s,seat);
+    const from=pc.pos;
+    const path=[];
+    if(from<0) path.push(BASE[st][m.piece%4]);
+    const startP = from<0?0:from+1;
+    for(let p=startP;p<=m.to;p++){
+      if(p<=50)path.push(P[(st+p)%52]);
+      else if(p<=56)path.push(HOME[st][p-51]);
+      else path.push([7,7]);
+    }
+    let cap=-1;
+    if(m.to<=50&&m.to>=0){
+      const occ=occupantAt(s,seat,m.to);
+      if(occ>=0&&(occ/4|0)!==seat&&!isSafe(s,seat,m.to)){ cap=occ; }
+    }
+    pc.pos=m.to;
+    if(cap>=0){ s.pieces[cap].pos=-1; again=true; }
+    if(m.to>=END) again=true;
+    s.moves=[]; s.phase='roll';
+    // 该方是否全部到达
+    let done=true;
+    for(let i=0;i<4;i++) if(s.pieces[seat*4+i].pos<END)done=false;
+    if(done){
+      if(s.rank.indexOf(seat)<0)s.rank.push(seat);
+      if(!s.over){ s.over=true; s.winner=seat; }
+    }
+    if(!again) s.turn=(s.turn+1)%s.n;
+    return {anim:{type:'walk',piece:m.piece,path:path,cap:cap},dur:Math.max(240,path.length*135)};
+  },
+  ai(s,seat,lv){
+    if(s.phase==='roll') return {type:'roll'};
+    const ms=s.moves;
+    if(!ms.length)return {type:'roll'};
+    let best=null,bs=-1e9;
+    for(const m of ms){
+      let sc=0;
+      const pc=s.pieces[m.piece];
+      if(m.to>=END)sc+=220;
+      const occ=occupantAt(s,(m.piece/4)|0,m.to);
+      if(m.to<=50&&m.to>=0&&occ>=0&&(occ/4|0)!==seat&&!isSafe(s,seat,m.to))sc+=130;
+      if(pc.pos<0)sc+=50;
+      if(m.to>=51&&m.to<END)sc+=35;
+      if(isSafe(s,seat,m.to)&&m.to>=0&&m.to<=50)sc+=18;
+      // 威胁与风险
+      for(let k=0;k<s.n*4;k++){
+        if((k/4|0)===seat)continue;
+        const o=s.pieces[k]; if(o.pos<0||o.pos>50)continue;
+        const oSeat=(k/4)|0;
+        let oPos=-1;
+        // 敌子在我路径上的相对位置（同一全局格）
+        const gO=(seatStart(s,oSeat)+o.pos)%52, gM=(seatStart(s,seat)+m.to)%52;
+        let d=gM-gO; while(d<0)d+=52; while(d>=52)d-=52;
+        if(d>=1&&d<=6) sc+=10;      // 我 1-6 步内可撞它
+        let d2=gO-gM; while(d2<0)d2+=52; while(d2>=52)d2-=52;
+        if(d2>=1&&d2<=6) sc-=14;    // 它 1-6 步内可撞我
+      }
+      sc += m.to*0.7 + (lv===1?Math.random()*28:Math.random()*4);
+      if(sc>bs){bs=sc;best=m;}
+    }
+    return {type:'move',piece:best.piece};
+  },
+  status(s){
+    if(s.phase==='move')return '掷出 '+s.dice+' 点 · 点击棋子起飞/前进';
+    return '掷出 6 点才能起飞';
+  },
+  resultText(s){
+    return this.seatName(s.winner)+'四子全部抵达终点，获胜！';
+  },
+  actions:[{t:'🎲 掷骰子',id:'btnDice',pri:1,f:(s,v,E)=>{
+    if(s.over)return 'keep';
+    if(s.phase!=='roll'){ QM.ui.toast('请先选择要移动的棋子'); return 'keep'; }
+    E.play({type:'roll'}); return 'keep';
+  }}],
+  draw(ctx,s,L,view){
+    const cs=L.cs,ox=L.ox,oy=L.oy;
+    // 底板
+    QM.gfx.rr(ctx,ox-cs*0.3,oy-cs*0.3,cs*15.6,cs*15.6,cs*0.5);
+    ctx.fillStyle='rgba(12,22,38,.9)';ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.09)';ctx.lineWidth=1;ctx.stroke();
+    const cellBox=(x,y,w,h,fill,stroke)=>{
+      QM.gfx.rr(ctx,ox+x*cs,oy+y*cs,cs*w,cs*h,cs*0.16);
+      ctx.fillStyle=fill;ctx.fill();
+      if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1.2;ctx.stroke();}
+    };
+    // 四个基地
+    for(let k=0;k<s.n;k++){
+      const st=seatStart(s,k), c=COLORS[st], b=BASEC[st];
+      cellBox(b[0]+0.15,b[1]+0.15,b[2]-0.3,b[3]-0.3,hexA(c,.22),hexA(c,.6));
+      for(const p of BASE[st]) cellBox(p[0]-0.34,p[1]-0.34,0.68,0.68,hexA(c,.4),hexA(c,.8));
+    }
+    // 主路径
+    for(let i=0;i<52;i++){
+      const p=P[i];
+      let fill='rgba(255,255,255,.10)',stroke='rgba(255,255,255,.15)';
+      for(let k=0;k<s.n;k++){
+        if(seatStart(s,k)===i){ const c=COLORS[seatStart(s,k)]; fill=hexA(c,.75); stroke=hexA(c,1); }
+      }
+      cellBox(p[0]-0.4,p[1]-0.4,0.8,0.8,fill,stroke);
+    }
+    // home 通道
+    for(let k=0;k<s.n;k++){
+      const st=seatStart(s,k),c=COLORS[st];
+      HOME[st].forEach((p,i)=>{
+        cellBox(p[0]-0.38,p[1]-0.38,0.76,0.76,hexA(c,.13+i*0.05),hexA(c,.45));
+      });
+    }
+    // 中心
+    const cx=ox+7.5*cs, cy=oy+7.5*cs, R=cs*1.45;
+    const tri=(a0,a1,col)=>{
+      ctx.beginPath();ctx.moveTo(cx,cy);
+      ctx.arc(cx,cy,R,a0,a1);ctx.closePath();
+      ctx.fillStyle=col;ctx.fill();
+    };
+    for(let k=0;k<s.n;k++){
+      const st=seatStart(s,k),c=COLORS[st];
+      const base={0:Math.PI/4,26:Math.PI/4+Math.PI/2,13:Math.PI/4+Math.PI,39:Math.PI/4-Math.PI/2}[st];
+      tri(base,base+Math.PI/2,hexA(c,.55));
+    }
+    ctx.beginPath();ctx.arc(cx,cy,R*0.42,0,6.2832);ctx.fillStyle='#0d1729';ctx.fill();
+    QM.gfx.txt(ctx,'终',cx,cy,cs*0.62,'rgba(255,255,255,.9)','center','800');
+
+    // 骰子（画在当前方基地中心）
+    const st=seatStart(s,s.turn);
+    const dc=this.cell(L,BASEC[st][0]+3,BASEC[st][1]+3);
+    const ds=cs*1.5;
+    QM.gfx.rr(ctx,dc[0]-ds/2,dc[1]-ds/2,ds,ds,cs*0.22);
+    ctx.fillStyle='rgba(255,255,255,.94)';ctx.fill();
+    ctx.strokeStyle=hexA(COLORS[st],.9);ctx.lineWidth=2;ctx.stroke();
+    const d=s.dice;
+    if(d>0){
+      const pips={1:[[0,0]],2:[[-1,-1],[1,1]],3:[[-1,-1],[0,0],[1,1]],4:[[-1,-1],[1,-1],[-1,1],[1,1]],5:[[-1,-1],[1,-1],[0,0],[-1,1],[1,1]],6:[[-1,-1],[1,-1],[-1,0],[1,0],[-1,1],[1,1]]}[d];
+      pips.forEach(p=>QM.gfx.disc(ctx,dc[0]+p[0]*ds*0.26,dc[1]+p[1]*ds*0.26,ds*0.09,'#1b2436'));
+    } else {
+      QM.gfx.txt(ctx,'?',dc[0],dc[1],ds*0.5,'#93a3bd','center','800');
+    }
+
+    // 棋子
+    const anim = (view.anim&&view.anim.a.type==='walk')?view.anim:null;
+    let animT = anim?QM.util.clamp((QM.util.now()-anim.t0)/anim.dur,0,1):0;
+    for(let idx=0;idx<s.n*4;idx++){
+      const pc=s.pieces[idx], seat=(idx/4)|0, stp=seatStart(s,seat), c=COLORS[stp];
+      let gx,gy;
+      if(anim&&anim.a.piece===idx){
+        const path=anim.a.path;
+        const f=animT*(path.length-1);
+        const i0=Math.floor(f), i1=Math.min(path.length-1,i0+1), t=f-i0;
+        gx=path[i0][0]+(path[i1][0]-path[i0][0])*t;
+        gy=path[i0][1]+(path[i1][1]-path[i0][1])*t;
+      } else {
+        const co=this.coordPiece(s,idx); gx=co[0]; gy=co[1];
+      }
+      let px,py,rad=cs*0.31;
+      if(pc.pos>=END){
+        // 终点区：沿本方方向两排各两枚
+        const k=idx%4;
+        const dirs={0:[0,1],13:[-1,0],26:[0,-1],39:[1,0]}[stp];
+        const perp=[-dirs[1],dirs[0]];
+        const along=0.55+((k>>1)%2)*0.5, side=((k%2)-0.5)*0.55;
+        px=cx+dirs[0]*along*cs+perp[0]*side*cs;
+        py=cy+dirs[1]*along*cs+perp[1]*side*cs;
+        rad=cs*0.19;
+      } else {
+        // 同格多子偏移
+        let same=0,tot=0;
+        for(let q=0;q<s.n*4;q++){
+          if(q===idx)continue;
+          const c1=this.coordPiece(s,q), c0=this.coordPiece(s,idx);
+          if(c1[0]===c0[0]&&c1[1]===c0[1]){ tot++; if(q<idx)same++; }
+        }
+        const off=tot?[[0,0],[-0.17,-0.17],[0.17,0.17],[-0.17,0.17],[0.17,-0.17]][same+ (tot>=3?1:0)]:[0,0];
+        px=ox+(gx+0.5+off[0])*cs; py=oy+(gy+0.5+off[1])*cs;
+        rad=cs*(tot?0.26:0.31);
+      }
+      const movable = s.phase==='move' && s.moves.some(m=>m.piece===idx);
+      if(movable){
+        const k=0.5+0.5*Math.sin(QM.util.now()/200);
+        ctx.beginPath();ctx.arc(px,py,rad*1.45,0,6.2832);
+        ctx.fillStyle='rgba(61,218,215,'+(0.15+k*0.25)+')';ctx.fill();
+      }
+      QM.gfx.stone(ctx,px,py,rad,{hi:'#fff',fill:c,lo:shade(c,-0.35),ring:'rgba(0,0,0,.35)',shadow:1});
+    }
+  }
+};
+function hexA(hex,a){
+  const h=hex.replace('#','');
+  const r=parseInt(h.substr(0,2),16),g=parseInt(h.substr(2,2),16),b=parseInt(h.substr(4,2),16);
+  return 'rgba('+r+','+g+','+b+','+a+')';
+}
+function shade(hex,k){
+  const h=hex.replace('#','');
+  let r=parseInt(h.substr(0,2),16),g=parseInt(h.substr(2,2),16),b=parseInt(h.substr(4,2),16);
+  if(k<0){r*=1+k;g*=1+k;b*=1+k;} else {r+=(255-r)*k;g+=(255-g)*k;b+=(255-b)*k;}
+  return 'rgb('+(r|0)+','+(g|0)+','+(b|0)+')';
+}
+return G;
+})());
+
+
+/* ======== 26_checkers.js ======== */
+/* ================= 中国跳棋 · 到达类 ================= */
+QM.reg((function(){
+// cube 坐标 x+y+z=0；星形 = 中心六边形(|x|,|y|,|z|<=4) + 六个三角
+const DIRS=[[1,-1,0],[1,0,-1],[0,1,-1],[-1,1,0],[-1,0,1],[0,-1,1]];
+function isCell(x,y,z){
+  if(x+y+z!==0)return false;
+  if(Math.abs(x)>8||Math.abs(y)>8||Math.abs(z)>8)return false;
+  if(Math.abs(x)<=4&&Math.abs(y)<=4&&Math.abs(z)<=4)return true;
+  // 三角：一个坐标 >=5 或 <=-5，另两个 >= -4 / <= 4
+  const co=[[x,y,z],[y,z,x],[z,x,y]];
+  for(let k=0;k<3;k++){
+    const a=co[k];
+    if(a[0]>=5&&a[0]<=8&&a[1]>=-4&&a[1]<=4&&a[2]>=-4&&a[2]<=4)return true;
+    if(a[0]<=-5&&a[0]>=-8&&a[1]>=-4&&a[1]<=4&&a[2]>=-4&&a[2]<=4)return true;
+  }
+  return false;
+}
+function allCells(){
+  const out=[];
+  for(let x=-8;x<=8;x++)for(let y=-8;y<=8;y++){
+    const z=-x-y;
+    if(isCell(x,y,z))out.push([x,y,z]);
+  }
+  return out;
+}
+const CELLS=allCells();
+// 六个三角（尖角方向）：以坐标 >=5 / <=-5 区分
+const TRI=[
+  {k:'x+', test:(x,y,z)=>x>=5, target:(x,y,z)=>x<=-5},
+  {k:'x-', test:(x,y,z)=>x<=-5, target:(x,y,z)=>x>=5},
+  {k:'y+', test:(x,y,z)=>y>=5, target:(x,y,z)=>y<=-5},
+  {k:'y-', test:(x,y,z)=>y<=-5, target:(x,y,z)=>y>=5},
+  {k:'z+', test:(x,y,z)=>z>=5, target:(x,y,z)=>z<=-5},
+  {k:'z-', test:(x,y,z)=>z<=-5, target:(x,y,z)=>z>=5}
+];
+const SEAT_TRI={2:['x+','x-'],3:['x+','y+','z+'],6:['x+','z-','y+','x-','z+','y-']};
+const COLORS=['#e2483d','#3fbf6f','#f0b429','#4a90e2','#b06ee8','#3ddad7'];
+function triCells(key){ return CELLS.filter(c=>{ const t=TRI.find(q=>q.k===key); return t.test(c[0],c[1],c[2]); }); }
+function key(x,y,z){ return x+','+y+','+z; }
+function dist(a,b){ return Math.max(Math.abs(a[0]-b[0]),Math.abs(a[1]-b[1]),Math.abs(a[2]-b[2])); }
+function centerOf(cells){
+  let x=0,y=0,z=0; cells.forEach(c=>{x+=c[0];y+=c[1];z+=c[2];});
+  return [x/cells.length,y/cells.length,z/cells.length];
+}
+/* 进度度量：越小越好。已入营的子不计，未入营的按距离加权，落伍子重罚 */
+function triOf(s,seat){
+  const tk=s.targets[seat];
+  return {t:TRI.find(q=>q.k===tk), tc:centerOf(triCells(tk))};
+}
+function metric(s,seat,cache){
+  const o=cache||triOf(s,seat);
+  let out=0,sum=0,mx=0;
+  for(const p of s.pieces){
+    if(p.s!==seat)continue;
+    if(o.t.test(p.x,p.y,p.z))continue;
+    out++;
+    const d=dist([p.x,p.y,p.z],o.tc);
+    sum+=d*d+d*4; if(d>mx)mx=d;
+  }
+  return out*240+sum+mx*34;
+}
+function globalMetric(s){
+  let g=0;
+  for(let i=0;i<s.n;i++) g+=metric(s,i);
+  return g;
+}
+
+const G={
+  id:'checkers', name:'中国跳棋', icon:'⭐', cat:'reach', desc:'连跳前进，十子先全部入对面阵营者胜',
+  seats:[2,3,6], tags:['六角星','连跳'],
+  seatNote:{2:'对角竞速',3:'三方跳跃',6:'六角混战'},
+  rules:'【目标】把自己 10 枚棋子全部移入正对面的三角阵营，先完成者胜（到达类）。\n【走法】每步任选两种之一：\n  ① 单步：走到相邻的空位；\n  ② 跳跃：隔着相邻的一枚棋子（敌我皆可）跳到它正后方的空位，可连续跳跃多次，一步内跳多段。\n【限制】棋子不能停在非相邻的斜位，跳跃必须"隔一子落到空位"。\n【要点】搭"跳板"是关键——把棋子排成阶梯，一次连跳能推进很远；同时别让自己的落伍子掉队。',
+  seatName(i){ return ['红方','绿方','黄方','蓝方','紫方','青方'][QM.engine.s.seatTri?i:i] || i; },
+  newState(cfg){
+    const n=cfg.players;
+    const triKeys=SEAT_TRI[n];
+    const pieces=[];
+    const targets={};
+    triKeys.forEach((tk,i)=>{
+      const cells=triCells(tk);
+      const t=TRI.find(q=>q.k===tk);
+      targets[i]=TRI.find(q=>TRI.indexOf(q)%2===(TRI.indexOf(t)%2===0?1:0)&&q.k[0]===t.k[0]).k;
+      cells.forEach(c=>pieces.push({s:i,x:c[0],y:c[1],z:c[2]}));
+    });
+    const st={n:n,seatTri:triKeys,pieces:pieces,targets:targets,turn:0,over:false,winner:null,last:null,stale:0,gm:0};
+    st.gm=globalMetric(st);
+    return st;
+  },
+  seatColor(i){ return COLORS[i%6]; },
+  layout(w,h,s){
+    const sz=Math.min(w/21.2,h/25.2);
+    return {sz:sz,ox:w/2,oy:h/2};
+  },
+  pos(L,x,z){
+    const s=L.sz;
+    return [L.ox+s*1.732*(x+z/2), L.oy+s*1.5*z];
+  },
+  hover(){return null;},
+  hit(s,x,y,L){
+    const view=QM.engine.view;
+    const sz=L.sz;
+    // 找最近的格子
+    let best=null,bd=1e9;
+    for(const c of CELLS){
+      const p=this.pos(L,c[0],c[2]);
+      const d=(p[0]-x)*(p[0]-x)+(p[1]-y)*(p[1]-y);
+      if(d<bd){bd=d;best=c;}
+    }
+    if(!best||bd>(sz*0.95)*(sz*0.95))return null;
+    const occ=this.at(s,best);
+    if(view.sel!==null&&view.sel!==undefined){
+      if(occ!==-1&&occ.seat===s.turn&&occ.idx===view.sel){ view.sel=null; return 'again'; }
+      const mv=this.genOne(s,view.sel);
+      const t=mv.filter(m=>m.x===best[0]&&m.y===best[1]&&m.z===best[2])[0];
+      if(t){ const from=view.sel; view.sel=null; return {from:from,to:[t.x,t.y,t.z],path:t.path}; }
+      if(occ===-1&&!this.canStay(s,s.turn,best[0],best[1],best[2])){
+        QM.ui.toast('只能停在自己营地、目标营地或中央区');
+      }
+    }
+    if(occ!==-1&&occ.seat===s.turn){ view.sel=occ.idx; return 'again'; }
+    return null;
+  },
+  at(s,c){
+    for(let i=0;i<s.pieces.length;i++){
+      const p=s.pieces[i];
+      if(p.x===c[0]&&p.y===c[1]&&p.z===c[2])return {seat:p.s,idx:i};
+    }
+    return -1;
+  },
+  occupied(s,x,y,z){
+    for(const p of s.pieces) if(p.x===x&&p.y===y&&p.z===z)return true;
+    return false;
+  },
+  canStay(s,seat,x,y,z){
+    const mine=s.seatTri[seat], tgt=s.targets[seat];
+    for(const t of TRI){
+      if(t.k===mine||t.k===tgt)continue;
+      if(t.test(x,y,z))return false;
+    }
+    return true;
+  },
+  genOne(s,idx){
+    const p=s.pieces[idx];
+    const seat=s.pieces[idx].s;
+    const out=[];
+    // 单步
+    for(const d of DIRS){
+      const x=p.x+d[0],y=p.y+d[1],z=p.z+d[2];
+      if(isCell(x,y,z)&&!this.occupied(s,x,y,z)&&this.canStay(s,seat,x,y,z)) out.push({x:x,y:y,z:z,path:[[x,y,z]]});
+    }
+    // 连跳
+    const seen={}; seen[key(p.x,p.y,p.z)]=1;
+    const q=[{x:p.x,y:p.y,z:p.z,path:[]}];
+    while(q.length){
+      const cur=q.shift();
+      for(const d of DIRS){
+        const mx=cur.x+d[0],my=cur.y+d[1],mz=cur.z+d[2];
+        const lx=cur.x+2*d[0],ly=cur.y+2*d[1],lz=cur.z+2*d[2];
+        if(!this.occupied(s,mx,my,mz))continue;
+        if(!isCell(lx,ly,lz))continue;
+        if(this.occupied(s,lx,ly,lz))continue;
+        const kk=key(lx,ly,lz);
+        if(seen[kk])continue;
+        seen[kk]=1;
+        const np=cur.path.concat([[lx,ly,lz]]);
+        out.push({x:lx,y:ly,z:lz,path:np});
+        q.push({x:lx,y:ly,z:lz,path:np});
+      }
+    }
+    return out;
+  },
+  apply(s,mv){
+    const p=s.pieces[mv.from];
+    const old=[p.x,p.y,p.z];
+    p.x=mv.to[0];p.y=mv.to[1];p.z=mv.to[2];
+    s.last={from:mv.from,path:mv.path};
+    // 胜利判定
+    const tk=s.targets[p.s];
+    const t=TRI.find(q=>q.k===tk);
+    const mine=s.pieces.filter(q=>q.s===p.s);
+    if(mine.every(q=>t.test(q.x,q.y,q.z))){ s.over=true; s.winner=p.s; }
+    else{
+      const g=globalMetric(s);
+      if(g<s.gm-0.5){ s.gm=g; s.stale=0; }
+      else s.stale=(s.stale||0)+1;
+      if(s.stale>=9*s.n) this.finish(s);
+      else s.turn=(s.turn+1)%s.n;
+    }
+    return {anim:{type:'jump',idx:mv.from,path:mv.path,from:old},dur:Math.min(760,240+mv.path.length*180)};
+  },
+  finish(s){
+    s.over=true; s.stalemate=true;
+    let best=0,bv=-1e18;
+    for(let i=0;i<s.n;i++){
+      const o=triOf(s,i);
+      let cnt=0,sum=0;
+      for(const p of s.pieces){
+        if(p.s!==i)continue;
+        if(o.t.test(p.x,p.y,p.z))cnt++;
+        else sum+=dist([p.x,p.y,p.z],o.tc);
+      }
+      const v=cnt*1000-sum;
+      if(v>bv){bv=v;best=i;}
+    }
+    s.winner=best;
+  },
+  ai(s,seat,lv){
+    const o=triOf(s,seat);
+    const own=[];
+    for(let i=0;i<s.pieces.length;i++) if(s.pieces[i].s===seat)own.push(i);
+    // 已入营的子原则上不再动，优先推落伍子
+    let cands=own.filter(i=>!o.t.test(s.pieces[i].x,s.pieces[i].y,s.pieces[i].z));
+    if(!cands.length)cands=own.slice();
+    let best=null,bs=1e18;
+    for(const i of cands){
+      const p=s.pieces[i];
+      const old=dist([p.x,p.y,p.z],o.tc);
+      const ms=this.genOne(s,i);
+      for(const m of ms){
+        const nw=dist([m.x,m.y,m.z],o.tc);
+        const bak=[p.x,p.y,p.z];
+        p.x=m.x;p.y=m.y;p.z=m.z;
+        const v=metric(s,seat,o);
+        p.x=bak[0];p.y=bak[1];p.z=bak[2];
+        // 后退要罚（但不禁止，避免卡死），多段连跳略加奖励
+        const vv=v+(nw-old)*14-m.path.length*0.6+Math.random()*(lv===1?9:1.5);
+        if(vv<bs){bs=vv;best={from:i,to:[m.x,m.y,m.z],path:m.path};}
+      }
+    }
+    if(!best){
+      for(const i of own){
+        const ms=this.genOne(s,i);
+        if(ms.length){ const m=ms[Math.floor(Math.random()*ms.length)]; best={from:i,to:[m.x,m.y,m.z],path:m.path}; break; }
+      }
+    }
+    return best;
+  },
+  status(s){ return '点击己方棋子，再点目标位（可连跳）'; },
+  resultText(s){
+    if(s.stalemate){
+      const o=triOf(s,s.winner);
+      let cnt=0;
+      for(const p of s.pieces) if(p.s===s.winner&&o.t.test(p.x,p.y,p.z))cnt++;
+      return '双方僵持、均无法十子全入营，按入营子数判定：\n—— '+this.seatName(s.winner)+'入营 '+cnt+' 子，领先获胜！';
+    }
+    return this.seatName(s.winner)+'十子全部入营，获胜！';
+  },
+  draw(ctx,s,L,view){
+    const sz=L.sz;
+    // 背景
+    ctx.beginPath();ctx.arc(L.ox,L.oy,sz*12.6,0,6.2832);
+    ctx.fillStyle='rgba(10,18,32,.75)';ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.08)';ctx.lineWidth=1;ctx.stroke();
+    // 目标区染色
+    for(let i=0;i<s.n;i++){
+      const tk=s.targets[i];
+      const c=COLORS[i%6];
+      triCells(tk).forEach(cc=>{
+        const p=this.pos(L,cc[0],cc[2]);
+        QM.gfx.hexPath(ctx,p[0],p[1],sz*0.94);
+        ctx.fillStyle=hexA(c,0.10);ctx.fill();
+      });
+    }
+    // 格子
+    CELLS.forEach(c=>{
+      const p=this.pos(L,c[0],c[2]);
+      QM.gfx.hexPath(ctx,p[0],p[1],sz*0.9);
+      ctx.fillStyle='rgba(255,255,255,.055)';ctx.fill();
+      ctx.strokeStyle='rgba(255,255,255,.12)';ctx.lineWidth=1;ctx.stroke();
+    });
+    // 可走提示
+    const view2=QM.engine.view;
+    if(view2.sel!==null&&view2.sel!==undefined){
+      const sp=s.pieces[view2.sel];
+      const p=this.pos(L,sp.x,sp.z);
+      QM.gfx.hexPath(ctx,p[0],p[1],sz*0.92);
+      ctx.strokeStyle='#3ddad7';ctx.lineWidth=2.5;ctx.stroke();
+      this.genOne(s,view2.sel).forEach(m=>{
+        const q=this.pos(L,m.x,m.z);
+        QM.gfx.disc(ctx,q[0],q[1],sz*0.22,'rgba(61,218,215,.5)');
+      });
+    }
+    // 棋子
+    const anim=(view.anim&&view.anim.a.type==='jump')?view.anim:null;
+    const at=anim?QM.util.clamp((QM.util.now()-anim.t0)/anim.dur,0,1):0;
+    for(let i=0;i<s.pieces.length;i++){
+      const p=s.pieces[i];
+      let gx=p.x,gz=p.z;
+      if(anim&&anim.a.idx===i){
+        const path=anim.a.path, st=anim.a.from;
+        const f=at*path.length;
+        const i0=Math.min(path.length-1,Math.floor(f)), t=f-i0;
+        const a=(i0===0)?{x:st[0],z:st[2]}:{x:path[i0-1][0],z:path[i0-1][2]};
+        const b=path[i0];
+        gx=a.x+(b[0]-a.x)*t; gz=a.z+(b[2]-a.z)*t;
+      }
+      const q=this.pos(L,gx,gz);
+      const c=COLORS[p.s%6];
+      QM.gfx.stone(ctx,q[0],q[1],sz*0.68,{hi:'#fff',fill:c,lo:shade(c,-0.4),ring:'rgba(0,0,0,.3)',shadow:1});
+    }
+    if(s.last&&!anim){
+      const p0=s.pieces[s.last.from];
+      const q=this.pos(L,p0.x,p0.z);
+      ctx.strokeStyle='rgba(240,180,41,.85)';ctx.lineWidth=2;
+      QM.gfx.hexPath(ctx,q[0],q[1],sz*0.78);ctx.stroke();
+    }
+  },
+  drawHint(ctx,s,L,mv){
+    const sz=L.sz;
+    const q=this.pos(L,mv.to[0],mv.to[2]);
+    const k=0.5+0.5*Math.sin(QM.util.now()/180);
+    ctx.strokeStyle='rgba(61,218,215,'+(0.4+k*0.5)+')';ctx.lineWidth=3;
+    QM.gfx.hexPath(ctx,q[0],q[1],sz*0.95);ctx.stroke();
+  }
+};
+function hexA(hex,a){
+  const h=hex.replace('#','');
+  const r=parseInt(h.substr(0,2),16),g=parseInt(h.substr(2,2),16),b=parseInt(h.substr(4,2),16);
+  return 'rgba('+r+','+g+','+b+','+a+')';
+}
+function shade(hex,k){
+  const h=hex.replace('#','');
+  let r=parseInt(h.substr(0,2),16),g=parseInt(h.substr(2,2),16),b=parseInt(h.substr(4,2),16);
+  if(k<0){r*=1+k;g*=1+k;b*=1+k;} else {r+=(255-r)*k;g+=(255-g)*k;b+=(255-b)*k;}
+  return 'rgb('+(r|0)+','+(g|0)+','+(b|0)+')';
+}
+return G;
+})());
+
+
+/* ======== 27_junqi.js ======== */
+/* ================= 军棋 · 争子类 ================= */
+QM.reg((function(){
+const CW=5, CH=8, TOT=40;
+const T={
+  marshal:{n:'司令',r:10,v:120,short:'司'},
+  army:{n:'军长',r:9,v:70,short:'军'},
+  division:{n:'师长',r:8,v:48,short:'师'},
+  brigade:{n:'旅长',r:7,v:34,short:'旅'},
+  regiment:{n:'团长',r:6,v:26,short:'团'},
+  battalion:{n:'营长',r:5,v:20,short:'营'},
+  company:{n:'连长',r:4,v:15,short:'连'},
+  platoon:{n:'排长',r:3,v:11,short:'排'},
+  sapper:{n:'工兵',r:2,v:16,short:'兵'},
+  bomb:{n:'炸弹',r:-1,v:46,short:'弹'},
+  mine:{n:'地雷',r:0,v:18,short:'雷'},
+  flag:{n:'军旗',r:-2,v:9999,short:'旗'}
+};
+const SETUP=[
+  ['marshal',1],['army',1],['division',2],['brigade',2],['regiment',2],
+  ['battalion',2],['company',2],['platoon',2],['sapper',2],['mine',2],['bomb',1],['flag',1]
+]; // 合计 20
+function newArmy(side){
+  const a=[];
+  SETUP.forEach(p=>{ for(let i=0;i<p[1];i++) a.push({s:side,t:p[0],h:true}); });
+  return a;
+}
+function fight(a,d){
+  if(d.t==='flag') return 'a';                       // 夺旗
+  if(a.t==='bomb'||d.t==='bomb') return 'both';       // 炸弹同归于尽
+  if(d.t==='mine') return a.t==='sapper'?'a':'both';  // 工兵挖雷
+  if(a.r>d.r) return 'a';
+  if(a.r<d.r) return 'd';
+  return 'both';
+}
+function movable(p){ return p && p.t!=='flag' && p.t!=='mine'; }
+function hasHidden(s){ for(let i=0;i<TOT;i++){ const c=s.cells[i]; if(c&&c.h)return true; } return false; }
+function nb(i){
+  const x=i%CW,y=(i/CW)|0,r=[];
+  if(x>0)r.push(i-1); if(x<CW-1)r.push(i+1);
+  if(y>0)r.push(i-CW); if(y<CH-1)r.push(i+CW);
+  return r;
+}
+
+const G={
+  id:'junqi', name:'军棋', icon:'🚩', cat:'fight', desc:'暗棋翻子、争夺阵地，夺对方军旗者胜',
+  seats:[2], tags:['暗棋','记忆'],
+  rules:'【目标】争夺阵地：吃掉对方"军旗"即胜；若一方无子可动也判负。\n【布置】40 枚棋子全部背面朝上随机摆满棋盘，双方轮流行动，暗子的归属要翻开才知道——比的是记忆与判断。\n【行动】每回合二选一：\n  ① 翻棋：翻开任意一枚暗子（翻出谁的子，就归谁）；\n  ② 走子/交战：把一枚己方明子移动一格（上下左右），或攻击相邻的敌方明子（不能攻击暗子）。\n【大小】司令＞军长＞师长＞旅长＞团长＞营长＞连长＞排长＞工兵；同级相遇同归于尽。\n【特殊】工兵可挖地雷；炸弹与任何棋子同归于尽；地雷与军旗不能移动；除工兵外，任何棋子碰地雷同归于尽。\n【夺旗】场上还有暗子时军旗受保护，不可被夺；所有暗子翻开后，才可发起夺旗。\n【要点】前期多翻子摸清敌情，用"刚好压过"的小子去吃，别轻易暴露司令；翻完暗子再图夺旗。',
+  seatName:i=>i===0?'红军':'蓝军',
+  seatColor:i=>i===0?'#e2483d':'#4a90e2',
+  newState(cfg){
+    const all=newArmy(0).concat(newArmy(1));
+    QM.util.shuffle(all);
+    return {cells:all,turn:0,over:false,winner:null,last:null,flips:0};
+  },
+  layout(w,h,s){
+    const cs=Math.min(w/(CW+0.5),h/(CH+0.7));
+    return {cs:cs,ox:(w-cs*CW)/2,oy:(h-cs*CH)/2};
+  },
+  hover(s,L,x,y){
+    const i=Math.floor((x-L.ox)/L.cs), j=Math.floor((y-L.oy)/L.cs);
+    if(i<0||i>=CW||j<0||j>=CH)return null;
+    return j*CW+i;
+  },
+  hit(s,x,y,L){
+    const p=this.hover(s,L,x,y);
+    if(p===null)return null;
+    const c=s.cells[p];
+    const view=QM.engine.view;
+    if(c&&!c.h&&c.s===s.turn&&movable(c)){
+      if(view.sel===p){ view.sel=null; return 'again'; }
+      view.sel=p; return 'again';
+    }
+    if(view.sel!==null&&view.sel!==undefined){
+      if(nb(view.sel).indexOf(p)>=0){
+        const from=view.sel; view.sel=null;
+        return {from:from,to:p};
+      }
+      view.sel=null; return 'again';
+    }
+    if(c&&c.h) return {flip:p};
+    return null;
+  },
+  apply(s,mv){
+    if(mv.flip!==undefined){
+      s.cells[mv.flip].h=false;
+      s.last={flip:mv.flip}; s.flips++;
+      s.turn=1-s.turn;
+      return {anim:{type:'flip',p:mv.flip},dur:320};
+    }
+    const a=s.cells[mv.from], d=s.cells[mv.to];
+    s.last={from:mv.from,to:mv.to};
+    if(!d){ s.cells[mv.to]=a; s.cells[mv.from]=null; }
+    else {
+      const r=fight(a,d);
+      if(r==='a'){ s.cells[mv.to]=a; s.cells[mv.from]=null; if(d.t==='flag'){ s.over=true; s.winner=a.s; } }
+      else if(r==='d'){ s.cells[mv.from]=null; }
+      else { s.cells[mv.from]=null; s.cells[mv.to]=null; }
+    }
+    if(!s.over){
+      // 判负：对方无子可动且无暗子可翻
+      const nt=1-s.turn;
+      if(!this.hasAction(s,nt)){ s.over=true; s.winner=s.turn; }
+      else s.turn=nt;
+    }
+    return {anim:{type:'move',from:mv.from,to:mv.to},dur:280};
+  },
+  hasAction(s,side){
+    for(let i=0;i<TOT;i++){
+      const c=s.cells[i];
+      if(!c)continue;
+      if(c.h)return true;
+      if(c.s===side&&movable(c)){
+        for(const j of nb(i)){
+          const d=s.cells[j];
+          if(!d)return true;
+          if(!d.h&&d.s!==side)return true;
+        }
+      }
+    }
+    return false;
+  },
+  ai(s,seat,lv){
+    const me=seat, op=1-seat;
+    const cands=[];
+    // 1) 攻击 / 移动
+    for(let i=0;i<TOT;i++){
+      const a=s.cells[i];
+      if(!a||a.h||a.s!==me||!movable(a))continue;
+      for(const j of nb(i)){
+        const d=s.cells[j];
+        if(!d){ cands.push({mv:{from:i,to:j},sc:6+Math.random()*4}); continue; }
+        if(d.h||d.s===me)continue;
+        if(d.t==='flag'&&hasHidden(s))continue;      // 暗子未翻完，军旗不可夺
+        const r=fight(a,d);
+        const dv=T[d.t].v, av=T[a.t].v;
+        let sc;
+        if(d.t==='flag') sc=100000;
+        else if(r==='a') sc = dv*2.2 - av*0.35;
+        else if(r==='both') sc = dv*0.9 - av*0.9;
+        else sc = -1000;                              // 送死，不选
+        if(a.t==='marshal'&&d.t!=='flag'&&d.v<40&&r==='a') sc-=60;   // 别用司令吃小兵
+        cands.push({mv:{from:i,to:j},sc:sc});
+      }
+    }
+    // 2) 翻棋
+    let hidden=0;
+    for(let i=0;i<TOT;i++) if(s.cells[i]&&s.cells[i].h){
+      hidden++;
+      // 靠近己方明子的暗子优先翻（便于后续配合）
+      let near=0;
+      nb(i).forEach(j=>{ const c=s.cells[j]; if(c&&!c.h&&c.s===me)near++; });
+      cands.push({mv:{flip:i},sc:22+near*3+Math.random()*10});
+    }
+    if(!cands.length)return null;
+    let best=cands[0],bs=-1e9;
+    for(const c of cands){
+      const noise = lv===1?Math.random()*30:(lv===2?Math.random()*8:0);
+      const v=c.sc+noise;
+      if(v>bs){bs=v;best=c;}
+    }
+    return best.mv;
+  },
+  status(s){
+    let a=0,b=0,ha=0;
+    s.cells.forEach(c=>{ if(!c)return; if(c.s===0)a++; else b++; if(c.h)ha++; });
+    return '兵力 '+a+' : '+b+' · 暗子 '+ha+' 枚';
+  },
+  resultText(s){
+    return this.seatName(s.winner)+'夺得对方军旗（或使其无子可动），获胜！';
+  },
+  draw(ctx,s,L,view){
+    const cs=L.cs,ox=L.ox,oy=L.oy;
+    QM.gfx.rr(ctx,ox-cs*0.22,oy-cs*0.3,cs*CW+cs*0.44,cs*CH+cs*0.6,cs*0.25);
+    ctx.fillStyle='rgba(10,20,34,.9)';ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=1;ctx.stroke();
+    // 选中与可走
+    if(view.sel!==null&&view.sel!==undefined&&s.cells[view.sel]){
+      nb(view.sel).forEach(j=>{
+        const x=ox+(j%CW)*cs,y=oy+((j/CW)|0)*cs;
+        const d=s.cells[j];
+        QM.gfx.rr(ctx,x+cs*0.08,y+cs*0.08,cs*0.84,cs*0.84,cs*0.12);
+        ctx.fillStyle = !d?'rgba(61,218,215,.16)':(d.h?'rgba(255,255,255,.05)':'rgba(226,72,61,.22)');
+        ctx.fill();
+        ctx.strokeStyle = !d?'rgba(61,218,215,.6)':(d.h?'rgba(255,255,255,.15)':'rgba(255,90,80,.75)');
+        ctx.lineWidth=2;ctx.stroke();
+      });
+    }
+    const anim=(view.anim&&view.anim.a.type)?view.anim:null;
+    const at=anim?QM.util.clamp((QM.util.now()-anim.t0)/anim.dur,0,1):0;
+    for(let i=0;i<TOT;i++){
+      const c=s.cells[i];
+      if(!c)continue;
+      let gx=i%CW, gy=(i/CW)|0;
+      if(anim&&anim.a.type==='move'&&anim.a.to===i){
+        const fx=anim.a.from%CW, fy=(anim.a.from/CW)|0;
+        gx=fx+(gx-fx)*at; gy=fy+(gy-fy)*at;
+      }
+      const x=ox+gx*cs, y=oy+gy*cs;
+      const w=cs*0.86, h=cs*0.86, px=x+cs*0.07, py=y+cs*0.07;
+      const sel=(view.sel===i);
+      ctx.save();
+      if(sel){ ctx.shadowColor='rgba(61,218,215,.9)';ctx.shadowBlur=cs*0.4; }
+      QM.gfx.rr(ctx,px,py,w,h,cs*0.13);
+      let flipA=1;
+      if(anim&&anim.a.type==='flip'&&anim.a.p===i){ flipA=Math.abs(Math.cos(at*Math.PI*0.5)); }
+      if(c.h){
+        const gd=ctx.createLinearGradient(px,py,px+w,py+h);
+        gd.addColorStop(0,'#3b4a63');gd.addColorStop(1,'#22304a');
+        ctx.fillStyle=gd;ctx.fill();
+        ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=1.4;ctx.stroke();
+        ctx.globalAlpha=0.85*flipA+ (1-flipA)*0.1;
+        QM.gfx.txt(ctx,'军',px+w/2,py+h/2,cs*0.34,'rgba(255,255,255,.5)','center','800');
+        ctx.globalAlpha=1;
+      } else {
+        const mine=c.s===0, col=mine?'#e2483d':'#4a90e2';
+        const gd=ctx.createLinearGradient(px,py,px+w,py+h);
+        gd.addColorStop(0,'#f6f2e6');gd.addColorStop(1,'#d9d3c2');
+        ctx.fillStyle=gd;ctx.fill();
+        ctx.strokeStyle=col;ctx.lineWidth=2.4;ctx.stroke();
+        const nm=T[c.t].n;
+        ctx.globalAlpha=flipA;
+        QM.gfx.txt(ctx,nm[0],px+w/2,py+h*0.29,cs*0.3,col,'center','800');
+        QM.gfx.txt(ctx,nm[1],px+w/2,py+h*0.71,cs*0.3,col,'center','800');
+        if(c.t==='flag'||c.t==='mine'||c.t==='bomb'){
+          QM.gfx.txt(ctx,c.t==='flag'?'★':(c.t==='mine'?'※':'✸'),px+w*0.82,py+h*0.2,cs*0.2,c.t==='flag'?'#c0392b':'#7f8c8d','center','800');
+        }
+        ctx.globalAlpha=1;
+      }
+      ctx.restore();
+    }
+    if(s.last&&s.last.flip!==undefined&&!anim){
+      const i=s.last.flip, x=ox+(i%CW)*cs,y=oy+((i/CW)|0)*cs;
+      ctx.strokeStyle='rgba(240,180,41,.9)';ctx.lineWidth=2.5;
+      QM.gfx.rr(ctx,x+cs*0.06,y+cs*0.06,cs*0.88,cs*0.88,cs*0.13);ctx.stroke();
+    }
+    if(view.hover!==null&&view.hover!==undefined){
+      const i=view.hover,x=ox+(i%CW)*cs,y=oy+((i/CW)|0)*cs;
+      ctx.strokeStyle='rgba(255,255,255,.3)';ctx.lineWidth=1.5;
+      QM.gfx.rr(ctx,x+cs*0.06,y+cs*0.06,cs*0.88,cs*0.88,cs*0.13);ctx.stroke();
+    }
+  },
+  drawHint(ctx,s,L,mv){
+    const cs=L.cs,ox=L.ox,oy=L.oy;
+    const i = mv.flip!==undefined?mv.flip:mv.to;
+    const x=ox+(i%CW)*cs,y=oy+((i/CW)|0)*cs;
+    const k=0.5+0.5*Math.sin(QM.util.now()/180);
+    ctx.strokeStyle='rgba(61,218,215,'+(0.4+k*0.5)+')';ctx.lineWidth=3;
+    QM.gfx.rr(ctx,x+cs*0.05,y+cs*0.05,cs*0.9,cs*0.9,cs*0.13);ctx.stroke();
+  }
+};
+return G;
+})());
+
+</script>
+</body>
+</html>

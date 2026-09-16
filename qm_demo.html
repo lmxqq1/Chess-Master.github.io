@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>棋大师 · 开发者接入示例</title>
+<style>
+:root{--bg:#0d1220;--card:#151d2e;--line:#253149;--txt:#e8eefb;--dim:#93a2bd;--dim2:#66748f;
+  --acc:#3ddad7;--acc2:#f0b429;--good:#3ddc84;--bad:#ff6b6b}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--txt);
+  font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  padding:0 0 60px}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px}
+header{padding:26px 0 18px;border-bottom:1px solid var(--line);margin-bottom:22px}
+h1{margin:0 0 6px;font-size:24px;letter-spacing:.5px}
+h1 .lg{font-size:26px}
+.sub{color:var(--dim);font-size:13.5px}
+h2{font-size:17px;margin:34px 0 12px;padding-left:10px;border-left:3px solid var(--acc)}
+h3{font-size:14.5px;margin:18px 0 8px;color:var(--acc)}
+p{color:var(--dim);font-size:13.5px;margin:8px 0}
+code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:12.5px;
+  background:rgba(255,255,255,.07);padding:2px 6px;border-radius:5px;color:#9fe8e6}
+pre{background:#0a0f1c;border:1px solid var(--line);border-radius:12px;padding:14px;
+  overflow-x:auto;font-size:12.5px;line-height:1.6;margin:10px 0}
+pre code{background:none;padding:0;color:#c8d6f0;white-space:pre}
+.tag{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;
+  background:rgba(61,218,215,.14);color:var(--acc);margin-left:6px;vertical-align:middle}
+.note{background:rgba(240,180,41,.09);border:1px solid rgba(240,180,41,.3);
+  border-left:3px solid var(--acc2);border-radius:10px;padding:11px 14px;margin:12px 0;font-size:13px;color:#e9d9b4}
+.note b{color:var(--acc2)}
+.ok{background:rgba(61,220,132,.09);border:1px solid rgba(61,220,132,.3);border-left-color:var(--good)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0}
+.row{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:10px 0}
+button{padding:9px 15px;border-radius:10px;background:var(--card);border:1px solid var(--line);
+  color:var(--txt);font-size:13.5px;cursor:pointer;font-family:inherit}
+button:hover{border-color:var(--acc)}
+button.pri{background:linear-gradient(120deg,var(--acc),#2bb8b5);color:#06222a;font-weight:700;border:0}
+select,input{padding:9px 11px;border-radius:10px;background:#0a0f1c;border:1px solid var(--line);
+  color:var(--txt);font-size:13.5px;font-family:inherit;outline:none}
+iframe{width:100%;height:520px;border:1px solid var(--line);border-radius:14px;background:#080e1a;display:block}
+#log{background:#0a0f1c;border:1px solid var(--line);border-radius:10px;padding:11px;
+  height:190px;overflow-y:auto;font-family:"SF Mono",Menlo,Consolas,monospace;font-size:12px;
+  color:#8fa4c4;margin-top:10px;white-space:pre-wrap}
+#log b{color:var(--acc)}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{color:var(--acc);font-weight:600;font-size:12.5px}
+td:first-child{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:12px;color:#9fe8e6}
+@media(max-width:600px){ iframe{height:430px} h1{font-size:20px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1><span class="lg">♟</span> 棋大师 · 开发者接入示例</h1>
+  <div class="sub">三种接入方式的可运行代码：iframe 嵌入 / JS SDK / URL 参数启动</div>
+</header>
+
+<div class="note ok">
+  <b>文件放置：</b>把 <code>棋大师.html</code> 与本文件放在<b>同一目录</b>，下面的嵌入示例即可直接运行。
+  若放在 CDN，把代码里的 <code>QM_URL</code> 换成你的实际地址即可（跨域 iframe 的 postMessage 通信不受同源限制影响）。
+</div>
+
+<!-- ============ 方式一：iframe 嵌入 ============ -->
+<h2>方式一：iframe 嵌入 <span class="tag">推荐</span></h2>
+<p>零依赖、样式隔离、跨域可用。宿主页面通过 <code>postMessage</code> 发送指令，通过 <code>message</code> 事件接收棋局动态。</p>
+
+<div class="card">
+  <div class="row">
+    <select id="selGame">
+      <option value="gomoku">五子棋</option>
+      <option value="reversi">黑白棋</option>
+      <option value="go">围棋</option>
+      <option value="mancala">播棋</option>
+      <option value="chess">中国象棋</option>
+      <option value="ludo">飞行棋</option>
+      <option value="checkers">中国跳棋</option>
+      <option value="junqi">军棋</option>
+    </select>
+    <select id="selMode">
+      <option value="pve">人机对弈</option>
+      <option value="hot">同设备轮流</option>
+      <option value="solo">一人多弈</option>
+      <option value="eva">机机演示</option>
+    </select>
+    <button class="pri" id="btnStart">开局</button>
+    <button id="btnHint">提示</button>
+    <button id="btnUndo">悔棋</button>
+    <button id="btnRestart">重开</button>
+    <button id="btnState">读局面</button>
+  </div>
+  <iframe id="frame" src="棋大师.html?embed=1" title="棋大师"></iframe>
+  <div id="log">等待棋大师就绪…</div>
+</div>
+
+<h3>宿主页面代码</h3>
+<pre><code>&lt;iframe id="frame" src="棋大师.html?embed=1"&gt;&lt;/iframe&gt;
+
+&lt;script&gt;
+const frame = document.getElementById('frame').contentWindow;
+
+// ① 发送指令（指令白名单见下方表格）
+function send(cmd, arg, opt){
+  frame.postMessage({ __qm_cmd: cmd, arg: arg, opt: opt }, '*');
+}
+send('start', 'gomoku', { mode:'pve', level:2, players:2 });
+send('hint');
+send('undo');
+
+// ② 接收棋局事件
+window.addEventListener('message', e =&gt; {
+  const d = e.data;
+  if (!d || !d.__qm) return;
+  switch (d.__qm) {
+    case 'ready':        console.log('棋大师就绪', d.data.version); break;
+    case 'start':        console.log('开局', d.data); break;
+    case 'move':         console.log('落子', d.data);  break;
+    case 'finish':       console.log('终局', d.data);  break;
+    case 'roomcreated':  console.log('房间码', d.data.code); break;
+    case 'result':       console.log('指令返回', d.cmd, d.data); break;
+    case 'error':        console.warn('出错了', d.data.msg); break;
+  }
+});
+&lt;/script&gt;</code></pre>
+
+<h3>支持的指令</h3>
+<table>
+  <tr><th>指令</th><th>参数</th><th>说明</th></tr>
+  <tr><td>start</td><td>arg=棋种id, opt={mode,players,level}</td><td>直接开局</td></tr>
+  <tr><td>open</td><td>arg=棋种id</td><td>只打开设置页，等用户操作</td></tr>
+  <tr><td>hint / undo / restart / home</td><td>—</td><td>对局控制</td></tr>
+  <tr><td>state / status / games</td><td>—</td><td>读取局面与棋种列表</td></tr>
+  <tr><td>joinRoom</td><td>arg=邀请码, opt=昵称</td><td>加入联机房间</td></tr>
+  <tr><td>setTheme</td><td>arg='dark' | 'light'</td><td>切换配色</td></tr>
+</table>
+<p>不在白名单内的指令会被拒绝并返回 <code>error</code>，宿主无法借接口越权操作内部 DOM。</p>
+
+
+<!-- ============ 方式二：JS SDK ============ -->
+<h2>方式二：JS SDK <span class="tag">同页面</span></h2>
+<p>用 <code>&lt;script src&gt;</code> 引入后，页面内会出现全局对象 <code>window.QiMaster</code>，可直接调用。适合需要深度集成、自定义外壳的场景。</p>
+
+<div class="card">
+  <div class="row">
+    <button class="pri" id="btnSdk">在新窗口演示 SDK</button>
+    <span style="color:var(--dim2);font-size:12.5px">（会打开棋大师自身，控制台预置了调用示例）</span>
+  </div>
+</div>
+
+<h3>调用示例</h3>
+<pre><code>&lt;script src="棋大师.html"&gt;&lt;/script&gt;
+&lt;script&gt;
+// 列出全部棋种
+QiMaster.games().forEach(g =&gt; console.log(g.id, g.name, g.seats));
+
+// 开一局中国象棋（人机，高级 AI）
+QiMaster.start('chess', { mode:'pve', level:3 });
+
+// 订阅事件
+QiMaster.on('move',  e =&gt; console.log('落子', e.data));
+QiMaster.on('finish',e =&gt; console.log('终局', e.data));
+const off = QiMaster.on('start', e =&gt; console.log('开局', e.data));
+off();   // 取消订阅
+
+// 读取当前局面
+const st = QiMaster.status();   // { game, turn, turnName, over, winner, text }
+const full = QiMaster.state();  // 含 board 原始数据
+
+// 联机
+QiMaster.on('roomcreated', e =&gt; console.log('房间码', e.data.code));
+QiMaster.createRoom('gomoku', { players:2 });
+QiMaster.joinRoom('ABC123', '玩家昵称');
+
+// 读取账号快照（不暴露任何凭据）
+QiMaster.account();  // { login:true, nick, mask:'138****8000', stat:{...} }
+&lt;/script&gt;</code></pre>
+
+
+<!-- ============ 方式三：URL 参数 ============ -->
+<h2>方式三：URL 参数启动 <span class="tag">最简单</span></h2>
+<p>无需写 JS，拼一个链接即可直达指定棋种与模式，适合做菜单跳转、分享卡片、二维码内容。</p>
+
+<div class="card">
+  <div class="row">
+    <select id="uGame">
+      <option value="gomoku">五子棋</option>
+      <option value="chess">中国象棋</option>
+      <option value="go">围棋</option>
+      <option value="junqi">军棋</option>
+    </select>
+    <select id="uMode">
+      <option value="pve">人机对弈</option>
+      <option value="hot">同设备轮流</option>
+      <option value="eva">机机演示</option>
+    </select>
+    <select id="uLevel"><option value="1">初级</option><option value="2" selected>中级</option><option value="3">高级</option></select>
+    <button class="pri" id="btnUrl">打开链接</button>
+  </div>
+  <pre id="urlPreview" style="margin:6px 0 0">棋大师.html?game=gomoku&mode=pve&level=2&auto=1</pre>
+</div>
+
+<h3>参数说明</h3>
+<table>
+  <tr><th>参数</th><th>取值</th><th>说明</th></tr>
+  <tr><td>game</td><td>棋种 id</td><td>打开指定棋种的设置页</td></tr>
+  <tr><td>auto / start</td><td>1</td><td>跳过设置页直接开局</td></tr>
+  <tr><td>mode</td><td>pve / pvp / hot / solo / eva</td><td>对局模式</td></tr>
+  <tr><td>players</td><td>各棋种支持的人数</td><td>对局人数</td></tr>
+  <tr><td>level</td><td>1 / 2 / 3</td><td>AI 棋力</td></tr>
+  <tr><td>room</td><td>6 位邀请码</td><td>打开后自动加入联机房间</td></tr>
+  <tr><td>name</td><td>字符串</td><td>配合 room 使用，指定昵称</td></tr>
+  <tr><td>embed</td><td>1</td><td>嵌入模式：隐藏外壳与首页文案</td></tr>
+  <tr><td>chrome</td><td>1</td><td>嵌入模式下仍保留顶栏</td></tr>
+  <tr><td>theme</td><td>dark / light</td><td>配色</td></tr>
+</table>
+<p>示例：<code>棋大师.html?game=chess&mode=pve&level=3&auto=1</code> —— 打开即是一局高级 AI 的中国象棋。</p>
+
+
+<!-- ============ 事件 ============ -->
+<h2>事件一览</h2>
+<table>
+  <tr><th>事件</th><th>触发时机</th><th>数据</th></tr>
+  <tr><td>ready</td><td>嵌入模式加载完成</td><td>{ version }</td></tr>
+  <tr><td>start</td><td>开局</td><td>{ game, mode, players }</td></tr>
+  <tr><td>move</td><td>每步落子后</td><td>{ move, state }</td></tr>
+  <tr><td>finish</td><td>终局</td><td>{ winner, text, ... }</td></tr>
+  <tr><td>result</td><td>战绩计入</td><td>{ result:'win'|'lose'|'draw' }</td></tr>
+  <tr><td>roomcreated</td><td>联机房创建完成</td><td>{ code }</td></tr>
+  <tr><td>joined</td><td>加入联机房成功</td><td>{ seat }</td></tr>
+  <tr><td>error</td><td>出错</td><td>{ msg }</td></tr>
+</table>
+<p>用 <code>QiMaster.on('*', fn)</code> 可订阅全部事件。</p>
+
+<div class="note">
+  <b>关于账号：</b>账号数据存在用户浏览器 localStorage 中，<b>没有服务器、不同步</b>。
+  <code>QiMaster.account()</code> 只返回昵称、脱敏账号与战绩，不暴露手机号/邮箱原文与密码摘要。
+  若你部署了自己的后端，可在 <code>QM.account</code> 中把 <code>register / login</code> 改为调用你的接口。
+</div>
+
+</div>
+
+<script>
+(function(){
+  var QM_URL = '棋大师.html';
+  var frame  = document.getElementById('frame');
+  var logEl  = document.getElementById('log');
+  var win;
+
+  function log(msg, strong){
+    var t = new Date().toTimeString().slice(0,8);
+    logEl.innerHTML += (strong ? '<b>'+t+'</b> ' : t+' ') + msg + '\n';
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+  function send(cmd, arg, opt){
+    if(!win) return;
+    win.postMessage({ __qm_cmd: cmd, arg: arg, opt: opt }, '*');
+  }
+
+  // 监听 iframe 回传
+  window.addEventListener('message', function(e){
+    var d = e.data;
+    if(!d || typeof d !== 'object' || !d.__qm) return;
+    switch(d.__qm){
+      case 'ready':
+        win = frame.contentWindow;
+        log('✅ 棋大师已就绪（v' + d.data.version + '）', true);
+        break;
+      case 'start':
+        log('▶ 开局：' + d.data.game + ' / ' + d.data.mode + ' / ' + d.data.players + ' 人', true);
+        break;
+      case 'move':
+        log('· 落子 → ' + JSON.stringify(d.data.state && d.data.state.text || '').slice(0,60));
+        break;
+      case 'finish':
+        log('🏁 终局：' + JSON.stringify(d.data), true);
+        break;
+      case 'roomcreated':
+        log('🔑 房间码：' + d.data.code, true);
+        break;
+      case 'joined':
+        log('✅ 已加入，座位 ' + d.data.seat, true);
+        break;
+      case 'result':
+        log('⇦ ' + d.cmd + ' → ' + JSON.stringify(d.data).slice(0,120));
+        break;
+      case 'error':
+        log('⚠ 错误：' + d.data.msg);
+        break;
+      default:
+        log('· ' + d.__qm + ' ' + JSON.stringify(d.data).slice(0,100));
+    }
+  });
+
+  // 控制面板
+  document.getElementById('btnStart').onclick = function(){
+    send('start', document.getElementById('selGame').value, {
+      mode:    document.getElementById('selMode').value,
+      level:   2,
+      players: 2
+    });
+  };
+  document.getElementById('btnHint').onclick    = function(){ send('hint'); };
+  document.getElementById('btnUndo').onclick    = function(){ send('undo'); };
+  document.getElementById('btnRestart').onclick = function(){ send('restart'); };
+  document.getElementById('btnState').onclick   = function(){ send('status'); };
+
+  // URL 参数演示
+  var uG = document.getElementById('uGame'),
+      uM = document.getElementById('uMode'),
+      uL = document.getElementById('uLevel'),
+      uP = document.getElementById('urlPreview');
+  function syncUrl(){
+    uP.textContent = QM_URL + '?game=' + uG.value + '&mode=' + uM.value +
+                     '&level=' + uL.value + '&auto=1';
+  }
+  [uG, uM, uL].forEach(function(el){ el.onchange = syncUrl; });
+  syncUrl();
+  document.getElementById('btnUrl').onclick = function(){
+    window.open(uP.textContent, '_blank');
+  };
+
+  // SDK 演示
+  document.getElementById('btnSdk').onclick = function(){
+    var w = window.open(QM_URL, '_blank');
+    log('已在新窗口打开，请在控制台执行：QiMaster.games() / QiMaster.start("gomoku")', true);
+  };
+})();
+</script>
+</body>
+</html>
